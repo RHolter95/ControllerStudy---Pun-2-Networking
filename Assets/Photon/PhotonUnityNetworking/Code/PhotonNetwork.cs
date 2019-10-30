@@ -1057,6 +1057,14 @@ namespace Photon.Pun
         ///
         /// In general check out the <see cref="DisconnectCause"/> from the <see cref="IConnectionCallbacks.OnDisconnected"/> callback.
         ///  </remarks>
+
+
+        public static void QuickStart() //Paired to the Quick Start button
+        {
+            PhotonNetwork.JoinRandomRoom(); //First tries to join an existing room
+            Debug.Log("Quick start");
+        }
+        
         public static bool ConnectUsingSettings()
         {
             if (NetworkingClient.LoadBalancingPeer.PeerState != PeerStateValue.Disconnected)

@@ -3,8 +3,10 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - FixedJoystick
     - GameSetupController
+    - Health
     - NetworkController
     - NetworkPlayer
+    - PlayerShooting
     - QuickStartLobbyController
     - QuickStartRoomController
     - Target
@@ -82,27 +84,29 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10312}
     - Class: 114
-      Script: {instanceID: 10594}
+      Script: {instanceID: 10422}
     - Class: 114
-      Script: {instanceID: 10644}
+      Script: {instanceID: 10596}
     - Class: 114
-      Script: {instanceID: 10698}
+      Script: {instanceID: 10646}
     - Class: 114
-      Script: {instanceID: 10746}
+      Script: {instanceID: 10700}
     - Class: 114
-      Script: {instanceID: 10770}
+      Script: {instanceID: 10750}
     - Class: 114
-      Script: {instanceID: 11000}
+      Script: {instanceID: 10774}
     - Class: 114
-      Script: {instanceID: 11188}
+      Script: {instanceID: 11004}
     - Class: 114
-      Script: {instanceID: 11304}
+      Script: {instanceID: 11192}
     - Class: 114
-      Script: {instanceID: 11506}
+      Script: {instanceID: 11308}
     - Class: 114
-      Script: {instanceID: 11572}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11594}
+      Script: {instanceID: 11576}
+    - Class: 114
+      Script: {instanceID: 11598}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -151,9 +155,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10312}
     - Class: 114
-      Script: {instanceID: 11466}
+      Script: {instanceID: 10712}
     - Class: 114
-      Script: {instanceID: 11572}
+      Script: {instanceID: 11470}
+    - Class: 114
+      Script: {instanceID: 11510}
+    - Class: 114
+      Script: {instanceID: 11576}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -493,6 +501,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: e72282a040447b396e9be0da5a6b4195
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerShooting
+  - hash:
+      serializedVersion: 2
       Hash: ce669872a2be11bc686ea22961d8a3bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -605,6 +619,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Button
+  - hash:
+      serializedVersion: 2
+      Hash: 8679ce48dd804e852cdbb0cd203d7e3d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Health
   - hash:
       serializedVersion: 2
       Hash: feb9a5a121d15fa3654d4e50a5233045

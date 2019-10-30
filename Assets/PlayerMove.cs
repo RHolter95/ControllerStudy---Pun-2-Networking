@@ -16,7 +16,6 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
     [SerializeField]
     private Animator animator;
-    private bool isSpacePressed = false;
 
     //Used to make player Jump
     [SerializeField]
@@ -39,7 +38,6 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     [SerializeField]
     float rotateSpeed = 10.0f;
     [SerializeField]
-    private float jumpHeight = 5.5f;
     private bool isGrounded = true;
     float verticalVelocity = 0;
     protected GameObject temp;

@@ -8,7 +8,6 @@ using UnityEngine;
         protected Vector3 realPosition = Vector3.zero;
         protected Quaternion realRotation = Quaternion.identity;
         protected float realSpeed;
-        protected bool jumping;
         private void Awake()
         {
         }

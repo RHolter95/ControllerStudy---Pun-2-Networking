@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 5343501737293008448}
   - component: {fileID: 3232007006524241012}
   - component: {fileID: 8719022377965141969}
+  - component: {fileID: 2589792963236102304}
   m_Layer: 0
   m_Name: PhotonPlayer
   m_TagString: Untagged
@@ -305,6 +306,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe41a82939a454845af1c9e2fb64f76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2589792963236102304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343501737293008461}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916cd7c5897585a4191888140f355844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 0.5
+  damage: 25
 --- !u!1 &5873826467123999097
 GameObject:
   m_ObjectHideFlags: 0

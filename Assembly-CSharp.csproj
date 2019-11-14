@@ -53,8 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\GameSetupController.cs" />
-     <Compile Include="Assets\Health.cs" />
+     <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -63,8 +62,6 @@
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick1.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-     <Compile Include="Assets\NetworkController.cs" />
-     <Compile Include="Assets\NetworkPlayer.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
@@ -76,15 +73,29 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
      <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-     <Compile Include="Assets\PlayerMove.cs" />
-     <Compile Include="Assets\PlayerShooting.cs" />
-     <Compile Include="Assets\QuickStartLobbyController.cs" />
-     <Compile Include="Assets\QuickStartRoomController.cs" />
-     <Compile Include="Assets\Target.cs" />
+     <Compile Include="Assets\Scripts\BulletForward.cs" />
+     <Compile Include="Assets\Scripts\FXManager.cs" />
+     <Compile Include="Assets\Scripts\gameObject.cs" />
+     <Compile Include="Assets\Scripts\GameSetupController.cs" />
+     <Compile Include="Assets\Scripts\Health.cs" />
+     <Compile Include="Assets\Scripts\NetworkController.cs" />
+     <Compile Include="Assets\Scripts\NetworkPlayer.cs" />
+     <Compile Include="Assets\Scripts\PlayerMove.cs" />
+     <Compile Include="Assets\Scripts\PlayerShooting.cs" />
+     <Compile Include="Assets\Scripts\QuickStartLobbyController.cs" />
+     <Compile Include="Assets\Scripts\QuickStartRoomController.cs" />
+     <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+     <Compile Include="Assets\Scripts\Target.cs" />
+     <Compile Include="Assets\Scripts\WeaponData.cs" />
      <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
      <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
+     <None Include="Assets\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
+     <None Include="Assets\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
+     <None Include="Assets\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
+     <None Include="Assets\EffectExamples\Misc Effects\Shaders\Respawn.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
+     <None Include="Assets\EffectExamples\Magic Effects\Shaders\Ice.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

@@ -9,6 +9,7 @@ TagManager:
   - JoyStick Right
   - PlayerOne
   - ground
+  - Bullet
   layers:
   - Default
   - TransparentFX

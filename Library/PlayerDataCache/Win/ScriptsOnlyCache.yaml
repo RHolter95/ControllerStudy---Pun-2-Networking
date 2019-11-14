@@ -1,6 +1,8 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BulletForward
+    - FXManager
     - FixedJoystick
     - GameSetupController
     - Health
@@ -9,10 +11,13 @@ ScriptsOnlyBuild:
     - PlayerShooting
     - QuickStartLobbyController
     - QuickStartRoomController
+    - SelfDestruct
     - Target
     - UnderdogCity.PlayerMove
+    - WeaponData
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
-    - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonTransformView
     - Photon.Pun.PhotonView
     - Photon.Pun.ServerSettings
@@ -59,6 +64,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 90
       Script: {instanceID: 0}
     - Class: 91
@@ -70,44 +79,52 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9674}
+      Script: {instanceID: 9682}
     - Class: 114
-      Script: {instanceID: 9812}
+      Script: {instanceID: 9756}
     - Class: 114
-      Script: {instanceID: 9828}
+      Script: {instanceID: 9838}
     - Class: 114
-      Script: {instanceID: 9850}
+      Script: {instanceID: 9860}
     - Class: 114
-      Script: {instanceID: 9892}
+      Script: {instanceID: 9902}
     - Class: 114
-      Script: {instanceID: 10092}
+      Script: {instanceID: 10102}
     - Class: 114
-      Script: {instanceID: 10312}
+      Script: {instanceID: 10322}
     - Class: 114
-      Script: {instanceID: 10422}
+      Script: {instanceID: 10432}
     - Class: 114
-      Script: {instanceID: 10596}
+      Script: {instanceID: 10608}
     - Class: 114
-      Script: {instanceID: 10646}
+      Script: {instanceID: 10658}
     - Class: 114
-      Script: {instanceID: 10700}
+      Script: {instanceID: 10712}
     - Class: 114
-      Script: {instanceID: 10750}
+      Script: {instanceID: 10762}
     - Class: 114
-      Script: {instanceID: 10774}
+      Script: {instanceID: 10786}
     - Class: 114
-      Script: {instanceID: 11004}
+      Script: {instanceID: 10900}
     - Class: 114
-      Script: {instanceID: 11192}
+      Script: {instanceID: 11012}
     - Class: 114
-      Script: {instanceID: 11308}
+      Script: {instanceID: 11020}
     - Class: 114
-      Script: {instanceID: 11510}
+      Script: {instanceID: 11210}
     - Class: 114
-      Script: {instanceID: 11576}
+      Script: {instanceID: 11326}
     - Class: 114
-      Script: {instanceID: 11598}
+      Script: {instanceID: 11528}
+    - Class: 114
+      Script: {instanceID: 11594}
+    - Class: 114
+      Script: {instanceID: 11616}
+    - Class: 114
+      Script: {instanceID: 11656}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 120
       Script: {instanceID: 0}
     - Class: 128
       Script: {instanceID: 0}
@@ -116,6 +133,10 @@ ScriptsOnlyBuild:
     - Class: 143
       Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -146,6 +167,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 104
@@ -153,18 +178,32 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 10312}
+      Script: {instanceID: 9756}
     - Class: 114
-      Script: {instanceID: 10712}
+      Script: {instanceID: 10322}
     - Class: 114
-      Script: {instanceID: 11470}
+      Script: {instanceID: 10608}
     - Class: 114
-      Script: {instanceID: 11510}
+      Script: {instanceID: 10724}
     - Class: 114
-      Script: {instanceID: 11576}
+      Script: {instanceID: 10900}
+    - Class: 114
+      Script: {instanceID: 11488}
+    - Class: 114
+      Script: {instanceID: 11528}
+    - Class: 114
+      Script: {instanceID: 11594}
+    - Class: 114
+      Script: {instanceID: 11656}
     - Class: 115
       Script: {instanceID: 0}
+    - Class: 120
+      Script: {instanceID: 0}
     - Class: 157
+      Script: {instanceID: 0}
+    - Class: 198
+      Script: {instanceID: 0}
+    - Class: 199
       Script: {instanceID: 0}
     - Class: 258
       Script: {instanceID: 0}
@@ -217,6 +256,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Utilities.dll
     namespaceName: Photon.Pun.UtilityScripts
     className: GraphicToggleIsOnTransition
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BulletForward
   - hash:
       serializedVersion: 2
       Hash: 3ba023cd67d72cace33969ab863e0fd4
@@ -501,7 +546,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: e72282a040447b396e9be0da5a6b4195
+      Hash: 72b02f241cce15c56b24149075d9c81c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerShooting
@@ -603,7 +648,7 @@ ScriptsOnlyBuild:
     className: OnClickDestroy
   - hash:
       serializedVersion: 2
-      Hash: 0b9d1c34cade1a37f400d3b4aa6e7f09
+      Hash: f1bb92d4097b3746997f7a49f3428232
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnderdogCity
     className: PlayerMove
@@ -639,7 +684,7 @@ ScriptsOnlyBuild:
     className: ServerSettings
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 776e36a9f1662754cbbdc0c604207262
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkPlayer
@@ -667,6 +712,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Utilities.dll
     namespaceName: Photon.Pun.UtilityScripts
     className: PointedAtGameObjectInfo
+  - hash:
+      serializedVersion: 2
+      Hash: d62fe646ea26806e1df60bf027cbbc39
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SelfDestruct
   - hash:
       serializedVersion: 2
       Hash: 783f593b9380cf72d0f7ebfd4a0d4bcd
@@ -717,6 +768,12 @@ ScriptsOnlyBuild:
     className: DynamicJoystick
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WeaponData
+  - hash:
+      serializedVersion: 2
       Hash: ae1347d9113eee8b83c5c8047dcf31a8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -727,6 +784,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FixedJoystick
+  - hash:
+      serializedVersion: 2
+      Hash: 36808e0bceda2a44a651d2c754474786
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SpawnEffect
   - hash:
       serializedVersion: 2
       Hash: c1933cc0a2f4ff6eb13333347497beb3
@@ -961,6 +1024,12 @@ ScriptsOnlyBuild:
     assemblyName: PhotonUnityNetworking.Utilities.dll
     namespaceName: Photon.Pun.UtilityScripts
     className: CountdownTimer
+  - hash:
+      serializedVersion: 2
+      Hash: 885d3b0c2e1edd4e407e51ec97fe2f08
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FXManager
   - hash:
       serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb

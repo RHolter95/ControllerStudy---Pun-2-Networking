@@ -35,5 +35,8 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - TakeDamage
+  - SniperBulletFX
+  - SyncBoneRotation
+  - RPC_UpdateBoneRotations
   DisableAutoOpenWizard: 1
   ShowSettings: 1

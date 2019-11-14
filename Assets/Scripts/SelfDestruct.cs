@@ -5,33 +5,36 @@ using Photon.Pun;
 
 public class SelfDestruct : MonoBehaviour
 {
-    public float selfDestructTime = 1f;
+    private float selfDestructTime = 3f;
+    bool hasRan = false;
 
     public PhotonView pv;
+    public GameObject thisObj = null;
 
     // Start is called before the first frame update
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        thisObj = transform.gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        selfDestructTime -= Time.deltaTime;
-        if(selfDestructTime <= 0){
+        selfDestructTime = selfDestructTime - Time.deltaTime;
 
-            //PhotonView pv = GetComponent<PhotonView>();
-            if(this.pv.IsMine == true && pv.InstantiationId != 0){
+        if(selfDestructTime <= 0 && hasRan == false){
+
+            hasRan = true;
+
+            if(pv.InstantiationId != 0 && pv != null && thisObj != null){
                 //This deletes INSTANTIATED items on the Network
-                PhotonNetwork.Destroy(gameObject);
+                PhotonNetwork.Destroy(thisObj);
             }
-            else
+            if(pv.InstantiationId == 0 && pv != null && thisObj != null) 
             {
-                Destroy(gameObject);
+                Destroy(thisObj);
             }
-
-            
         }
     }
 }

@@ -144,8 +144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffea9ed9d60abdb4d9917136a8f8538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfDestructTime: 1.5
+  selfDestructTime: 10
   pv: {fileID: 1066900671270692527}
+  thisObj: {fileID: 3454999087216064235}
 --- !u!114 &1066900671270692527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selfDestructTime: 0.1
   pv: {fileID: 0}
+  thisObj: {fileID: 0}
 --- !u!114 &1596598553230098106
 MonoBehaviour:
   m_ObjectHideFlags: 0

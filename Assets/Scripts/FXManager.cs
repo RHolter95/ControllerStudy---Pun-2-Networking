@@ -21,12 +21,15 @@ public class FXManager : MonoBehaviour {
 	Vector3 endPosition ;
 	GameObject bullet;
 	float bulletSpeed = 100f;
+	WeaponData weaponData;
+	Vector3 weaponDataTransform;
 	
 
 	void Awake(){
 		//This will find weapon in hands @ start
 		//Wont work if has no weapon and give one later
-		WeaponData wd = gameObject.GetComponentInChildren<WeaponData>();
+		weaponData = gameObject.GetComponentInChildren<WeaponData>();
+		weaponDataTransform = weaponData.transform.position;
 	}
 
 	void Start() {
@@ -41,6 +44,8 @@ public class FXManager : MonoBehaviour {
 	[PunRPC]
 	public void SniperBulletFX(Vector3 startPos, Vector3 endPos) {
 		Debug.Log("SniperBulletFX");
+
+		
 
 		if(SniperBulletFXPrefab != null){
 			GameObject sniperFX = (GameObject)Instantiate(SniperBulletFXPrefab, startPos ,Quaternion.LookRotation(startPos - endPos));

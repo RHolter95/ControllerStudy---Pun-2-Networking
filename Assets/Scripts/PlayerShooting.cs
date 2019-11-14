@@ -8,16 +8,17 @@ public class PlayerShooting : MonoBehaviour
     GameObject fxManagerOBJ;
     [SerializeField]
     FXManager fxManager;
-    public float fireRate = 0.5f;
     float coolDown = 0f;
-    public float damage = 25f;
-
+    public WeaponData weaponData = null;
+    public float currentWepDmg = 0;
 
 
 
 
     void Start()
     {
+        
+        weaponData = gameObject.GetComponentInChildren<WeaponData>();
         fxManagerOBJ = GameObject.Find("FXManager");
         fxManager = fxManagerOBJ.GetComponent<FXManager>();
 
@@ -25,15 +26,20 @@ public class PlayerShooting : MonoBehaviour
         {
             Debug.Log("Couldn't Find FXManager");
         }
+
+        Debug.Log(this.weaponData.damage);
+
     }
 
     // Start is called before the first frame update
     void Update()
     {
+     currentWepDmg = weaponData.damage;
+     Debug.Log("currentWepDmg = " + currentWepDmg);
      coolDown -= Time.deltaTime;
 
 
-     if(Input.GetButtonDown("Fire1")){
+     if(Input.GetButton("Fire1")){
          Fire();
      }   
     }
@@ -42,6 +48,13 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Fire()
     { 
+        if(weaponData == null){
+            weaponData = gameObject.GetComponentInChildren<WeaponData>();
+            if(weaponData == null)
+                Debug.Log("Couldn't Find WeaponData in our children");
+            return;
+        }
+
         if(coolDown > 0){
             return;
         }
@@ -72,7 +85,7 @@ public class PlayerShooting : MonoBehaviour
                 if(PhotonView == null){
                     Debug.Log("There is no PhotonView");
                 }else{
-                h.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage);
+                h.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, currentWepDmg);
                 }
                 //h.TakeDamage(damage); This is offline version of above code./
             }
@@ -88,13 +101,13 @@ public class PlayerShooting : MonoBehaviour
             DoGunFX(hitPoint);
             }
         }
-        coolDown = fireRate;
+        coolDown = weaponData.fireRate;
     }
 
     void DoGunFX(Vector3 hitPoint)
     {
-        WeaponData wd = gameObject.GetComponentInChildren<WeaponData>();
-        fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX",RpcTarget.All, wd.transform.position, hitPoint);
+        //wd is the game object component location at the end of the barrel of the gun
+        fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX",RpcTarget.All, weaponData.transform.position, hitPoint);
     }
 
     Transform FindClosestHitObject(Ray ray, out Vector3 hitPoint){

@@ -5,24 +5,19 @@ using UnityEngine;
     {
 
         public Animator animator;
-        public float aimAngle = 0;
         protected Vector3 realPosition = Vector3.zero;
         protected Quaternion realRotation = Quaternion.identity;
         public Quaternion chestRotation = Quaternion.identity;
         public Vector3 targetPosition = Vector3.zero;
-        public Vector3 offset = new Vector3(10,56,12);
+        public Vector3 offset = new Vector3(10,47.32f,12);
         public Transform local_head, local_neck, local_spine, local_chest = null;
-        public Quaternion server_head, server_neck, server_spine, server_chest = Quaternion.identity;
-        private int currentBoneRate = 0;
-        public Quaternion local_chestQuaternion;
         public Transform target;
-        Quaternion rot;
+        public bool gotFirstUpdate = false;
 
         private void Awake()
         {
             animator = GetComponentInChildren<Animator>();
             target = transform.Find("CameraPivot/Target");
-            rot = Quaternion.Euler(offset.x, offset.y, offset.z);
         }
 
         void Start()
@@ -58,7 +53,6 @@ using UnityEngine;
         {            
             if (this.photonView.IsMine)
             {
-                Debug.Log("Local_Chest: " + local_chest.rotation);
                 //Do Nothing -- Everything is already enabled
             }
             else
@@ -72,7 +66,6 @@ using UnityEngine;
         {            
             if (this.photonView.IsMine)
             {
-                //local_chest.rotation = Quaternion.Lerp(local_chest.rotation, chestRotation, 0.1f);
                 //Do Nothing -- Everything is already enabled
             }
             else
@@ -98,7 +91,6 @@ using UnityEngine;
                 stream.SendNext(animator.GetBool("IsGrounded"));
                 stream.SendNext(animator.GetFloat("JoyStickX"));
                 stream.SendNext(animator.GetFloat("JoyStickY"));
-                stream.SendNext(animator.GetFloat("AimAngle"));
                  
             }
             else
@@ -113,7 +105,16 @@ using UnityEngine;
                 animator.SetBool("IsGrounded",(bool)stream.ReceiveNext());
                 animator.SetFloat("JoyStickX",(float)stream.ReceiveNext());
                 animator.SetFloat("JoyStickY",(float)stream.ReceiveNext());
-                animator.SetFloat("AimAngle",(float)stream.ReceiveNext());
+
+                if(gotFirstUpdate == false){
+                    targetPosition = target.transform.position;
+                    chestRotation = local_chest.transform.rotation;
+                    transform.position = realPosition;
+                    transform.rotation = realRotation;
+                    gotFirstUpdate = true;
+                }
+                
+
             }    
         }
     }

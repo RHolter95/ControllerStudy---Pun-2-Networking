@@ -76,7 +76,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         canvas = GameObject.Find("Canvas");
 
         //This makes the player "look" like he is aiming the gun at the "target"
-        offset = new Vector3(10,56,12);
+        offset = new Vector3(10,47.32f,12);
         
         //Find the joystick objects
         GameObject tempJoystickOne = canvas.gameObject.transform.GetChild(0).gameObject;

@@ -54,6 +54,25 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
+     <Compile Include="Assets\GameSparks\GameSparksRTUnity.cs" />
+     <Compile Include="Assets\GameSparks\GameSparksSettings.cs" />
+     <Compile Include="Assets\GameSparks\GameSparksUnity.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\DefaultPlatform.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\IControlledTimer.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\IControlledWebSocket.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\Native\detail\GameSparksNative.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\Native\detail\GameSparksNativePINVOKE.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\Native\detail\NativeWebSocket.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\Native\NativePlatform.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\Native\NativeWebSocket.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\PlatformBase.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\TimerController.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\UnityTimer.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\WebGL\SimpleJson2.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\WebGL\WebGLPlatform.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\WebGL\WebGLWebSocket.cs" />
+     <Compile Include="Assets\GameSparks\Platforms\WebSocketController.cs" />
+     <Compile Include="Assets\GameSparks\TestUI\GameSparksTestUI.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -77,17 +96,31 @@
      <Compile Include="Assets\Scripts\FXManager.cs" />
      <Compile Include="Assets\Scripts\gameObject.cs" />
      <Compile Include="Assets\Scripts\GameSetupController.cs" />
+     <Compile Include="Assets\Scripts\GameSparksManager.cs" />
      <Compile Include="Assets\Scripts\Health.cs" />
+     <Compile Include="Assets\Scripts\Item.cs" />
+     <Compile Include="Assets\Scripts\ItemDragHandler.cs" />
+     <Compile Include="Assets\Scripts\ItemDropHandler.cs" />
      <Compile Include="Assets\Scripts\NetworkController.cs" />
      <Compile Include="Assets\Scripts\NetworkPlayer.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\PlayerShooting.cs" />
      <Compile Include="Assets\Scripts\QuickStartLobbyController.cs" />
      <Compile Include="Assets\Scripts\QuickStartRoomController.cs" />
+     <Compile Include="Assets\Scripts\RegisterPlayer_SampleScript.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\DefaultObject.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\EquipmentObject.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\FoodObject.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\InventoryScripts\InventoryObject.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\ItemObject.cs" />
+     <Compile Include="Assets\Scripts\ScriptableObjects\WeaponObject.cs" />
      <Compile Include="Assets\Scripts\SelfDestruct.cs" />
      <Compile Include="Assets\Scripts\Target.cs" />
      <Compile Include="Assets\Scripts\WeaponData.cs" />
+     <None Include="Assets\GameSparks\Plugins\GameSparksRT.xml" />
+     <None Include="Assets\GameSparks\Plugins\Metro\GameSparksRT.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
+     <None Include="Assets\GameSparks\README.txt" />
      <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
@@ -95,6 +128,7 @@
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\Respawn.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
+     <None Include="Assets\GameSparks\link.xml" />
      <None Include="Assets\EffectExamples\Magic Effects\Shaders\Ice.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
  <Reference Include="Unity.Timeline.Editor">
@@ -300,6 +334,18 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+ </Reference>
+ <Reference Include="BouncyCastle_GameSparks">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/BouncyCastle_GameSparks.dll</HintPath>
+ </Reference>
+ <Reference Include="GameSparks.Api">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparks.Api.dll</HintPath>
+ </Reference>
+ <Reference Include="GameSparks">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparks.dll</HintPath>
+ </Reference>
+ <Reference Include="GameSparksRT">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparksRT.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>

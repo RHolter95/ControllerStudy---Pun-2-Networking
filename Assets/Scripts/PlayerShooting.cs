@@ -35,7 +35,7 @@ public class PlayerShooting : MonoBehaviour
     void Update()
     {
      currentWepDmg = weaponData.damage;
-     Debug.Log("currentWepDmg = " + currentWepDmg);
+     //Debug.Log("currentWepDmg = " + currentWepDmg);
      coolDown -= Time.deltaTime;
 
 

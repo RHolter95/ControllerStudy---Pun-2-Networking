@@ -760,6 +760,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844920300}
   m_CullTransparentMesh: 0
+--- !u!1 &873821558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7278234623064698925, guid: 05e8a7dda38f40549adb2a4a68575d19,
+    type: 3}
+  m_PrefabInstance: {fileID: 7278234621563739167}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &873821560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873821558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 286867108ae55234a975b707c8ac0293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &880758660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,7 +1151,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7278234621563739167}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 873821558}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1946aa63972c31847950be2b21eede23, type: 3}
@@ -1215,7 +1233,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SniperBulletFXPrefab
       value: 
-      objectReference: {fileID: 3454999087216064235, guid: 658029aedcd01f443b8532a35c48f465,
+      objectReference: {fileID: 3454999087216064235, guid: 9c3b4719498107744a6af5cdb6713a7e,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7605902dcf11595428b9b68dd9d34afa, type: 3}

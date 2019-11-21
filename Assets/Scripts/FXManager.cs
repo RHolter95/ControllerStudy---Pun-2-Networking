@@ -17,10 +17,10 @@ public class FXManager : MonoBehaviour {
 	public GameObject lineRendererOBJ;
 
 	public Vector3 p0,p1;
-	float lineDrawSpeed = 6f;
+	//float lineDrawSpeed = 6f;
 	Vector3 endPosition ;
 	GameObject bullet;
-	float bulletSpeed = 100f;
+	//float bulletSpeed = 100f;
 	WeaponData weaponData;
 	Vector3 weaponDataTransform;
 	
@@ -28,8 +28,8 @@ public class FXManager : MonoBehaviour {
 	void Awake(){
 		//This will find weapon in hands @ start
 		//Wont work if has no weapon and give one later
-		weaponData = gameObject.GetComponentInChildren<WeaponData>();
-		weaponDataTransform = weaponData.transform.position;
+		//weaponData = gameObject.GetComponentInChildren<WeaponData>();
+		//weaponDataTransform = weaponData.transform.position;
 	}
 
 	void Start() {

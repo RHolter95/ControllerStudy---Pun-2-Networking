@@ -2,31 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.EventSystems;
 
 namespace UnderdogCity
 {
 public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
+    public InventoryObject inventory;
     public FixedJoystick joystickOne;
     public FixedJoystick joystickTwo;
-
 	public Texture2D crosshair;   
     private bool showMessage = false;
     private CharacterController CharacterController;
-
     [SerializeField]
     public Animator animator;
-
     //Used to make player Jump
     [SerializeField]
     public float jumpSpeed = 5.0f;
     public float gravity = 20.0f;
     private Vector3 moveDirection = Vector3.zero;
-    
-
-    [SerializeField]
-    //private float turnSpeed = 5f;
-
      public Camera Camera;
      [SerializeField]
     float walkSpeed = 10.0f;
@@ -42,19 +36,22 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     protected GameObject temp;
     public Transform chest;
     public GameObject target;
-    [SerializeField]
     public Vector3 offset;
-
     public GameObject CameraPivot;
-
     public float upTime;
     public float downTime;
     public GameObject canvas;
+    public PhotonView itemPV;
+
+    string[] slotTagArray = new string[10]{"Slot0","Slot1","Slot2","Slot3","Slot4","Slot5","Slot6","Slot7","Slot8","Slot9"};
+
+
 
     void Start()
     {
-    downTime = 0f;
-    upTime = 0f;
+     //Set aim up and aim down limits to 0 for aiming at center
+     downTime = 0f;
+     upTime = 0f;
 
      CameraPivot = GameObject.Find("CameraPivot");
      temp = GameObject.Find("Character@Idle");
@@ -73,9 +70,13 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     // Start is called before the first frame update
     private void Awake()
     { 
+        //Delete this after inventory is setup
+        inventory.Awake();
+
         canvas = GameObject.Find("Canvas");
 
         //This makes the player "look" like he is aiming the gun at the "target"
+        //If you edit this you must edit it in NetworkPlayer!
         offset = new Vector3(10,47.32f,12);
         
         //Find the joystick objects
@@ -93,15 +94,13 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         joystickTwo = tempJoystickOTwo.GetComponent<FixedJoystick>();
         }else{
             Debug.Log("No Right JoyStick");
-
         }
 
         CharacterController = GetComponent<CharacterController>();
-        //animator = GetComponent<Animator>();
     }
-
     void LateUpdate()
     {
+        //Handles late physics chest rotation
         Camera.main.transform.LookAt(target.transform.position);
         chest.LookAt(target.transform.position);
 		chest.rotation = chest.rotation * Quaternion.Euler(offset);
@@ -137,9 +136,34 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         animator.SetFloat("AimAngle", aimAngle);
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        var item = other.GetComponent<Item>();
+        if(item)
+        {
+            itemPV = item.GetComponent<PhotonView>();
+            if(itemPV == null)
+            {
+                Debug.Log("PhotonView of item is missing!");
+                }else{
+                inventory.AddItem(item.item,1,item.item.image);
+                if(itemPV.InstantiationId != 0)
+                {
+                    //This deletes INSTANTIATED items on the Network
+                    PhotonNetwork.Destroy(other.gameObject);
+                }
+                if(itemPV.InstantiationId == 0) 
+                {
+                    Destroy(other.gameObject);
+                }                    
+            }
+        }
+    }
+
     // Update is called once per frame
     private void Update()
-    {    
+    { 
+
         if(Physics.Raycast(transform.position, -Vector3.up, 0.05f) == true)
         {
             isGrounded = true;
@@ -147,32 +171,17 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
             isGrounded = false;
         }
 
-
+        //Assign joysticks to variables on canvas
         var horizontalOne = joystickOne.Horizontal;
         var verticalOne = joystickOne.Vertical;
-
         var horizontalTwo = joystickTwo.Horizontal;
         var verticalTwo = joystickTwo.Vertical;
 
-         AdjustAimAngle(verticalTwo);
-
+        //Constantly calculates the
+        AdjustAimAngle(verticalTwo);
 
         var moveDirection = new Vector3(horizontalOne, 0f, verticalOne);
         var lookDirection = new Vector3(0f, verticalTwo, 0f);
-
-
-        // if(verticalTwo > 0.05f && upTime < 1.0f){
-        //     upTime += Time.deltaTime;
-        //     downTime -= Time.deltaTime;
-        //    CameraPivot.transform.Rotate(Vector3.left * Time.deltaTime * 50f);
-        // }
-        // if(verticalTwo < -0.05f && downTime < 1.0f){
-        //     downTime += Time.deltaTime;
-        //     upTime -= Time.deltaTime;
-        //    CameraPivot.transform.Rotate(Vector3.right * Time.deltaTime * 50f);
-        // }
-
-
 
         if(moveDirection.magnitude > 0.1f)
         {
@@ -182,7 +191,8 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         //This translates location from joystick Left   
         transform.Rotate(0, moveDirection.y, 0, Space.Self);   
         transform.Rotate(joystickTwo.Horizontal * Vector3.up * Time.deltaTime * rotateSpeed);
-        
+
+        //Sets Speed and sets anim joystick vars for mixed animations
         animator.SetFloat("Speed",moveDirection.magnitude);
         animator.SetFloat("JoyStickX",joystickOne.Horizontal);
         animator.SetFloat("JoyStickY",joystickOne.Vertical);
@@ -244,7 +254,6 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
         CharacterController.Move(dist/2);
     }
-
-
 }
+
 }

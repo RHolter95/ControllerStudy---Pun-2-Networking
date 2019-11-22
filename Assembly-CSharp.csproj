@@ -54,25 +54,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
-     <Compile Include="Assets\GameSparks\GameSparksRTUnity.cs" />
-     <Compile Include="Assets\GameSparks\GameSparksSettings.cs" />
-     <Compile Include="Assets\GameSparks\GameSparksUnity.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\DefaultPlatform.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\IControlledTimer.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\IControlledWebSocket.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\Native\detail\GameSparksNative.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\Native\detail\GameSparksNativePINVOKE.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\Native\detail\NativeWebSocket.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\Native\NativePlatform.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\Native\NativeWebSocket.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\PlatformBase.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\TimerController.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\UnityTimer.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\WebGL\SimpleJson2.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\WebGL\WebGLPlatform.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\WebGL\WebGLWebSocket.cs" />
-     <Compile Include="Assets\GameSparks\Platforms\WebSocketController.cs" />
-     <Compile Include="Assets\GameSparks\TestUI\GameSparksTestUI.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
      <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
@@ -92,6 +73,100 @@
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
      <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
      <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
+     <Compile Include="Assets\PlayFabSdk\Admin\PlayFabAdminAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Admin\PlayFabAdminInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Admin\PlayFabAdminModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Admin\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Authentication\PlayFabAuthenticationAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Authentication\PlayFabAuthenticationInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Authentication\PlayFabAuthenticationModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Authentication\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Client\PlayFabClientAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Client\PlayFabClientInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Client\PlayFabClientModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Client\PlayFabDeviceUtil.cs" />
+     <Compile Include="Assets\PlayFabSdk\Client\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\CloudScript\PlayFabCloudScriptAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\CloudScript\PlayFabCloudScriptInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\CloudScript\PlayFabCloudScriptModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\CloudScript\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Data\PlayFabDataAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Data\PlayFabDataInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Data\PlayFabDataModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Data\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Entity\ScreenTimeTracker.cs" />
+     <Compile Include="Assets\PlayFabSdk\Events\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Events\PlayFabEventsAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Events\PlayFabEventsInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Events\PlayFabEventsModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Groups\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Groups\PlayFabGroupsAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Groups\PlayFabGroupsInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Groups\PlayFabGroupsModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Localization\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Localization\PlayFabLocalizationAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Localization\PlayFabLocalizationInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Localization\PlayFabLocalizationModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Matchmaker\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Matchmaker\PlayFabMatchmakerAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Matchmaker\PlayFabMatchmakerInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Matchmaker\PlayFabMatchmakerModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Multiplayer\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Multiplayer\PlayFabMultiplayerAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Multiplayer\PlayFabMultiplayerInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Multiplayer\PlayFabMultiplayerModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Profiles\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Profiles\PlayFabProfilesAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Profiles\PlayFabProfilesInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Profiles\PlayFabProfilesModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Server\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Server\PlayFabServerAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Server\PlayFabServerInstanceAPI.cs" />
+     <Compile Include="Assets\PlayFabSdk\Server\PlayFabServerModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\External\aria\BondHelper.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\External\aria\CompactBinaryProtocolWriter.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\External\aria\MiniBondSerializer.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\External\aria\Schema3_types.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\External\aria\Utils.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\ISerializer.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\Log.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabErrors.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabHttp\IPlayFabHttp.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabHttp\PlayFabHTTP.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabHttp\PlayFabUnityHttp.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabHttp\PlayFabWebRequest.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\PlayFabHttp\PlayFabWWW.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\SimpleJson.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\SingletonMonoBehaviour.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\Util.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Internal\wsaReflectionExtensions.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\CRC32.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\Deflate.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\DeflateStream.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\GZipStream.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\Inflate.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\InfTree.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ParallelDeflateOutputStream.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\Zlib.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ZlibBaseStream.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ZlibCodec.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ZlibConstants.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ZlibStream.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Ionic.Zlib\ZTree.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Models\PlayFabSharedSettings.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Models\SharedModels.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\IPlayFabPlugin.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\ISerializerPlugin.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\ITransportPlugin.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabApiSettings.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabAuthenticationContext.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabDataGatherer.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabEvents.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabLogger.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PlayFabSettings.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginContract.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginContractKey.cs" />
+     <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginManager.cs" />
      <Compile Include="Assets\Scripts\BulletForward.cs" />
      <Compile Include="Assets\Scripts\FXManager.cs" />
      <Compile Include="Assets\Scripts\gameObject.cs" />
@@ -105,9 +180,9 @@
      <Compile Include="Assets\Scripts\NetworkPlayer.cs" />
      <Compile Include="Assets\Scripts\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\PlayerShooting.cs" />
+     <Compile Include="Assets\Scripts\PlayFab Scripts\PlayFabLogin.cs" />
      <Compile Include="Assets\Scripts\QuickStartLobbyController.cs" />
      <Compile Include="Assets\Scripts\QuickStartRoomController.cs" />
-     <Compile Include="Assets\Scripts\RegisterPlayer_SampleScript.cs" />
      <Compile Include="Assets\Scripts\ScriptableObjects\DefaultObject.cs" />
      <Compile Include="Assets\Scripts\ScriptableObjects\EquipmentObject.cs" />
      <Compile Include="Assets\Scripts\ScriptableObjects\FoodObject.cs" />
@@ -117,10 +192,8 @@
      <Compile Include="Assets\Scripts\SelfDestruct.cs" />
      <Compile Include="Assets\Scripts\Target.cs" />
      <Compile Include="Assets\Scripts\WeaponData.cs" />
-     <None Include="Assets\GameSparks\Plugins\GameSparksRT.xml" />
-     <None Include="Assets\GameSparks\Plugins\Metro\GameSparksRT.xml" />
+     <None Include="Assets\PlayFabSdk\link.xml" />
      <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
-     <None Include="Assets\GameSparks\README.txt" />
      <None Include="Assets\Photon\PhotonLibs\Photon3Unity3D.xml" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\Dissolve.shader" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\FireFly.shader" />
@@ -128,7 +201,6 @@
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\Respawn.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
-     <None Include="Assets\GameSparks\link.xml" />
      <None Include="Assets\EffectExamples\Magic Effects\Shaders\Ice.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
  <Reference Include="Unity.Timeline.Editor">
@@ -334,18 +406,6 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
- </Reference>
- <Reference Include="BouncyCastle_GameSparks">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/BouncyCastle_GameSparks.dll</HintPath>
- </Reference>
- <Reference Include="GameSparks.Api">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparks.Api.dll</HintPath>
- </Reference>
- <Reference Include="GameSparks">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparks.dll</HintPath>
- </Reference>
- <Reference Include="GameSparksRT">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/GameSparks/Plugins/GameSparksRT.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>

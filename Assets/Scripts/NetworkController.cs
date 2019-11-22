@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 
@@ -18,22 +19,149 @@ public class NetworkController : MonoBehaviourPunCallbacks
      *
      * ******************************************************/
 
-    private GameObject offlineButton; 
-
-    private GameObject onlineButton; 
-
+	
+    public GameObject playFabManager;
+    public GameObject loginButton = null; 
+    public GameObject submitButton = null; 
+    public GameObject offlineButton = null; 
+    public GameObject createNewButton = null; 
+    public GameObject onlineButton = null; 
+    public GameObject onlineAuthButton = null; 
+    public GameObject userNameGO = null;
+    public GameObject userEmailGO = null;
+    public GameObject userPassGO = null;
+    public Component userInputEmail = null;
+    public Component userInputName = null;
+    public Component userInputPass = null;
+    public InputField userNameInput = null;
+	public InputField userEmailInput = null;
+	public InputField userPassInput = null;
+    public string userEmailStr = null;
+	public string userNameStr = null;
+	public string userPassStr = null;
     bool offlineButtonPressed = false;
     bool onlineButtonPressed = false;
+    bool playFab = true;
 
     void Start()
     {
         PhotonNetwork.OfflineMode = true;
+    }
+
+    void Awake()
+    {
+        playFab = true;
+        createNewButton = GameObject.Find("NewUser");
+        userNameGO = GameObject.Find("UserName");
+        userEmailGO = GameObject.Find("Email");
+        userPassGO = GameObject.Find("Password");
+        loginButton = GameObject.Find("Login");
+        submitButton = GameObject.Find("Submit");
+
+        userInputEmail = userEmailGO.gameObject.GetComponent<InputField>();
+        userInputName = userNameGO.gameObject.GetComponent<InputField>();
+        userInputPass = userPassGO.gameObject.GetComponent<InputField>();
+
+        if(userInputEmail == null){
+            Debug.Log("Couldn't Find userInput Field");}
+
         offlineButton = GameObject.Find("Offline");
         onlineButton = GameObject.Find("Online");
+        onlineAuthButton = GameObject.Find("OnlineAuth");
+
+        createNewButton.SetActive(false);
+        onlineButton.SetActive(false);
+        userNameGO.SetActive(false);
+        userPassGO.SetActive(false);
+        userEmailGO.SetActive(false);
+        loginButton.SetActive(false);
+        submitButton.SetActive(false);
+        
+        if(userNameGO == null){
+            Debug.Log("Couldn't Find userName Field");}
+        
+        if(userEmailGO == null){
+            Debug.Log("Couldn't Find userEmail Field");}
+        
+        if(userPassGO == null){
+            Debug.Log("Couldn't Find userPass Field");}
+
+        if(loginButton == null){
+            Debug.Log("Couldn't Find submit Button Field");}
+
+        if(onlineAuthButton == null){
+            Debug.Log("Couldn't Find onlineAuth Button");}
+
+        if(offlineButton == null){
+            Debug.Log("Couldn't Find Offline Button");}
+
+        if(onlineButton == null){
+            Debug.Log("Couldn't Find Online Button");}
+
+        if(createNewButton == null){
+            Debug.Log("Couldn't Find createNew Button");}
+        
+         if(submitButton == null){
+            Debug.Log("Couldn't Find Submit Button");}
+    }
+
+    public void playFabCanvas()
+	{
+		Debug.Log("Prepparing PlayFab Page");
+		createNewButton.SetActive(true);
+		offlineButton.SetActive(false);
+		onlineButton.SetActive(false);
+		onlineAuthButton.SetActive(false);
+
+		userNameGO.SetActive(true);
+        userPassGO.SetActive(true);
+        userEmailGO.SetActive(true);
+		loginButton.SetActive(true);
+
+		userEmailInput = userEmailGO.GetComponent<InputField>();
+		if(userEmailInput == null){
+			Debug.Log("Couldn't Find UserEmail InputField Component");
+		}
+		userNameInput = userNameGO.GetComponent<InputField>(); 
+		if(userNameInput == null){
+			Debug.Log("Couldn't Find UserName InputField Component");
+		}
+		userPassInput = userPassGO.GetComponent<InputField>(); 
+		if(userPassInput == null){
+			Debug.Log("Couldn't Find UserPass InputField Component");
+		}
+		//Once the field has been edited and entered we send the info
+		userEmailInput.onEndEdit.AddListener(SubmitEmail);
+		userNameInput.onEndEdit.AddListener(SubmitUserName);
+		userPassInput.onEndEdit.AddListener(SubmitUserPass);	
+	}
+
+    public void NewUserCanvas(){
+		Debug.Log("Creating new user canvas");
+		createNewButton.SetActive(false);
+		userNameGO.SetActive(true);
+		loginButton.SetActive(false);
+		submitButton.SetActive(true);
+	}
+
+    private void SubmitEmail(string arg0){
+        //Debug.Log("Email: " + arg0);
+		userEmailStr = arg0;
+    }
+
+	private void SubmitUserName(string arg0){
+        //Debug.Log("UserName: " + arg0);
+		userNameStr = arg0;
+    }
+
+	private void SubmitUserPass(string arg0){
+        //Debug.Log("Password: " + arg0);
+		userPassStr = arg0;
     }
 
     public void Offline()
     {
+       playFab = false;
        offlineButtonPressed = true;
        PhotonNetwork.Disconnect();
     }
@@ -41,7 +169,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     void Update()
     {
         // If were initially connected and press offline play
-         if(offlineButtonPressed == true)
+         if(offlineButtonPressed == true && playFab == false)
          {
              //Let user know were DC'ing
             Debug.Log("Disconecting");
@@ -62,6 +190,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
      onlineButtonPressed = true;
      PhotonNetwork.OfflineMode = false;
      PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public void Authenticate()
+    {
+        offlineButton.SetActive(false);
+        onlineButton.SetActive(false);
+        
     }
 
     public override void OnConnectedToMaster()

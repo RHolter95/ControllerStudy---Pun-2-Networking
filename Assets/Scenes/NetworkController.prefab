@@ -43,3 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1946aa63972c31847950be2b21eede23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSparksMngr: {fileID: 0}
+  loginButton: {fileID: 0}
+  submitButton: {fileID: 0}
+  offlineButton: {fileID: 0}
+  createNewButton: {fileID: 0}
+  onlineButton: {fileID: 0}
+  onlineAuthButton: {fileID: 0}
+  userName: {fileID: 0}
+  userEmail: {fileID: 0}
+  userPass: {fileID: 0}
+  userInputEmail: {fileID: 0}
+  userInputName: {fileID: 0}
+  userInputPass: {fileID: 0}

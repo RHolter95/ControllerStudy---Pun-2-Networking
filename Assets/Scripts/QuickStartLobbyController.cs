@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
+    
     [SerializeField]
     private GameObject quickStartButton; //button used for creating and joining a game.
     [SerializeField]

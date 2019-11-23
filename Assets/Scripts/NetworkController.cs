@@ -20,13 +20,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
      * ******************************************************/
 
 	
-    public GameObject playFabManager;
+    public static NetworkController NWC;
+    public PlayFabsController playFabManager;
+    public GameObject submitRecovery = null;
     public GameObject loginButton = null; 
     public GameObject submitButton = null; 
     public GameObject offlineButton = null; 
     public GameObject createNewButton = null; 
     public GameObject onlineButton = null; 
     public GameObject onlineAuthButton = null; 
+    public GameObject recoverButton = null;
     public GameObject userNameGO = null;
     public GameObject userEmailGO = null;
     public GameObject userPassGO = null;
@@ -50,6 +53,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+
+        DontDestroyOnLoad(transform.gameObject);
+     
         playFab = true;
         createNewButton = GameObject.Find("NewUser");
         userNameGO = GameObject.Find("UserName");
@@ -57,13 +63,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
         userPassGO = GameObject.Find("Password");
         loginButton = GameObject.Find("Login");
         submitButton = GameObject.Find("Submit");
+        recoverButton = GameObject.Find("Recover");
+        submitRecovery = GameObject.Find("SubmitRecovery");
 
-        userInputEmail = userEmailGO.gameObject.GetComponent<InputField>();
-        userInputName = userNameGO.gameObject.GetComponent<InputField>();
-        userInputPass = userPassGO.gameObject.GetComponent<InputField>();
-
-        if(userInputEmail == null){
-            Debug.Log("Couldn't Find userInput Field");}
+        playFabManager = transform.GetComponent<PlayFabsController>();
+        userEmailInput = userEmailGO.gameObject.GetComponent<InputField>();
+        userNameInput = userNameGO.gameObject.GetComponent<InputField>();
+        userPassInput = userPassGO.gameObject.GetComponent<InputField>();
 
         offlineButton = GameObject.Find("Offline");
         onlineButton = GameObject.Find("Online");
@@ -76,6 +82,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         userEmailGO.SetActive(false);
         loginButton.SetActive(false);
         submitButton.SetActive(false);
+        recoverButton.SetActive(false);
+        submitRecovery.SetActive(false);
         
         if(userNameGO == null){
             Debug.Log("Couldn't Find userName Field");}
@@ -89,11 +97,17 @@ public class NetworkController : MonoBehaviourPunCallbacks
         if(loginButton == null){
             Debug.Log("Couldn't Find submit Button Field");}
 
+        if(submitRecovery == null){
+             Debug.Log("Couldn't Find Submit Recovery Button");}
+
         if(onlineAuthButton == null){
             Debug.Log("Couldn't Find onlineAuth Button");}
 
         if(offlineButton == null){
             Debug.Log("Couldn't Find Offline Button");}
+
+        if(recoverButton == null){
+            Debug.Log("Couldn't Find recover Button");}
 
         if(onlineButton == null){
             Debug.Log("Couldn't Find Online Button");}
@@ -113,10 +127,12 @@ public class NetworkController : MonoBehaviourPunCallbacks
 		onlineButton.SetActive(false);
 		onlineAuthButton.SetActive(false);
 
-		userNameGO.SetActive(true);
+		userNameGO.SetActive(false);
+
         userPassGO.SetActive(true);
         userEmailGO.SetActive(true);
 		loginButton.SetActive(true);
+        recoverButton.SetActive(false);
 
 		userEmailInput = userEmailGO.GetComponent<InputField>();
 		if(userEmailInput == null){
@@ -132,16 +148,35 @@ public class NetworkController : MonoBehaviourPunCallbacks
 		}
 		//Once the field has been edited and entered we send the info
 		userEmailInput.onEndEdit.AddListener(SubmitEmail);
-		userNameInput.onEndEdit.AddListener(SubmitUserName);
+		//userNameInput.onEndEdit.AddListener(SubmitUserName);
 		userPassInput.onEndEdit.AddListener(SubmitUserPass);	
+        //we just reset username to nothing because it only needs an ACTUAL email/pass
+        userNameStr = "";
 	}
 
     public void NewUserCanvas(){
+        playFabManager.WipeTextFields();
 		Debug.Log("Creating new user canvas");
 		createNewButton.SetActive(false);
 		userNameGO.SetActive(true);
 		loginButton.SetActive(false);
 		submitButton.SetActive(true);
+	}
+
+    public void MakeRecoveryAccountCanvas(){
+        
+        userNameGO.SetActive(true);
+        userPassGO.SetActive(true);
+        userEmailGO.SetActive(true);
+        playFabManager.WipeTextFields();
+
+        onlineButton.SetActive(false);
+        submitButton.SetActive(false);
+        offlineButton.SetActive(false);
+		createNewButton.SetActive(false);
+		loginButton.SetActive(false);
+        recoverButton.SetActive(false);
+        submitRecovery .SetActive(true);
 	}
 
     private void SubmitEmail(string arg0){

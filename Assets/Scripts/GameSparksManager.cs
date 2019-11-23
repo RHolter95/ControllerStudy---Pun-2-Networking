@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class GameSparksManager : MonoBehaviour 
 {
 	/// <summary>The GameSparks Manager singleton</summary>
-	private static GameSparksManager instance = null;
 	public NetworkController networkController;
 	public Component registerPlayer;
 	public InputField userName = null;

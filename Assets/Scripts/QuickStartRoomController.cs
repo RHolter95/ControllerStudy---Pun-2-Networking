@@ -5,10 +5,25 @@ public class QuickStartRoomController : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private int multiplayerSceneIndex; //Number for the build index to the multiplay scene.
+    public static QuickStartRoomController QSRC;
 
     public override void OnEnable()
     {
+        if(QuickStartRoomController.QSRC == null)
+        {
+            QuickStartRoomController.QSRC = this;
+        }
+        else
+        {
+            if(QuickStartRoomController.QSRC != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        DontDestroyOnLoad(this.gameObject);
+    
         PhotonNetwork.AddCallbackTarget(this); 
+        
     }
 
     public override void OnDisable()

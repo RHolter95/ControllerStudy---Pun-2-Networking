@@ -6,30 +6,46 @@ using UnityEngine;
 
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
-    
     [SerializeField]
     private GameObject quickStartButton; //button used for creating and joining a game.
     [SerializeField]
-    private GameObject quickCancelButton; //button used to stop searing for a game to join.
+    private GameObject quickCancelButton; //button used to stop searching for a game to join.
+    private GameObject onlineButton;
+
+    private GameObject offlineButton; 
+
     [SerializeField]
     private int RoomSize = 4; //Manual set the number of player in the room at one time.
+    public static QuickStartLobbyController QSLC;
+
+   //IF YOU MAKE THIS PERSIST SAY GOODBYE TO YOUR MATCHMAKING
+   //YOU WONT CONNECT TO A SERVER
+   //Enable() == DEATH
+
 
     public override void OnConnectedToMaster() //Callback function for when the first connection is established successfully.
     {
         PhotonNetwork.AutomaticallySyncScene = true; //Makes it so whatever scene the master client has loaded is the scene all other clients will load
-        //quickStartButton.SetActive(true);
+//      quickStartButton.SetActive(false);
+        onlineButton.SetActive(true);
+        offlineButton.SetActive(true);
     }
 
     void Start()
     {
-        quickCancelButton.SetActive(false);
+        onlineButton = GameObject.Find("OnlineAuth");
+        offlineButton = GameObject.Find("Offline");
         quickStartButton = GameObject.Find("QuickStart");
         quickCancelButton = GameObject.Find("QuickCancel");
+//      quickStartButton.SetActive(false);
+        onlineButton.SetActive(false);
+        offlineButton.SetActive(false);
     }
 
     public void QuickStart() //Paired to the Quick Start button
     {
         PhotonNetwork.OfflineMode = false;
+        PhotonNetwork.ConnectUsingSettings();
         //quickStartButton.SetActive(false);
         //quickCancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom(); //First tries to join an existing room

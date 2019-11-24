@@ -252,7 +252,11 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
         dist.y = verticalVelocity * Time.deltaTime;
 
-        CharacterController.Move(dist/2);
+
+         if(moveDirection.magnitude > 0.1f)
+        {
+            CharacterController.Move(dist/2);
+        }
     }
 }
 

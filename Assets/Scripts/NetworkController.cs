@@ -22,7 +22,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
 	
     public static NetworkController NWC;
     public PlayFabsController playFabManager;
+    public GameObject shopCanvas = null;
     public GameObject submitRecovery = null;
+    public GameObject shopButton = null;
     public GameObject loginButton = null; 
     public GameObject submitButton = null; 
     public GameObject offlineButton = null; 
@@ -48,14 +50,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.OfflineMode = true;
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    void OnDisconnected()
+    {
     }
 
     void Awake()
-    {
-
-        DontDestroyOnLoad(transform.gameObject);
-     
+    {     
         playFab = true;
         createNewButton = GameObject.Find("NewUser");
         userNameGO = GameObject.Find("UserName");
@@ -65,6 +68,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         submitButton = GameObject.Find("Submit");
         recoverButton = GameObject.Find("Recover");
         submitRecovery = GameObject.Find("SubmitRecovery");
+        shopButton = GameObject.Find("Shop");
+        shopCanvas = GameObject.Find("ShopCanvas");
 
         playFabManager = transform.GetComponent<PlayFabsController>();
         userEmailInput = userEmailGO.gameObject.GetComponent<InputField>();
@@ -84,6 +89,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
         submitButton.SetActive(false);
         recoverButton.SetActive(false);
         submitRecovery.SetActive(false);
+        shopButton.SetActive(false);
+        shopCanvas.SetActive(false);
+        
+        if(shopCanvas == null){
+            Debug.Log("Couldn't Find Shop Canvas");}
         
         if(userNameGO == null){
             Debug.Log("Couldn't Find userName Field");}
@@ -95,7 +105,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
             Debug.Log("Couldn't Find userPass Field");}
 
         if(loginButton == null){
-            Debug.Log("Couldn't Find submit Button Field");}
+            Debug.Log("Couldn't Find login Button");}
+
+        if(shopButton == null){
+            Debug.Log("Couldn't Find Shop Button ");}
 
         if(submitRecovery == null){
              Debug.Log("Couldn't Find Submit Recovery Button");}
@@ -121,6 +134,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     public void playFabCanvas()
 	{
+        
 		Debug.Log("Prepparing PlayFab Page");
 		createNewButton.SetActive(true);
 		offlineButton.SetActive(false);
@@ -163,6 +177,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
 		submitButton.SetActive(true);
 	}
 
+    public void Back()
+    {
+        shopCanvas.SetActive(false);
+        onlineButton.SetActive(true);
+        shopButton.SetActive(true);
+    }
+
     public void MakeRecoveryAccountCanvas(){
         
         userNameGO.SetActive(true);
@@ -176,8 +197,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
 		createNewButton.SetActive(false);
 		loginButton.SetActive(false);
         recoverButton.SetActive(false);
-        submitRecovery .SetActive(true);
+        submitRecovery.SetActive(true);
 	}
+
+    public void MakeShopCanvas()
+    {
+        shopButton.SetActive(false);
+        onlineButton.SetActive(false);
+        shopCanvas.SetActive(true);
+    }
 
     private void SubmitEmail(string arg0){
         //Debug.Log("Email: " + arg0);
@@ -204,7 +232,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     void Update()
     {
         // If were initially connected and press offline play
-         if(offlineButtonPressed == true && playFab == false)
+         if(offlineButtonPressed == true)
          {
              //Let user know were DC'ing
             Debug.Log("Disconecting");
@@ -225,13 +253,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
      onlineButtonPressed = true;
      PhotonNetwork.OfflineMode = false;
      PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public void Authenticate()
-    {
-        offlineButton.SetActive(false);
-        onlineButton.SetActive(false);
-        
     }
 
     public override void OnConnectedToMaster()

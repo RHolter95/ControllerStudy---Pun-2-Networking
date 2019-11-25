@@ -285,6 +285,21 @@
  <Reference Include="websocket-sharp">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Analytics.Tracker">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.StandardEvents">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.Editor">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Purchasing">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>

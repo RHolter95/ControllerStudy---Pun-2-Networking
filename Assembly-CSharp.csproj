@@ -53,6 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CivilCharactersPack\Scripts\CharacterCustomization.cs" />
+     <Compile Include="Assets\CivilCharactersPack\Scripts\UIControllerDEMO.cs" />
      <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
@@ -203,6 +205,7 @@
      <None Include="Assets\EffectExamples\Misc Effects\Prefabs\Readme_Dissolve_Respawn_.txt" />
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\EffectExamples\Misc Effects\Shaders\Respawn.shader" />
+     <None Include="Assets\CivilCharactersPack\Readme.txt" />
      <None Include="Assets\Photon\PhotonUnityNetworking\readme.txt" />
      <None Include="Assets\EffectExamples\Magic Effects\Shaders\Ice.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
@@ -232,6 +235,15 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Postprocessing.Editor">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Postprocessing.Runtime">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.DataPrivacy">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -409,6 +421,15 @@
  </Reference>
  <Reference Include="websocket-sharp">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.Tracker">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.StandardEvents">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Analytics.Editor">
+ <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudyy/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

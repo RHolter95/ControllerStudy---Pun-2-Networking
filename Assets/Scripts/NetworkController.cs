@@ -48,6 +48,13 @@ public class NetworkController : MonoBehaviourPunCallbacks
     bool onlineButtonPressed = false;
     bool playFab = true;
 
+
+    public GameObject maleCharCustomizer = null;
+    public GameObject femaleCharCustomizer = null;
+    public int charSex = 2;//Neither Male 0 or Female 1
+    public GameObject maleSex = null;
+    public GameObject femaleSex = null;
+
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -71,6 +78,15 @@ public class NetworkController : MonoBehaviourPunCallbacks
         shopButton = GameObject.Find("Shop");
         shopCanvas = GameObject.Find("ShopCanvas");
 
+        
+
+        //Start Char Customization   
+        maleCharCustomizer = GameObject.Find("Male_Customize");
+        femaleCharCustomizer = GameObject.Find("Female_Customize");
+        maleSex = GameObject.Find("Female");
+        femaleSex = GameObject.Find("Male");
+        //End Char Customization    
+
         playFabManager = transform.GetComponent<PlayFabsController>();
         userEmailInput = userEmailGO.gameObject.GetComponent<InputField>();
         userNameInput = userNameGO.gameObject.GetComponent<InputField>();
@@ -91,6 +107,25 @@ public class NetworkController : MonoBehaviourPunCallbacks
         submitRecovery.SetActive(false);
         shopButton.SetActive(false);
         shopCanvas.SetActive(false);
+
+        //Start Char Customization    
+        femaleCharCustomizer.SetActive(false);
+        maleCharCustomizer.SetActive(false);
+        maleSex.SetActive(false);
+        femaleSex.SetActive(false);
+        
+        if(maleSex == null){
+            Debug.Log("Couldn't Find Male Sex Button");}
+
+        if(femaleSex == null){
+            Debug.Log("Couldn't Find Female Sex Button");}
+
+        if(maleCharCustomizer == null){
+            Debug.Log("Couldn't Find Male Customize OBJ");}
+
+        if(femaleCharCustomizer == null){
+            Debug.Log("Couldn't Find Female Customize OBJ");}
+        //End Char Customization    
         
         if(shopCanvas == null){
             Debug.Log("Couldn't Find Shop Canvas");}
@@ -183,6 +218,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         onlineButton.SetActive(true);
         shopButton.SetActive(true);
     }
+
+    
 
     public void MakeRecoveryAccountCanvas(){
         

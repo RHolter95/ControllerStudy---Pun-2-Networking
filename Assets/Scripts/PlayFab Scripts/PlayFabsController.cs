@@ -1,21 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.Json;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayFabsController : MonoBehaviour
 {
     private int DEFAULT = 0;
+    public bool newRegister = false;
 
     public static PlayFabsController PFC;
     public NetworkController networkController = null;
+    public UIControllerDEMO CharCust = null;
     public string userEmailStr = null;
 	public string userNameStr = null;
 	public string userPassStr = null;
     private string myID;
+    public bool isCustomizing = false;
+    public GameObject maleCust = null;
+    public GameObject femaleCust = null;
+    public GameObject finalChar = null;
+    public int playerHat = 0;
+    public int Playeraccessory = 0;
+    public int playerTop = 0;
+    public int playerJacket = 0;
+    public int playerUnderware = 0;
+    public int playerBottom = 0;
+    public int playerShoes = 0;
+    public int playerSkin = 0;
+    public int playerHead = 0;
+    public string temp = "";
+    public UnityEngine.Object prefab;
+
 
     private void Enable()
     {
@@ -35,7 +55,17 @@ public class PlayFabsController : MonoBehaviour
 
     void Awake()
     {
-        
+        maleCust = GameObject.Find("Male_Customize");
+        femaleCust = GameObject.Find("Female_Customize");
+
+        maleCust = maleCust.transform.GetChild(6).gameObject;
+        femaleCust = femaleCust.transform.GetChild(6).gameObject;
+
+        if(femaleCust == null || maleCust == null )
+        {
+            Debug.Log("Couldn't locate Male/Female GameObj");
+        }
+
         networkController = transform.gameObject.GetComponent<NetworkController>();
         if(networkController == null)
         {
@@ -45,6 +75,23 @@ public class PlayFabsController : MonoBehaviour
 
     void Update()
     {
+        //If were customizing and we are Male lets grab correct component
+        if(isCustomizing && networkController.charSex == 0){
+        CharCust = maleCust.gameObject.GetComponent<UIControllerDEMO>();
+        finalChar = GameObject.Find("Male_Customize");
+        finalChar = finalChar.transform.GetChild(1).gameObject;
+        if(CharCust == null){
+            Debug.Log("Couldn't locate CharCust Script");}
+        }
+
+        if(isCustomizing && networkController.charSex == 1){
+        CharCust = femaleCust.gameObject.GetComponentInChildren<UIControllerDEMO>();
+        finalChar = GameObject.Find("Female_Customize");
+        finalChar = finalChar.transform.GetChild(1).gameObject;
+        if(CharCust == null){
+            Debug.Log("Couldn't locate CharCust Script");}
+        }
+
         if(networkController.userEmailGO != null){
             userEmailStr = networkController.userEmailGO.GetComponent<InputField>().text;
         }
@@ -131,11 +178,82 @@ public class PlayFabsController : MonoBehaviour
         networkController.userPassGO.SetActive(false);
         networkController.submitButton.SetActive(false);
         networkController.recoverButton.SetActive(false);
+        networkController.onlineButton.SetActive(false);
+        networkController.shopButton.SetActive(false);
 
+        GetStatistics();
+
+        if(newRegister){
+            Debug.Log("Customize Now");
+            networkController.maleSex.SetActive(true);
+            networkController.femaleSex.SetActive(true);
+        }
+    }
+
+    public void FinalizeCharacter()
+    {
+        isCustomizing = false;
+
+        prefab = EditorUtility.CreateEmptyPrefab("Assets/Photon/Resources/PhotonPrefabs/PhotonPlayerTEST.prefab");
+        EditorUtility.ReplacePrefab(finalChar, prefab, ReplacePrefabOptions.ConnectToPrefab);
+
+
+
+        //Grabs all list index's and pushes to cloud
+        //Default is 0 so even if some are blank/null were gucci
+        playerHat = int.Parse(CharCust.hat_text.text.ToString());
+        Playeraccessory = int.Parse(CharCust.accessory_text.text.ToString());
+        playerTop = int.Parse(CharCust.shirt_text.text.ToString());
+        playerBottom = int.Parse(CharCust.pant_text.text.ToString());
+        playerShoes = int.Parse(CharCust.shoes_text.text.ToString());
+        //playerSkin = int.Parse(CharCust.skin_text.text.ToString());
+        //playerHead = int.Parse(CharCust.head_text.text.ToString());
+        StartCloudUpdatePlayerClothes();
+
+        networkController.maleCharCustomizer.SetActive(false);
+        networkController.femaleCharCustomizer.SetActive(false);
         networkController.onlineButton.SetActive(true);
         networkController.shopButton.SetActive(true);
-        GetStatistics();
-        //GetPlayerData();
+
+    }
+
+    public void FemaleSex()
+    {
+        networkController.femaleSex.SetActive(false);
+        networkController.maleSex.SetActive(false);
+
+        isCustomizing = true;
+        networkController.charSex = 1;
+        networkController.femaleCharCustomizer.SetActive(true);
+    }
+
+    public void SwapSex()
+    {
+        switch(networkController.charSex){
+            case 0:
+                Debug.Log("Female -> Male");
+                networkController.femaleCharCustomizer.SetActive(false);
+                networkController.maleCharCustomizer.SetActive(true);
+                networkController.charSex = 1;
+            break;
+            case 1:
+                Debug.Log("Male -> Female");
+                networkController.maleCharCustomizer.SetActive(false);
+                networkController.femaleCharCustomizer.SetActive(true);
+                networkController.charSex = 0;
+            break;
+        }
+    }
+
+     public void MaleSex()
+    {
+        networkController.femaleSex.SetActive(false);
+        networkController.maleSex.SetActive(false);
+
+        isCustomizing = true;
+        networkController.charSex = 0;
+        networkController.maleCharCustomizer.SetActive(true);
+
     }
 
     private void OnRegisterFailure(PlayFabError error)
@@ -166,6 +284,7 @@ public class PlayFabsController : MonoBehaviour
         PlayerPrefs.SetString("EMAIL", userEmailStr);
         PlayerPrefs.SetString("PASSWORD", userPassStr);
         PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest{DisplayName = userNameStr},OnDisplayName,OnLoginMobileFailure);
+        newRegister = true;
 
         //Evertime we register we initialize stats to 0 and push to server
         playerLevel = 1;
@@ -175,11 +294,11 @@ public class PlayFabsController : MonoBehaviour
 
         //start With default clothes & push to server
         playerHat = playerTop = playerJacket = playerUnderware = playerBottom = playerShoes = DEFAULT;
-        StartCloudUpdatePlayerClothes();
+        //StartCloudUpdatePlayerClothes();
 
         myID = result.PlayFabId;
         //GetPlayerData();
-        GetStatistics();
+        //GetStatistics();
 
         //Doesnt need UserName to login
         userNameStr = "";
@@ -197,7 +316,7 @@ public class PlayFabsController : MonoBehaviour
 
     public void Submit()
 	{
-        if(userEmailStr.Length > 6 && userNameStr.Length > 3 && userPassStr.Length >= 6)
+        if(userEmailStr.Length > 6 && userNameStr.Length > 3 && userPassStr.Length > 6)
         {
 		Debug.Log("Sending Registration to playfab\nEMAIL: " + userEmailStr+" , USERNAME: "+userNameStr);
         var registerRequest  = new RegisterPlayFabUserRequest  { Email = userEmailStr, Password = userPassStr ,Username = userNameStr};
@@ -242,15 +361,6 @@ public int gameLevel;
 public int playerHighScore;
 public int playerCash;
 
-//Set all clothing bellow to 0 which is default
-public int playerHat = 0;
-public int playerTop = 0;
-public int playerJacket = 0;
-public int playerUnderware = 0;
-public int playerBottom = 0;
-public int playerShoes = 0;
-
-
 #region PlayerStats  
 
 #region Level_HighScore_Cash_StatPush
@@ -280,12 +390,11 @@ public void StartCloudUpdatePlayerClothes()
 {
     PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
     {
-        FunctionName = "UpdatePlayerClothes", // Arbitrary function name (must exist in your uploaded cloud.js file)
-        FunctionParameter = new { Hat = playerHat, Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes}, // The parameter provided to your function
-        GeneratePlayStreamEvent = true, // Optional - Shows this event in PlayStream
+        FunctionName = "UpdatePlayerClothes", 
+        FunctionParameter = new { Hat = playerHat, Accessories = Playeraccessory , Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes}, // The parameter provided to your function
+        GeneratePlayStreamEvent = true, 
     }, OnCloudUpdateClothes, OnErrorShared);
 }
-// OnCloudHelloWorld defined in the next code block
 
 private static void OnCloudUpdateClothes(ExecuteCloudScriptResult result) {
     // Cloud Script returns arbitrary results, so you have to evaluate them one step and one parameter at a time

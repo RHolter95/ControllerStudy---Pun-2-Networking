@@ -35,6 +35,11 @@ public class PlayFabsController : MonoBehaviour
     public int playerHead = 0;
     public string temp = "";
     public UnityEngine.Object prefab;
+    public GameObject maleStage = null;
+    public GameObject femaleStage = null;
+    public GameObject tempOBJ = null;
+
+
 
 
     private void Enable()
@@ -58,13 +63,25 @@ public class PlayFabsController : MonoBehaviour
         maleCust = GameObject.Find("Male_Customize");
         femaleCust = GameObject.Find("Female_Customize");
 
-        maleCust = maleCust.transform.GetChild(6).gameObject;
-        femaleCust = femaleCust.transform.GetChild(6).gameObject;
+        maleStage  = GameObject.Find("Male_Stand");
+        femaleStage  = GameObject.Find("Female_Stand");
+
+        maleStage.SetActive(false);
+        femaleStage.SetActive(false);
+
+        //maleCust = maleCust.transform.GetChild(6).gameObject;
+        //femaleCust = femaleCust.transform.GetChild(6).gameObject;
 
         if(femaleCust == null || maleCust == null )
         {
             Debug.Log("Couldn't locate Male/Female GameObj");
         }
+
+        if(maleStage == null || femaleStage == null )
+        {
+            Debug.Log("Couldn't locate Male/Female Stage");
+        }
+
 
         networkController = transform.gameObject.GetComponent<NetworkController>();
         if(networkController == null)
@@ -75,21 +92,18 @@ public class PlayFabsController : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(networkController.charSex);
+
         //If were customizing and we are Male lets grab correct component
         if(isCustomizing && networkController.charSex == 0){
-        CharCust = maleCust.gameObject.GetComponent<UIControllerDEMO>();
-        finalChar = GameObject.Find("Male_Customize");
-        finalChar = finalChar.transform.GetChild(1).gameObject;
-        if(CharCust == null){
-            Debug.Log("Couldn't locate CharCust Script");}
+        CharCust = maleCust.gameObject.GetComponentInChildren<UIControllerDEMO>();
+        finalChar = maleCust;
         }
 
+        //If were customizing and we are Female lets grab correct component
         if(isCustomizing && networkController.charSex == 1){
-        CharCust = femaleCust.gameObject.GetComponentInChildren<UIControllerDEMO>();
-        finalChar = GameObject.Find("Female_Customize");
-        finalChar = finalChar.transform.GetChild(1).gameObject;
-        if(CharCust == null){
-            Debug.Log("Couldn't locate CharCust Script");}
+        CharCust = femaleCust.transform.GetChild(0).gameObject.GetComponent<UIControllerDEMO>();
+        finalChar = femaleCust;
         }
 
         if(networkController.userEmailGO != null){
@@ -201,14 +215,14 @@ public class PlayFabsController : MonoBehaviour
 
         //Grabs all list index's and pushes to cloud
         //Default is 0 so even if some are blank/null were gucci
-        playerHat = int.Parse(CharCust.hat_text.text.ToString());
-        Playeraccessory = int.Parse(CharCust.accessory_text.text.ToString());
-        playerTop = int.Parse(CharCust.shirt_text.text.ToString());
-        playerBottom = int.Parse(CharCust.pant_text.text.ToString());
-        playerShoes = int.Parse(CharCust.shoes_text.text.ToString());
+        // playerHat = int.Parse(CharCust.hat_text.text.ToString());
+        // Playeraccessory = int.Parse(CharCust.accessory_text.text.ToString());
+        // playerTop = int.Parse(CharCust.shirt_text.text.ToString());
+        // playerBottom = int.Parse(CharCust.pant_text.text.ToString());
+        // playerShoes = int.Parse(CharCust.shoes_text.text.ToString());
         //playerSkin = int.Parse(CharCust.skin_text.text.ToString());
         //playerHead = int.Parse(CharCust.head_text.text.ToString());
-        StartCloudUpdatePlayerClothes();
+        //StartCloudUpdatePlayerClothes();
 
         networkController.maleCharCustomizer.SetActive(false);
         networkController.femaleCharCustomizer.SetActive(false);
@@ -219,12 +233,16 @@ public class PlayFabsController : MonoBehaviour
 
     public void FemaleSex()
     {
-        networkController.femaleSex.SetActive(false);
+        networkController.maleCharCustomizer.SetActive(false);
+        networkController.femaleCharCustomizer.SetActive(true);
+
         networkController.maleSex.SetActive(false);
+        networkController.femaleSex.SetActive(false);
+
+        femaleStage.SetActive(true);
 
         isCustomizing = true;
-        networkController.charSex = 1;
-        networkController.femaleCharCustomizer.SetActive(true);
+        networkController.charSex = 0;        
     }
 
     public void SwapSex()
@@ -232,14 +250,18 @@ public class PlayFabsController : MonoBehaviour
         switch(networkController.charSex){
             case 0:
                 Debug.Log("Female -> Male");
-                networkController.femaleCharCustomizer.SetActive(false);
-                networkController.maleCharCustomizer.SetActive(true);
+                femaleCust.SetActive(false);
+                femaleStage.SetActive(false);
+                maleCust.SetActive(true);
+                maleStage.SetActive(true);
                 networkController.charSex = 1;
             break;
             case 1:
                 Debug.Log("Male -> Female");
-                networkController.maleCharCustomizer.SetActive(false);
-                networkController.femaleCharCustomizer.SetActive(true);
+                maleCust.SetActive(false);
+                maleStage.SetActive(false);
+                femaleCust.SetActive(true);
+                femaleStage.SetActive(true);
                 networkController.charSex = 0;
             break;
         }
@@ -247,13 +269,16 @@ public class PlayFabsController : MonoBehaviour
 
      public void MaleSex()
     {
-        networkController.femaleSex.SetActive(false);
+        networkController.maleCharCustomizer.SetActive(true);
+        networkController.femaleCharCustomizer.SetActive(false);
+
         networkController.maleSex.SetActive(false);
+        networkController.femaleSex.SetActive(false);
+
+        maleStage.SetActive(true);
 
         isCustomizing = true;
-        networkController.charSex = 0;
-        networkController.maleCharCustomizer.SetActive(true);
-
+        networkController.charSex = 1;
     }
 
     private void OnRegisterFailure(PlayFabError error)

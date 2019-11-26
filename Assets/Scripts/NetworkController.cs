@@ -46,7 +46,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 	public string userPassStr = null;
     bool offlineButtonPressed = false;
     bool onlineButtonPressed = false;
-    bool playFab = true;
+    //bool playFab = true;
 
 
     public GameObject maleCharCustomizer = null;
@@ -66,7 +66,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     void Awake()
     {     
-        playFab = true;
+        //playFab = true;
         createNewButton = GameObject.Find("NewUser");
         userNameGO = GameObject.Find("UserName");
         userEmailGO = GameObject.Find("Email");
@@ -261,7 +261,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     public void Offline()
     {
-       playFab = false;
+      // playFab = false;
        offlineButtonPressed = true;
        PhotonNetwork.Disconnect();
     }

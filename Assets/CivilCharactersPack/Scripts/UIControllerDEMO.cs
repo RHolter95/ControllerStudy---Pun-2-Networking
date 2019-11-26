@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class UIControllerDEMO : MonoBehaviour
 {
     public CharacterCustomization CharacterCustomization;
+    public NetworkController NWC = null;
+    public PlayFabsController PFC = null;
 
     //UI element number
     public Text head_text;
@@ -19,6 +21,38 @@ public class UIControllerDEMO : MonoBehaviour
     public Text playbutton_text;
 
     public Animator animator;
+    public GameObject temp;
+
+    void Awake()
+    {
+        NWC = GameObject.Find("NetworkController").GetComponent<NetworkController>();
+        if(NWC == null){
+            Debug.Log("There is no NetworkController");
+        }
+
+        PFC = GameObject.Find("NetworkController").GetComponentInChildren<PlayFabsController>();
+        if(PFC == null){
+            Debug.Log("There is no PlayFabsController");
+        }
+    }
+
+    void Update()
+    {
+        //If were editing a male, swap CharCustomization Script
+        if(PFC.isCustomizing && NWC.charSex == 0){
+            CharacterCustomization = PFC.femaleCust.GetComponentInChildren<CharacterCustomization>();
+            animator = PFC.femaleCust.GetComponentInChildren<Animator>();
+            if(CharacterCustomization == null){
+                Debug.Log("Couldn't locate CharacterCustomization Script For Female");}
+        }
+
+        if(PFC.isCustomizing && NWC.charSex == 1){
+            CharacterCustomization = PFC.maleCust.GetComponentInChildren<CharacterCustomization>();
+            animator = PFC.maleCust.GetComponentInChildren<Animator>();
+            if(CharacterCustomization == null){
+                Debug.Log("Couldn't locate CharacterCustomization Script For Male");}
+        }
+    }
 
     #region ButtonEvents
     public void HeadChange_Event(int next)

@@ -171,7 +171,6 @@
      <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginManager.cs" />
      <Compile Include="Assets\Scripts\BulletForward.cs" />
      <Compile Include="Assets\Scripts\FXManager.cs" />
-     <Compile Include="Assets\Scripts\gameObject.cs" />
      <Compile Include="Assets\Scripts\GameSetupController.cs" />
      <Compile Include="Assets\Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
@@ -195,6 +194,7 @@
      <Compile Include="Assets\Scripts\ScriptableObjects\ItemObject.cs" />
      <Compile Include="Assets\Scripts\ScriptableObjects\WeaponObject.cs" />
      <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+     <Compile Include="Assets\Scripts\StayOnStage.cs" />
      <Compile Include="Assets\Scripts\Target.cs" />
      <Compile Include="Assets\Scripts\WeaponData.cs" />
      <None Include="Assets\PlayFabSdk\link.xml" />
@@ -422,9 +422,6 @@
  <Reference Include="websocket-sharp">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.ads@2.0.8/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Analytics.Editor">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
@@ -433,9 +430,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.purchasing@2.0.3/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.5f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

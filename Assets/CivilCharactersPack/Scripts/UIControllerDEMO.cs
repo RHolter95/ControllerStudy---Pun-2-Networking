@@ -41,14 +41,14 @@ public class UIControllerDEMO : MonoBehaviour
         //If were editing a male, swap CharCustomization Script
         if(PFC.isCustomizing && NWC.charSex == 0){
             CharacterCustomization = PFC.femaleCust.GetComponentInChildren<CharacterCustomization>();
-            animator = PFC.femaleCust.GetComponentInChildren<Animator>();
+            animator = PFC.femaleCust.transform.GetChild(0).GetComponentInChildren<Animator>();
             if(CharacterCustomization == null){
                 Debug.Log("Couldn't locate CharacterCustomization Script For Female");}
         }
 
         if(PFC.isCustomizing && NWC.charSex == 1){
             CharacterCustomization = PFC.maleCust.GetComponentInChildren<CharacterCustomization>();
-            animator = PFC.maleCust.GetComponentInChildren<Animator>();
+            animator = PFC.maleCust.transform.GetChild(0).GetComponentInChildren<Animator>();
             if(CharacterCustomization == null){
                 Debug.Log("Couldn't locate CharacterCustomization Script For Male");}
         }
@@ -144,8 +144,7 @@ public class UIControllerDEMO : MonoBehaviour
     {
         walk_active = !walk_active;
 
-        animator.SetBool("walk", walk_active);
-
+        animator.SetBool("Speed", walk_active);
         playbutton_text.text = (walk_active) ? "STOP" : "PLAY";
     }
 

@@ -96,14 +96,12 @@ public class PlayFabsController : MonoBehaviour
 
         //If were customizing and we are Male lets grab correct component
         if(isCustomizing && networkController.charSex == 0){
-        CharCust = maleCust.gameObject.GetComponentInChildren<UIControllerDEMO>();
-        finalChar = maleCust;
+        finalChar = femaleCust;
         }
 
         //If were customizing and we are Female lets grab correct component
         if(isCustomizing && networkController.charSex == 1){
-        CharCust = femaleCust.transform.GetChild(0).gameObject.GetComponent<UIControllerDEMO>();
-        finalChar = femaleCust;
+        finalChar = maleCust;
         }
 
         if(networkController.userEmailGO != null){
@@ -208,6 +206,11 @@ public class PlayFabsController : MonoBehaviour
     {
         isCustomizing = false;
 
+        //THIS WILL NEVER WORK OUTSIDE OF EDITOR
+        //Lets push clothing index's and generate the character based off those index's
+        //inside gameManager. Load stats and generate a base character
+        //Then change the skin asset "Mesh" component to the index of correct "Mesh"
+        
         prefab = EditorUtility.CreateEmptyPrefab("Assets/Photon/Resources/PhotonPrefabs/PhotonPlayerTEST.prefab");
         EditorUtility.ReplacePrefab(finalChar, prefab, ReplacePrefabOptions.ConnectToPrefab);
 

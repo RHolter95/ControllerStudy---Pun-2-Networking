@@ -30,7 +30,10 @@ using UnityEngine;
                 Debug.Log("Animator Empty in child");
             }
 
+            //HumanBodyBones gets Spine 2, not chest, grab immediate child
             local_chest = animator.GetBoneTransform(HumanBodyBones.Chest);
+            local_chest = local_chest.transform.GetChild(0);
+
             local_head = animator.GetBoneTransform(HumanBodyBones.Head);
             local_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
             local_spine = animator.GetBoneTransform(HumanBodyBones.Spine);

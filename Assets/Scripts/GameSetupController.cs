@@ -21,8 +21,10 @@ public class GameSetupController : MonoBehaviour
         ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;
+        ((MonoBehaviour)Myplayer.GetComponent("StayOnStage")).enabled = false;
         Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
         Myplayer.transform.Find("Canvas").gameObject.SetActive(true);
+        ((MonoBehaviour)Myplayer.transform.GetChild(0).GetComponent("CharacterCustomization")).enabled = false;
     }
 }
 

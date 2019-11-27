@@ -58,6 +58,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
      animator = temp.GetComponentInChildren<Animator>();
      chest = animator.GetBoneTransform(HumanBodyBones.Chest);
+     chest = chest.transform.GetChild(0).transform;
 
 
      //Raycast isGrounded returns false @ spawn 
@@ -73,7 +74,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         //Delete this after inventory is setup
         inventory.Awake();
 
-        canvas = GameObject.Find("Canvas");
+        canvas = transform.GetChild(1).gameObject;
 
         //This makes the player "look" like he is aiming the gun at the "target"
         //If you edit this you must edit it in NetworkPlayer!
@@ -201,7 +202,10 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
        {
            verticalVelocity = jumpSpeed;
        }
-        
+
+        transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
+
+       
         //If were walking backwards
         if(joystickOne.Direction.y < -.1f){
         transform.Translate(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
@@ -213,6 +217,7 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
         //Just move if not strafing or walking backwards
         transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
         }
+        
     }
     
     void OnGUI()

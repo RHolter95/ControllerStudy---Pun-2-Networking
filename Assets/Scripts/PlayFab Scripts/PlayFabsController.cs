@@ -33,6 +33,7 @@ public class PlayFabsController : MonoBehaviour
     public int playerSkin = 0;
     public int playerBottom = 0;
     public int playerShoes = 0;
+    public int playerSex = 0;
     public string temp = "";
     public UnityEngine.Object prefab;
     public GameObject maleStage = null;
@@ -232,8 +233,7 @@ public class PlayFabsController : MonoBehaviour
         //EditorUtility.ReplacePrefab(finalChar, prefab, ReplacePrefabOptions.ConnectToPrefab);
 
         //Grabs all list index's and pushes to cloud
-        //Default is 0 so even if some are blank/null were gucci
-
+        playerSex = networkController.charSex;
         playerHat = GetIndex(CharCust.hat_text.text);
         Playeraccessory = GetIndex(CharCust.accessory_text.text);
         playerTop = GetIndex(CharCust.shirt_text.text);
@@ -432,7 +432,7 @@ public void StartCloudUpdatePlayerClothes()
     PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
     {
         FunctionName = "UpdatePlayerClothes", 
-        FunctionParameter = new { Hat = playerHat, Accessories = Playeraccessory , Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes, Skin = playerSkin, Head = playerHead}, // The parameter provided to your function
+        FunctionParameter = new { Hat = playerHat, Accessories = Playeraccessory , Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes, Skin = playerSkin, Sex = playerSex, Head = playerHead}, // The parameter provided to your function
         GeneratePlayStreamEvent = true, 
     }, OnCloudUpdateClothes, OnErrorShared);
 }
@@ -502,6 +502,9 @@ void OnGetStatistics(GetPlayerStatisticsResult result)
             case "Hat" :
             playerHat = eachStat.Value;
             break;
+             case "Accessories" :
+            Playeraccessory = eachStat.Value;
+            break;
              case "Top" :
             playerTop = eachStat.Value;
             break;
@@ -511,11 +514,17 @@ void OnGetStatistics(GetPlayerStatisticsResult result)
              case "Underware" :
             playerUnderware = eachStat.Value;
             break;
+             case "Bottom" :
+            playerBottom = eachStat.Value;
+            break;
              case "Shoes" :
             playerShoes = eachStat.Value;
             break;
              case "Skin" :
             playerSkin = eachStat.Value;
+            break;
+             case "Sex" :
+            playerSex = eachStat.Value;
             break;
              case "Head" :
             playerHead = eachStat.Value;

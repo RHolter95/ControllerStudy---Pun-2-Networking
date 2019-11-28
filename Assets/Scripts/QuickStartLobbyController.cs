@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
+    public PlayFabsController PFC = null;
     [SerializeField]
     private GameObject quickStartButton; //button used for creating and joining a game.
     [SerializeField]
@@ -21,7 +22,13 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
    //IF YOU MAKE THIS PERSIST SAY GOODBYE TO YOUR MATCHMAKING
    //YOU WONT CONNECT TO A SERVER
    //Enable() == DEATH
-
+    void Awake()
+    {
+        PFC = GameObject.Find("NetworkController").GetComponentInChildren<PlayFabsController>();
+        if(PFC == null){
+            Debug.Log("There is no PlayFabsController");
+        }
+    }
 
     public override void OnConnectedToMaster() //Callback function for when the first connection is established successfully.
     {
@@ -46,6 +53,9 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.OfflineMode = false;
         PhotonNetwork.ConnectUsingSettings();
+
+        PFC.GetStatistics();
+        
         //quickStartButton.SetActive(false);
         //quickCancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom(); //First tries to join an existing room

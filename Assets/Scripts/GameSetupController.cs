@@ -19,6 +19,7 @@ public class GameSetupController : MonoBehaviour
     public int shoesIndex = 0;
     public int headIndex = 0;
     public int skinIndex = 0;
+    public int playerSex = 0;
 
     //Add the index of all shirts with no arms
     public int[] shirtsWithNoArms = new int[] {3, 4, 6, 7, 8};
@@ -46,9 +47,9 @@ public class GameSetupController : MonoBehaviour
             Debug.Log("There is no NetworkController");
         }
 
-        PFC.GetStatistics();
+        //PFC.GetStatistics();
 
-        //Get stats from cloud
+        //Get stats from PFC
         accessoryIndex = PFC.Playeraccessory;
         hatIndex = PFC.playerHat;
         shirtIndex = PFC.playerTop;
@@ -56,8 +57,9 @@ public class GameSetupController : MonoBehaviour
         shoesIndex = PFC.playerShoes;
         headIndex = PFC.playerHead;
         skinIndex = PFC.playerSkin;
+        playerSex = PFC.playerSex;
 
-        /*
+        
         Debug.Log("Accesories "+accessoryIndex);
         Debug.Log("Hat "+hatIndex);
         Debug.Log("Shirt "+shirtIndex);
@@ -65,7 +67,10 @@ public class GameSetupController : MonoBehaviour
         Debug.Log("Shoes "+shoesIndex);
         Debug.Log("Head "+headIndex);
         Debug.Log("Skin "+skinIndex);
-        */
+        Debug.Log("Sex "+playerSex);
+
+
+        
     }
 
     // This script will be added to any multiplayer scene
@@ -80,7 +85,7 @@ public class GameSetupController : MonoBehaviour
         //Debug.Log("Creating Player");
         
         //Spawn Base Model 
-        if(NWC.charSex == 0){
+        if(playerSex == 0){
             //Female
             Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerFEMALE"), new Vector3 (-2.8f,0.0f,0.736f), Quaternion.identity);
         }else{

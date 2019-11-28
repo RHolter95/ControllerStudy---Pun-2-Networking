@@ -5,6 +5,7 @@ using UnityEngine;
 public class StayOnStage : MonoBehaviour
 {
     public Vector3 stageCenterVector;
+    public GameObject target = null;
 
     // Start is called before the first frame update
     void Awake()

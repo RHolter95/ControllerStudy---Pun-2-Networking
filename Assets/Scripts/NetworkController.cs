@@ -60,12 +60,16 @@ public class NetworkController : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    
+
     void OnDisconnected()
     {
     }
 
     void Awake()
     {     
+        DontDestroyOnLoad(this.gameObject); 
+
         //playFab = true;
         createNewButton = GameObject.Find("NewUser");
         userNameGO = GameObject.Find("UserName");

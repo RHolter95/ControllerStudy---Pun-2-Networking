@@ -168,7 +168,7 @@ public class CharacterCustomization : MonoBehaviour
     /// <summary>
     /// Get preset array by type
     /// </summary>
-    List<ClothPreset> getPresetArray(ClothesPartType type)
+    public List<ClothPreset> getPresetArray(ClothesPartType type)
     {
         switch (type)
         {

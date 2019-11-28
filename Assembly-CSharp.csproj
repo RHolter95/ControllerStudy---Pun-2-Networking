@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\CivilCharactersPack\Scripts\CharacterCustomization.cs" />
      <Compile Include="Assets\CivilCharactersPack\Scripts\UIControllerDEMO.cs" />
+     <Compile Include="Assets\Clothes.cs" />
      <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
      <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />

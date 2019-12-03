@@ -13,6 +13,8 @@ public class PlayFabsController : MonoBehaviour
     private int DEFAULT = 0;
     public bool newRegister = false;
 
+    public UnderdogCity.PlayerMove PM = null;
+
     public static PlayFabsController PFC;
     public NetworkController networkController = null;
     public UIControllerDEMO CharCust = null;
@@ -58,6 +60,8 @@ public class PlayFabsController : MonoBehaviour
 
     void Awake()
     {
+        
+
         maleCust = GameObject.Find("Male_Customize");
         femaleCust = GameObject.Find("Female_Customize");
 

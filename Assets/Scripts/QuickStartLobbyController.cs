@@ -7,6 +7,8 @@ using UnityEngine;
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
     public PlayFabsController PFC = null;
+    public Clothes C = null;
+
     [SerializeField]
     private GameObject quickStartButton; //button used for creating and joining a game.
     [SerializeField]
@@ -54,7 +56,7 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
         PhotonNetwork.OfflineMode = false;
         PhotonNetwork.ConnectUsingSettings();
 
-        PFC.GetStatistics();
+        //PFC.GetStatistics();
         
         //quickStartButton.SetActive(false);
         //quickCancelButton.SetActive(true);

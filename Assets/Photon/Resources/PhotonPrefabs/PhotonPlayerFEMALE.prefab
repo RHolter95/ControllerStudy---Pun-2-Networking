@@ -4246,6 +4246,7 @@ GameObject:
   - component: {fileID: 4212830685828844576}
   - component: {fileID: 6047878068627859431}
   - component: {fileID: 7669640317510867764}
+  - component: {fileID: 4933969130263908763}
   m_Layer: 0
   m_Name: PhotonPlayerFEMALE
   m_TagString: Player
@@ -4339,6 +4340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
+  clothesInt: 0
   joystickOne: {fileID: 5931022553862056123}
   joystickTwo: {fileID: 3283162578293939209}
   crosshair: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
@@ -4366,12 +4368,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4072695232193313831}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe41a82939a454845af1c9e2fb64f76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 936625025445081048}
+  GSC: {fileID: 0}
+  clothesInt: 0
+  clothesStr: 
+  tempClothesStr: 
+  CharacterCustomizeClothesSlots: 0000000000000000000000000000000000000000
+  CharacterCustomizeBodySlots: 0000000000000000000000000000000000000000
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
   targetPosition: {x: 0, y: 0, z: 0}
   offset: {x: 10, y: 56, z: 12}
@@ -4380,7 +4388,22 @@ MonoBehaviour:
   local_spine: {fileID: 0}
   local_chest: {fileID: 0}
   target: {fileID: 4972569636955899345}
+  sentFirstUpdate: 0
   gotFirstUpdate: 0
+  playerCustomizeChildOBJ: {fileID: 0}
+  playerClothesComp: {fileID: 0}
+  playerHat: 0
+  Playeraccessory: 0
+  playerTop: 0
+  playerJacket: 0
+  playerUnderware: 0
+  playerHead: 0
+  playerSkin: 0
+  playerBottom: 0
+  playerShoes: 0
+  playerSex: 0
+  run: 1
+  updateArray: 0
 --- !u!114 &6047878068627859431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4410,6 +4433,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageCenterVector: {x: -4.89, y: 1.646, z: -1.119}
   target: {fileID: 0}
+--- !u!114 &4933969130263908763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4072695232193313831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc07d71891feb0449560d8b0ad1d589, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needClothesStats: 1
+  playerHat: 0
+  Playeraccessory: 0
+  playerTop: 0
+  playerJacket: 0
+  playerUnderware: 0
+  playerHead: 0
+  playerSkin: 0
+  playerBottom: 0
+  playerShoes: 0
+  playerSex: 0
+  run: 1
 --- !u!1 &4191730225368806916
 GameObject:
   m_ObjectHideFlags: 0

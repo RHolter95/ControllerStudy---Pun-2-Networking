@@ -3041,6 +3041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
+  clothesInt: 0
   joystickOne: {fileID: 3890656144603369484}
   joystickTwo: {fileID: 5341682886029452478}
   crosshair: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
@@ -3068,12 +3069,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7560762846300775358}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe41a82939a454845af1c9e2fb64f76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7757426831222840541}
+  GSC: {fileID: 0}
+  clothesInt: 0
+  clothesStr: 
+  tempClothesStr: 
+  CharacterCustomizeClothesSlots: 0000000000000000000000000000000000000000
+  CharacterCustomizeBodySlots: 0000000000000000000000000000000000000000
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
   targetPosition: {x: 0, y: 0, z: 0}
   offset: {x: 10, y: 56, z: 12}
@@ -3082,7 +3089,22 @@ MonoBehaviour:
   local_spine: {fileID: 0}
   local_chest: {fileID: 0}
   target: {fileID: 2500420343310007654}
+  sentFirstUpdate: 0
   gotFirstUpdate: 0
+  playerCustomizeChildOBJ: {fileID: 0}
+  playerClothesComp: {fileID: 0}
+  playerHat: 0
+  Playeraccessory: 0
+  playerTop: 0
+  playerJacket: 0
+  playerUnderware: 0
+  playerHead: 0
+  playerSkin: 0
+  playerBottom: 0
+  playerShoes: 0
+  playerSex: 0
+  run: 1
+  updateArray: 0
 --- !u!114 &3773800707152486224
 MonoBehaviour:
   m_ObjectHideFlags: 0

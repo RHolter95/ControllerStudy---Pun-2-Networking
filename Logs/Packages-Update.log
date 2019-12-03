@@ -27,3 +27,13 @@ The following packages were added:
   com.unity.analytics@3.2.2
   com.unity.postprocessing@2.1.7
   com.unity.purchasing@2.0.3
+
+=== Sat Nov 30 18:48:09 2019
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.analytics from version 3.2.2 to 3.3.2
+  com.unity.ide.vscode from version 1.1.0 to 1.1.2
+  com.unity.purchasing from version 2.0.3 to 2.0.6

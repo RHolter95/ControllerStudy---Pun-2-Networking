@@ -9,6 +9,9 @@ namespace UnderdogCity
 public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
     public InventoryObject inventory;
+    
+
+    public int clothesInt = 0;
     public FixedJoystick joystickOne;
     public FixedJoystick joystickTwo;
 	public Texture2D crosshair;   
@@ -70,7 +73,9 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
     // Start is called before the first frame update
     private void Awake()
-    { 
+    {
+
+        
         //Delete this after inventory is setup
         inventory.Awake();
 

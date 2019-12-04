@@ -22,9 +22,18 @@ public class GameSetupController : MonoBehaviour
     public int playerSex = 0;
 
     //Add the index of all shirts with no arms
-    public int[] shirtsWithNoArms = new int[] {3, 4, 6, 7, 8};
-    public int[] shirtsWithNoSpine = new int[] {6,7};
-    public int[] pantsWithNoLegs = new int[] {6};
+    public int[] femaleShirtsWithNoArms = new int[] {3, 4, 6, 7, 8};
+    public int[] femaleShirtsWithNoSpine = new int[] {6,7};
+    public int[] femalePantsWithNoLegs = new int[] {6};
+
+    //Chest is usually [OFF] when shirt [On] except here
+    public int[] maleShirtsWithChest = new int[] { 2 };
+    public int[] femaleShirtsWithChest = new int[] { };
+
+    public int[] maleShirtsWithNoArms = new int[] { 3, 4, 5, 6, 7 };
+    public int[] maleShirtsWithNoSpine = new int[] { };
+    public int[] malePantsWithNoLegs = new int[] { 1, 3, 4, 5, 6, 7, 8, 9, 10 };
+
 
 
 
@@ -48,7 +57,6 @@ public class GameSetupController : MonoBehaviour
         }
 
         //PFC.GetStatistics();
-
         //Get stats from PFC
         accessoryIndex = PFC.Playeraccessory;
         hatIndex = PFC.playerHat;
@@ -69,6 +77,7 @@ public class GameSetupController : MonoBehaviour
         Debug.Log("Skin "+skinIndex);
         Debug.Log("Sex "+playerSex);
         */
+        
 
         
     }
@@ -110,13 +119,29 @@ public class GameSetupController : MonoBehaviour
             meshRenderer = playerCustomizeChildOBJ.transform.GetChild(9).GetComponent<SkinnedMeshRenderer>();
             meshRenderer.sharedMesh = null;
 
-            for (int i = 0; i < pantsWithNoLegs.Length; i++)
+            //If female
+            if(playerSex == 0)
             {
-                if (pantIndex == pantsWithNoLegs[i])
+                for (int i = 0; i < femalePantsWithNoLegs.Length; i++)
                 {
-                    meshRenderer = playerCustomizeChildOBJ.transform.GetChild(7).GetComponent<SkinnedMeshRenderer>();
-                    meshRenderer.sharedMesh = null;
-                    break;
+                    if (pantIndex == femalePantsWithNoLegs[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(7).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < malePantsWithNoLegs.Length; i++)
+                {
+                    if (pantIndex == malePantsWithNoLegs[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(7).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
                 }
             }
         }
@@ -136,39 +161,81 @@ public class GameSetupController : MonoBehaviour
     public void SetupPlayerShirt(int shirtIndex, GameObject playerCustomizeChildOBJ)
     {
         var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        bool removeChest = true;
 
-
-        //If we have a SHIRT[ON] then there is not CHEST[OFF]
+        //If our current shirt has no arms or spine, remove the mesh
         if (shirtIndex > 0)
+        {
+            //If female
+            if(playerSex == 0)
+            {
+                for (int i = 0; i < femaleShirtsWithChest.Length; i++)
+                {
+                    //If we have a shirt on that has no chest, delete chest
+                    if (shirtIndex == femaleShirtsWithChest[i])
+                    {
+                        removeChest = false;
+                        break;
+                    }
+                }
+                for (int i = 0; i < femaleShirtsWithNoArms.Length; i++)
+                {
+                    if (shirtIndex == femaleShirtsWithNoArms[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
+                }
+                for (int i = 0; i < femaleShirtsWithNoSpine.Length; i++)
+                {
+                    if (shirtIndex == femaleShirtsWithNoSpine[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(12).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < maleShirtsWithChest.Length; i++)
+                {
+                    //If we have a shirt on that has no chest, delete chest
+                    if (shirtIndex == maleShirtsWithChest[i])
+                    {
+                        removeChest = false;
+                        break;
+                    }
+                }
+                for (int i = 0; i < maleShirtsWithNoArms.Length; i++)
+                {
+                    if (shirtIndex == maleShirtsWithNoArms[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
+                }
+                for (int i = 0; i < maleShirtsWithNoSpine.Length; i++)
+                {
+                    if (shirtIndex == maleShirtsWithNoSpine[i])
+                    {
+                        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(12).GetComponent<SkinnedMeshRenderer>();
+                        meshRenderer.sharedMesh = null;
+                        break;
+                    }
+                }
+            } 
+        }
+
+        if (removeChest == true)
         {
             meshRenderer = playerCustomizeChildOBJ.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
             meshRenderer.sharedMesh = null;
         }
 
-        //If our current shirt has no arms or spine, remove the mesh
-        if (shirtIndex > 0)
-        {
-            for (int i = 0; i < shirtsWithNoArms.Length; i++)
-            {
-                if (shirtIndex == shirtsWithNoArms[i])
-                {
-                    meshRenderer = playerCustomizeChildOBJ.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-                    meshRenderer.sharedMesh = null;
-                    break;
-                }
-            }
-            for (int i = 0; i < shirtsWithNoSpine.Length; i++)
-            {
-                if (shirtIndex == shirtsWithNoSpine[i])
-                {
-                    meshRenderer = playerCustomizeChildOBJ.transform.GetChild(12).GetComponent<SkinnedMeshRenderer>();
-                    meshRenderer.sharedMesh = null;
-                    break;
-                }
-            }
-        }
-
-         meshRenderer = playerCustomizeChildOBJ.transform.GetChild(10).GetComponent<SkinnedMeshRenderer>();
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(10).GetComponent<SkinnedMeshRenderer>();
 
         //Actually apply the correct "top" they are wearing
         foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().shirtsPresets)
@@ -230,7 +297,7 @@ public class GameSetupController : MonoBehaviour
 
         ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
-        ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = false;//true
+        ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;//true
         ((MonoBehaviour)Myplayer.GetComponent("StayOnStage")).enabled = false;
         Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
         Myplayer.transform.Find("Canvas").gameObject.SetActive(true);

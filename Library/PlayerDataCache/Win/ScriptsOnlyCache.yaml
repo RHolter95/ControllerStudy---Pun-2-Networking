@@ -1224,7 +1224,7 @@ ScriptsOnlyBuild:
     className: TextMeshPro
   - hash:
       serializedVersion: 2
-      Hash: 852288b171f9af003016837ba157c880
+      Hash: f1a2fa94e21a0452fa8f180d0250c7d7
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetupController

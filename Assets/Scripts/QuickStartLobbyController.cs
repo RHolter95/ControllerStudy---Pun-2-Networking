@@ -7,7 +7,6 @@ using UnityEngine;
 public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 {
     public PlayFabsController PFC = null;
-    public Clothes C = null;
 
     [SerializeField]
     private GameObject quickStartButton; //button used for creating and joining a game.

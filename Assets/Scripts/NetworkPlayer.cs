@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using PlayFab;
 using PlayFab.ClientModels;
-using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
 using System.Globalization;
@@ -50,11 +49,13 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
         private void Awake()
         {
+            /*THIS GETS STATS TOO LATE, MOVED TO ON SUCCESSFUL LOGIN
             if (SceneManager.GetActiveScene().name == "Network" && run)
             {
                 GetStatistics();
                 run = false;
             }
+            */
 
             if (SceneManager.GetActiveScene().name == "Network")
             {

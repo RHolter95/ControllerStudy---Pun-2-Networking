@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PlayFab;
@@ -60,7 +61,10 @@ public class PlayFabsController : MonoBehaviour
 
     void Awake()
     {
-        
+        //friendScrollView = GameObject.Find("FriendPanel").transform.GetChild(0).transform.GetChild(1).gameObject.transform;
+
+        leaderBoardPanel.SetActive(false);
+        friendPanel.SetActive(false);
 
         maleCust = GameObject.Find("Male_Customize");
         femaleCust = GameObject.Find("Female_Customize");
@@ -206,6 +210,7 @@ public class PlayFabsController : MonoBehaviour
             networkController.maleSex.SetActive(true);
             networkController.femaleSex.SetActive(true);
         }else{
+            GetStatistics();
             networkController.onlineButton.SetActive(true);
             networkController.shopButton.SetActive(true);
         }
@@ -458,9 +463,14 @@ private static void OnErrorShared(PlayFabError error)
 }
 
 
-#endregion PlayerStats
+    #endregion PlayerStats
 
-#region Leaderboard
+    #region Leaderboard
+
+    public GameObject ListingPrefab;
+    public GameObject leaderBoardPanel;
+    public Transform listingContainer;
+
 
 
 public void GetLeaderboarder()
@@ -471,11 +481,26 @@ PlayFabClientAPI.GetLeaderboard(requestLeaderboard,OnGetLeaderboard,OnErrorLeade
 
 void OnGetLeaderboard(GetLeaderboardResult result)
 {
+    leaderBoardPanel.SetActive(true);
     //Debug.Log(result.Leaderboard[0].StatValue);
-    foreach(PlayerLeaderboardEntry player in result.Leaderboard){
+    foreach (PlayerLeaderboardEntry player in result.Leaderboard)
+    {
+        GameObject tempListing = Instantiate(ListingPrefab, listingContainer);
+        ListingPrefabb LL = tempListing.GetComponent<ListingPrefabb>();
+        LL.playerNameText.text = player.DisplayName;
+        LL.playerScoreText.text = player.StatValue.ToString();
         Debug.Log(player.DisplayName+ ": " + player.StatValue);
     }
 }
+
+    public void CloseLeaderboardPanel()
+    {
+        leaderBoardPanel.SetActive(false);
+        for (int i = listingContainer.childCount - 1; i>= 0; i--)
+        {
+            Destroy(listingContainer.GetChild(i).gameObject);
+        }
+    }
 
 void OnErrorLeaderboard(PlayFabError error)
 {
@@ -483,7 +508,6 @@ void OnErrorLeaderboard(PlayFabError error)
 }
 
 #endregion Leaderboard
-
 
 #region PlayerData
 
@@ -576,63 +600,168 @@ void SetDataSuccess(UpdateUserDataResult result)
 }
 
 
-#endregion PlayerData
+    #endregion PlayerData
 
+    #region Friends
+    [SerializeField]
+    Transform friendScrollView;
+    List<FriendInfo> myFriends;
 
-
-//Use for Offline in a while
-#region OfflineSetStats
-/*
-public void SetStats()
-{
-    PlayFabClientAPI.UpdatePlayerStatistics( new UpdatePlayerStatisticsRequest
+    
+    void DisplayFriends(List<FriendInfo> friendsCache)
     {
-    // request.Statistics is a list, so multiple StatisticUpdate objects can be defined if required.
-        Statistics = new List<StatisticUpdate>
+        foreach (FriendInfo f in friendsCache)
         {
-        new StatisticUpdate { StatisticName = "PlayerLevel", Value = playerLevel},
-        new StatisticUpdate { StatisticName = "GameLevel", Value = gameLevel},
-        new StatisticUpdate { StatisticName = "PlayerHighScore", Value = playerHighScore},
-        new StatisticUpdate { StatisticName = "PlayerCash", Value = playerCash},
-        }
-    },
-    result => {Debug.Log("User statistics updated");},
-    error => {Debug.LogError(error.GenerateErrorReport());});
-}
-
-void GetStats()
-{
-    PlayFabClientAPI.GetPlayerStatistics(
-        new GetPlayerStatisticsRequest(),
-        OnGetStats,
-        error => Debug.LogError(error.GenerateErrorReport())
-    );
-}
-
-
-void OnGetStats(GetPlayerStatisticsResult result)
-{
-        Debug.Log("Received the following Statistics:");
-        foreach (var eachStat in result.Statistics)
-        {
-            Debug.Log("Statistic (" + eachStat.StatisticName + "): " + eachStat.Value);
-            switch(eachStat.StatisticName)
+            bool isFound = false;
+            if (myFriends != null)
             {
-                case "PlayerLevel":
-                playerLevel = eachStat.Value;
-                    break;
-                case "GameLevel" :
-                gameLevel = eachStat.Value;
-                    break;
-                case "PlayerHighScore":
-                playerHighScore = eachStat.Value;
-                    break;
-                case "PlayerCash" :
-                playerCash = eachStat.Value;
-                    break;
+                foreach (FriendInfo g in myFriends)
+                {
+                    if (f.FriendPlayFabId == g.FriendPlayFabId)
+                    {
+                        isFound = true ;
+                    }
+                }
+            }
+            if (isFound == false)
+            {
+            GameObject listing = Instantiate(ListingPrefab, friendScrollView);
+            ListingPrefabb tempListing = listing.GetComponent<ListingPrefabb>();
+            //Debug.Log(tempListing.playerNameText);
+            //Debug.Log(f.TitleDisplayName);
+            tempListing.playerNameText.text = f.TitleDisplayName;
             }
         }
-}
-*/
-#endregion OfflineSetStats
+        myFriends = friendsCache;
+    }
+    
+    IEnumerator WaitForFriend()
+    {
+        yield return new WaitForSeconds(2);
+        GetFriends();
+    }
+
+    public void RunWaitForFriend()
+    {
+        StartCoroutine(WaitForFriend());
+    }
+    
+    enum FriendIdType { PlayFabId, Username, Email, DisplayName };
+
+    void AddFriend(FriendIdType idType, string friendId)
+    {
+        var request = new AddFriendRequest();
+        switch (idType)
+        {
+            case FriendIdType.PlayFabId:
+                request.FriendPlayFabId = friendId;
+                break;
+            case FriendIdType.Username:
+                request.FriendUsername = friendId;
+                break;
+            case FriendIdType.Email:
+                request.FriendEmail = friendId;
+                break;
+            case FriendIdType.DisplayName:
+                request.FriendTitleDisplayName = friendId;
+                break;
+        }
+        // Execute request and update friends when we are done
+        PlayFabClientAPI.AddFriend(request, result => {
+            Debug.Log("Friend added successfully!");
+        }, OnErrorShared);
+    }
+
+    List<FriendInfo> _friends = null;
+    
+    public void GetFriends()
+    {
+        PlayFabClientAPI.GetFriendsList(new GetFriendsListRequest
+        { IncludeSteamFriends = false,
+          IncludeFacebookFriends = false
+        }, result =>
+        {
+            _friends = result.Friends;
+            DisplayFriends(_friends);//triggers your UI
+        }, OnErrorShared);
+    }
+    
+    string friendSearch;
+    [SerializeField]
+    public GameObject friendPanel;
+
+    public void InputFriendID(string idIn)
+    {
+        friendSearch = idIn;
+    }
+
+    public void SubmitFriendRequest()
+    {
+        AddFriend(FriendIdType.PlayFabId, friendSearch);
+    }
+
+    public void OpenCloseFriends()
+    {
+        friendPanel.SetActive(!friendPanel.activeInHierarchy);
+    }
+
+    #endregion Friends
+
+
+
+    //Use for Offline in a while
+    #region OfflineSetStats
+    /*
+    public void SetStats()
+    {
+        PlayFabClientAPI.UpdatePlayerStatistics( new UpdatePlayerStatisticsRequest
+        {
+        // request.Statistics is a list, so multiple StatisticUpdate objects can be defined if required.
+            Statistics = new List<StatisticUpdate>
+            {
+            new StatisticUpdate { StatisticName = "PlayerLevel", Value = playerLevel},
+            new StatisticUpdate { StatisticName = "GameLevel", Value = gameLevel},
+            new StatisticUpdate { StatisticName = "PlayerHighScore", Value = playerHighScore},
+            new StatisticUpdate { StatisticName = "PlayerCash", Value = playerCash},
+            }
+        },
+        result => {Debug.Log("User statistics updated");},
+        error => {Debug.LogError(error.GenerateErrorReport());});
+    }
+
+    void GetStats()
+    {
+        PlayFabClientAPI.GetPlayerStatistics(
+            new GetPlayerStatisticsRequest(),
+            OnGetStats,
+            error => Debug.LogError(error.GenerateErrorReport())
+        );
+    }
+
+
+    void OnGetStats(GetPlayerStatisticsResult result)
+    {
+            Debug.Log("Received the following Statistics:");
+            foreach (var eachStat in result.Statistics)
+            {
+                Debug.Log("Statistic (" + eachStat.StatisticName + "): " + eachStat.Value);
+                switch(eachStat.StatisticName)
+                {
+                    case "PlayerLevel":
+                    playerLevel = eachStat.Value;
+                        break;
+                    case "GameLevel" :
+                    gameLevel = eachStat.Value;
+                        break;
+                    case "PlayerHighScore":
+                    playerHighScore = eachStat.Value;
+                        break;
+                    case "PlayerCash" :
+                    playerCash = eachStat.Value;
+                        break;
+                }
+            }
+    }
+    */
+    #endregion OfflineSetStats
 }

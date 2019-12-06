@@ -4340,6 +4340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
+  PFC: {fileID: 0}
   clothesInt: 0
   joystickOne: {fileID: 5931022553862056123}
   joystickTwo: {fileID: 3283162578293939209}

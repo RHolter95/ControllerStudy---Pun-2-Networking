@@ -9,6 +9,7 @@ namespace UnderdogCity
 public class PlayerMove : MonoBehaviourPun, IPunObservable
 {
     public InventoryObject inventory;
+    public PlayFabsController PFC = null;
     
 
     public int clothesInt = 0;
@@ -74,7 +75,11 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
     // Start is called before the first frame update
     private void Awake()
     {
-
+        PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
+        if (PFC == null)
+        {
+           Debug.Log("Couldn't find NetworkController/PlayFabsController");
+        }
         
         //Delete this after inventory is setup
         inventory.Awake();
@@ -168,9 +173,21 @@ public class PlayerMove : MonoBehaviourPun, IPunObservable
 
     // Update is called once per frame
     private void Update()
-    { 
+    {
 
-        if(Physics.Raycast(transform.position, -Vector3.up, 0.05f) == true)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PFC.leaderBoardPanel.SetActive(true);
+            PFC.GetLeaderboarder();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PFC.friendPanel.SetActive(true);
+            PFC.GetFriends();
+        }
+
+            if (Physics.Raycast(transform.position, -Vector3.up, 0.05f) == true)
         {
             isGrounded = true;
         }else{

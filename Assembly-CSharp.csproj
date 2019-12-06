@@ -180,12 +180,14 @@
     <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginContractKey.cs" />
     <Compile Include="Assets\PlayFabSdk\Shared\Public\PluginManager.cs" />
     <Compile Include="Assets\Scripts\BulletForward.cs" />
+    <Compile Include="Assets\Scripts\DontDestroyOnLoaded.cs" />
     <Compile Include="Assets\Scripts\FXManager.cs" />
     <Compile Include="Assets\Scripts\GameSetupController.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\ItemDragHandler.cs" />
     <Compile Include="Assets\Scripts\ItemDropHandler.cs" />
+    <Compile Include="Assets\Scripts\ListingPrefabb.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\NetworkController.cs" />
     <Compile Include="Assets\Scripts\NetworkPlayer.cs" />

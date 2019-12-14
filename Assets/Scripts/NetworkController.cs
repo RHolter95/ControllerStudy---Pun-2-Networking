@@ -35,6 +35,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public GameObject userNameGO = null;
     public GameObject userEmailGO = null;
     public GameObject userPassGO = null;
+
+    public GameObject PauseMenu = null;
+
     public Component userInputEmail = null;
     public Component userInputName = null;
     public Component userInputPass = null;
@@ -82,6 +85,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         shopButton = GameObject.Find("Shop");
         shopCanvas = GameObject.Find("ShopCanvas");
 
+     
+
         
 
         //Start Char Customization   
@@ -100,6 +105,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         onlineButton = GameObject.Find("Online");
         onlineAuthButton = GameObject.Find("OnlineAuth");
 
+
+        
         createNewButton.SetActive(false);
         onlineButton.SetActive(false);
         userNameGO.SetActive(false);
@@ -117,8 +124,11 @@ public class NetworkController : MonoBehaviourPunCallbacks
         maleCharCustomizer.SetActive(false);
         maleSex.SetActive(false);
         femaleSex.SetActive(false);
-        
-        if(maleSex == null){
+
+        if (PauseMenu == null){
+            Debug.Log("Couldn't Find PauseMenu");}
+
+        if (maleSex == null){
             Debug.Log("Couldn't Find Male Sex Button");}
 
         if(femaleSex == null){
@@ -206,6 +216,8 @@ public class NetworkController : MonoBehaviourPunCallbacks
         //we just reset username to nothing because it only needs an ACTUAL email/pass
         userNameStr = "";
 	}
+
+
 
     public void NewUserCanvas(){
         playFabManager.WipeTextFields();

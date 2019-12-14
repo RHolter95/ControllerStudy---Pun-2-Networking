@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.Json;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayFab.Internal;
 
 public class PlayFabsController : MonoBehaviour
 {
@@ -20,10 +19,11 @@ public class PlayFabsController : MonoBehaviour
     public NetworkController networkController = null;
     public UIControllerDEMO CharCust = null;
     public string userEmailStr = null;
-	public string userNameStr = null;
-	public string userPassStr = null;
-    private string myID;
+    public string userNameStr = null;
+    public string userPassStr = null;
+    public string myID = "";
     public bool isCustomizing = false;
+    public bool updateFriendPanelID = false;
     public GameObject maleCust = null;
     public GameObject femaleCust = null;
     public GameObject finalChar = null;
@@ -37,21 +37,36 @@ public class PlayFabsController : MonoBehaviour
     public int playerBottom = 0;
     public int playerShoes = 0;
     public int playerSex = 0;
+    public string playerID = "";
     public string temp = "";
     public UnityEngine.Object prefab;
     public GameObject maleStage = null;
     public GameObject femaleStage = null;
     public GameObject tempOBJ = null;
 
+    public GameObject ListingPrefab;
+    public GameObject leaderBoard;
+    public GameObject leaderBoardPanel;
+    public Transform listingContainer;
+    public Transform friendScrollView;
+    public GameObject friendPanel;
+    public GameObject friendListPanel;
+    public GameObject pauseMenu = null;
+    public GameObject pausePanel = null;
+    string friendSearch;
+
+
+
+
     private void Enable()
     {
-        if(PlayFabsController.PFC == null)
+        if (PlayFabsController.PFC == null)
         {
             PlayFabsController.PFC = this;
         }
         else
         {
-            if(PlayFabsController.PFC != this)
+            if (PlayFabsController.PFC != this)
             {
                 Destroy(this.gameObject);
             }
@@ -61,7 +76,26 @@ public class PlayFabsController : MonoBehaviour
 
     void Awake()
     {
-        //friendScrollView = GameObject.Find("FriendPanel").transform.GetChild(0).transform.GetChild(1).gameObject.transform;
+        pauseMenu = GameObject.Find("PauseMenu").gameObject;
+        
+        if (pauseMenu == null)
+        {
+            Debug.Log("Couldn't locate PauseMenu GameObj, Pause broken");
+        }
+        else
+        {
+            friendPanel = pauseMenu.transform.GetChild(0).gameObject;
+            friendListPanel = pauseMenu.transform.GetChild(0).GetChild(0).gameObject;
+            friendScrollView = friendListPanel.transform.GetChild(1).transform;
+
+            leaderBoard = pauseMenu.transform.GetChild(1).gameObject;
+            leaderBoardPanel = pauseMenu.transform.GetChild(1).GetChild(0).gameObject;
+            listingContainer = leaderBoardPanel.transform.GetChild(1).transform;
+
+            pausePanel = pauseMenu.transform.GetChild(2).gameObject;
+
+            pauseMenu.SetActive(false);
+        }
 
         leaderBoardPanel.SetActive(false);
         friendPanel.SetActive(false);
@@ -69,28 +103,25 @@ public class PlayFabsController : MonoBehaviour
         maleCust = GameObject.Find("Male_Customize");
         femaleCust = GameObject.Find("Female_Customize");
 
-        maleStage  = GameObject.Find("Male_Stand");
-        femaleStage  = GameObject.Find("Female_Stand");
+        maleStage = GameObject.Find("Male_Stand");
+        femaleStage = GameObject.Find("Female_Stand");
 
         maleStage.SetActive(false);
         femaleStage.SetActive(false);
 
-        //maleCust = maleCust.transform.GetChild(6).gameObject;
-        //femaleCust = femaleCust.transform.GetChild(6).gameObject;
-
-        if(femaleCust == null || maleCust == null )
+        if (femaleCust == null || maleCust == null)
         {
             Debug.Log("Couldn't locate Male/Female GameObj");
         }
 
-        if(maleStage == null || femaleStage == null )
+        if (maleStage == null || femaleStage == null)
         {
             Debug.Log("Couldn't locate Male/Female Stage");
         }
 
 
         networkController = transform.gameObject.GetComponent<NetworkController>();
-        if(networkController == null)
+        if (networkController == null)
         {
             Debug.Log("Couldn't locate Network Controller");
         }
@@ -98,34 +129,44 @@ public class PlayFabsController : MonoBehaviour
 
     void Update()
     {
-
-        if(networkController.charSex == 0 && isCustomizing){
-            CharCust = femaleStage.GetComponentInChildren<UIControllerDEMO>();
-            //CharCust = CharCust.transform.GetChild(5).GetComponent<UIControllerDEMO>();
+        if (updateFriendPanelID)
+        {
+            friendListPanel.transform.GetChild(5).GetComponent<Text>().text = myID.ToString();
+            updateFriendPanelID = false;
         }
 
-        if(networkController.charSex == 1 && isCustomizing){
+        if (networkController.charSex == 0 && isCustomizing)
+        {
+            CharCust = femaleStage.GetComponentInChildren<UIControllerDEMO>();
+        }
+
+        if (networkController.charSex == 1 && isCustomizing)
+        {
             CharCust = maleStage.GetComponentInChildren<UIControllerDEMO>();
-            //CharCust = CharCust.transform.GetChild(5).GetComponent<UIControllerDEMO>();
         }
 
         //If were customizing and we are Male lets grab correct component
-        if(isCustomizing && networkController.charSex == 0){
-        finalChar = femaleCust;
+        if (isCustomizing && networkController.charSex == 0)
+        {
+            finalChar = femaleCust;
         }
 
         //If were customizing and we are Female lets grab correct component
-        if(isCustomizing && networkController.charSex == 1){
-        finalChar = maleCust;
+        if (isCustomizing && networkController.charSex == 1)
+        {
+            finalChar = maleCust;
         }
 
-        if(networkController.userEmailGO != null){
+        if (networkController.userEmailGO != null)
+        {
             userEmailStr = networkController.userEmailGO.GetComponent<InputField>().text;
         }
-        if(networkController.userNameGO != null){
+        if (networkController.userNameGO != null)
+        {
             userNameStr = networkController.userNameGO.GetComponent<InputField>().text;
         }
-        if(networkController.userPassGO != null){
+        if (networkController.userPassGO != null)
+        {
             userPassStr = networkController.userPassGO.GetComponent<InputField>().text;
         }
     }
@@ -133,49 +174,53 @@ public class PlayFabsController : MonoBehaviour
     public void Start()
     {
         //Note: Setting title Id here can be skipped if you have set the value in Editor Extensions already.
-        if (string.IsNullOrEmpty(PlayFabSettings.TitleId)){
+        if (string.IsNullOrEmpty(PlayFabSettings.TitleId))
+        {
             PlayFabSettings.TitleId = "EF1CC"; // Please change this value to your own titleId from PlayFab Game Manager
         }
 
         PlayerPrefs.DeleteAll();
 
         //Automatically try to sign them in
-        if(PlayerPrefs.HasKey("EMAIL"))
+        if (PlayerPrefs.HasKey("EMAIL"))
         {
-        userEmailStr = PlayerPrefs.GetString("EMAIL");
-        userPassStr = PlayerPrefs.GetString("PASSWORD");
-        Login();
+            userEmailStr = PlayerPrefs.GetString("EMAIL");
+            userPassStr = PlayerPrefs.GetString("PASSWORD");
+            Login();
         }
         else
         {
-            #if UNITY_ANDROID
+#if UNITY_ANDROID
             var requestAndroid = new LoginWithAndroidDeviceIDRequest{AndroidDeviceId = ReturnMobileID(), CreateAccount = true};
             PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnLoginMobileSuccess, OnLoginMobileFailure);
             networkController.recoverButton.SetActive(true);
-            #endif
+#endif
 
-            #if UNITY_IOS
+#if UNITY_IOS
             var requestIOS = new loginWithIOSDeviceIDRequest{DeviceID = ReturnMobileID(), CreateAccount = true};
             PlayFabClientAPI.loginWithIOSDeviceID(requestIOS, OnLoginMobileSuccess, OnLoginMobileFailure);
             networkController.recoverButton.SetActive(true);
-            #endif
+#endif
         }
     }
 
-//Login finction
-#region Login
+    //Login finction
+    #region Login
 
     public void Login()
-	{
-        var request = new LoginWithEmailAddressRequest { Email = userEmailStr, Password = userPassStr};
+    {
+        var request = new LoginWithEmailAddressRequest { Email = userEmailStr, Password = userPassStr };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSuccess, OnLoginFailure);
-	}
+    }
 
     private void OnLoginMobileSuccess(LoginResult result)
     {
         Debug.Log("Logged In: ");
 
         myID = result.PlayFabId;
+
+        //Throw playerID onto friendlist Panel for friend request refrence
+        updateFriendPanelID = true;
 
         networkController.userEmailGO.SetActive(false);
         networkController.userNameGO.SetActive(false);
@@ -195,6 +240,9 @@ public class PlayFabsController : MonoBehaviour
 
         myID = result.PlayFabId;
 
+        //Throw playerID onto friendlist Panel
+        updateFriendPanelID = true;
+
         networkController.loginButton.SetActive(false);
         networkController.createNewButton.SetActive(false);
         networkController.userEmailGO.SetActive(false);
@@ -205,11 +253,14 @@ public class PlayFabsController : MonoBehaviour
         networkController.onlineButton.SetActive(false);
         networkController.shopButton.SetActive(false);
 
-        if(newRegister){
+        if (newRegister)
+        {
             Debug.Log("Customize Now");
             networkController.maleSex.SetActive(true);
             networkController.femaleSex.SetActive(true);
-        }else{
+        }
+        else
+        {
             GetStatistics();
             networkController.onlineButton.SetActive(true);
             networkController.shopButton.SetActive(true);
@@ -219,12 +270,15 @@ public class PlayFabsController : MonoBehaviour
     int GetIndex(String inputString)
     {
         int index = int.Parse(inputString.ToString());
-        if(index >= 0 && index <= 100){
-        }else{
+        if (index >= 0 && index <= 100)
+        {
+        }
+        else
+        {
             //We dont have a valid index 0 of Head or Skin ( not sure yet) so set it to default 1
             index = 1;
         }
-            return index;
+        return index;
     }
 
     public void FinalizeCharacter()
@@ -235,7 +289,7 @@ public class PlayFabsController : MonoBehaviour
         //Lets push clothing index's and generate the character based off those index's
         //inside gameManager. Load stats and generate a base character
         //Then change the skin asset "Mesh" component to the index of correct "Mesh"
-        
+
 
         //Determine sex and spawn base model
         //prefab = EditorUtility.CreateEmptyPrefab("Assets/Photon/Resources/PhotonPrefabs/PhotonPlayerMALE.prefab");
@@ -251,6 +305,9 @@ public class PlayFabsController : MonoBehaviour
         playerSkin = GetIndex(CharCust.skin_text.text);
         playerHead = GetIndex(CharCust.head_text.text);
         StartCloudUpdatePlayerClothes();
+
+        //Get Stats we just posted
+        GetStatistics();
 
         networkController.maleCharCustomizer.SetActive(false);
         networkController.femaleCharCustomizer.SetActive(false);
@@ -270,12 +327,13 @@ public class PlayFabsController : MonoBehaviour
         femaleStage.SetActive(true);
 
         isCustomizing = true;
-        networkController.charSex = 0;        
+        networkController.charSex = 0;
     }
 
     public void SwapSex()
     {
-        switch(networkController.charSex){
+        switch (networkController.charSex)
+        {
             case 0:
                 Debug.Log("Female -> Male");
                 femaleCust.SetActive(false);
@@ -283,7 +341,7 @@ public class PlayFabsController : MonoBehaviour
                 maleCust.SetActive(true);
                 maleStage.SetActive(true);
                 networkController.charSex = 1;
-            break;
+                break;
             case 1:
                 Debug.Log("Male -> Female");
                 maleCust.SetActive(false);
@@ -291,11 +349,11 @@ public class PlayFabsController : MonoBehaviour
                 femaleCust.SetActive(true);
                 femaleStage.SetActive(true);
                 networkController.charSex = 0;
-            break;
+                break;
         }
     }
 
-     public void MaleSex()
+    public void MaleSex()
     {
         networkController.maleCharCustomizer.SetActive(true);
         networkController.femaleCharCustomizer.SetActive(false);
@@ -311,7 +369,7 @@ public class PlayFabsController : MonoBehaviour
 
     private void OnRegisterFailure(PlayFabError error)
     {
-        Debug.LogError(error.GenerateErrorReport());;
+        Debug.LogError(error.GenerateErrorReport()); ;
     }
 
     private void OnLoginFailure(PlayFabError error)
@@ -326,6 +384,7 @@ public class PlayFabsController : MonoBehaviour
 
     public void WipeTextFields()
     {
+        Debug.Log("Here");
         networkController.userNameInput.text = "";
         networkController.userEmailInput.text = "";
         networkController.userPassInput.text = "";
@@ -336,7 +395,7 @@ public class PlayFabsController : MonoBehaviour
         Debug.Log("Registered: " + userEmailStr);
         PlayerPrefs.SetString("EMAIL", userEmailStr);
         PlayerPrefs.SetString("PASSWORD", userPassStr);
-        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest{DisplayName = userNameStr},OnDisplayName,OnLoginMobileFailure);
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = userNameStr }, OnDisplayName, OnLoginMobileFailure);
         newRegister = true;
 
         //Evertime we register we initialize stats to 0 and push to server
@@ -349,7 +408,8 @@ public class PlayFabsController : MonoBehaviour
         playerHat = playerTop = playerJacket = playerUnderware = playerBottom = playerShoes = DEFAULT;
 
         myID = result.PlayFabId;
-      
+
+
         //Doesnt need UserName to login
         userNameStr = "";
         networkController.userNameGO.SetActive(false);
@@ -365,16 +425,18 @@ public class PlayFabsController : MonoBehaviour
     }
 
     public void Submit()
-	{
-        if(userEmailStr.Length > 6 && userNameStr.Length > 3 && userPassStr.Length > 6)
+    {
+        if (userEmailStr.Length > 6 && userNameStr.Length > 3 && userPassStr.Length > 6)
         {
-		Debug.Log("Sending Registration to playfab\nEMAIL: " + userEmailStr+" , USERNAME: "+userNameStr);
-        var registerRequest  = new RegisterPlayFabUserRequest  { Email = userEmailStr, Password = userPassStr ,Username = userNameStr};
-        PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
-        }else{
+            Debug.Log("Sending Registration to playfab\nEMAIL: " + userEmailStr + " , USERNAME: " + userNameStr);
+            var registerRequest = new RegisterPlayFabUserRequest { Email = userEmailStr, Password = userPassStr, Username = userNameStr };
+            PlayFabClientAPI.RegisterPlayFabUser(registerRequest, OnRegisterSuccess, OnRegisterFailure);
+        }
+        else
+        {
             Debug.Log("Fix Username Field");
         }
-	}
+    }
 
     public static string ReturnMobileID()
     {
@@ -384,8 +446,8 @@ public class PlayFabsController : MonoBehaviour
 
     public void OnClickAddLogin()
     {
-        var addLoginRequest = new AddUsernamePasswordRequest{Email = userEmailStr, Password = userPassStr, Username = userNameStr};
-        PlayFabClientAPI.AddUsernamePassword(addLoginRequest,OnAddLoginSuccess,OnRegisterFailure); 
+        var addLoginRequest = new AddUsernamePasswordRequest { Email = userEmailStr, Password = userPassStr, Username = userNameStr };
+        PlayFabClientAPI.AddUsernamePassword(addLoginRequest, OnAddLoginSuccess, OnRegisterFailure);
     }
 
     private void OnAddLoginSuccess(AddUsernamePasswordResult result)
@@ -404,210 +466,240 @@ public class PlayFabsController : MonoBehaviour
         networkController.shopButton.SetActive(true);
         WipeTextFields();
     }
-#endregion Login
+    #endregion Login
 
-public int playerLevel;
-public int gameLevel;
-public int playerHighScore;
-public int playerCash;
+    public int playerLevel;
+    public int gameLevel;
+    public int playerHighScore;
+    public int playerCash;
 
-#region PlayerStats  
+    #region PlayerStats  
 
-#region Level_HighScore_Cash_StatPush
-// Build the request object and access the API
-public void StartCloudUpdatePlayerStats()
-{
-    
-    PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+    #region Level_HighScore_Cash_StatPush
+    // Build the request object and access the API
+    public void StartCloudUpdatePlayerStats()
     {
-        FunctionName = "UpdatePlayerStats",
-        FunctionParameter = new { Level = playerLevel , HighScore = playerHighScore , Cash = playerCash },
-        GeneratePlayStreamEvent = true, 
-    }, OnCloudUpdateStats, OnErrorShared);
-}
+        PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+        {
+            FunctionName = "UpdatePlayerStats",
+            FunctionParameter = new { Level = playerLevel, HighScore = playerHighScore, Cash = playerCash },
+            GeneratePlayStreamEvent = true,
+        }, OnCloudUpdateStats, OnErrorShared);
+    }
 
-private static void OnCloudUpdateStats(ExecuteCloudScriptResult result) {
-    JsonObject jsonResult = (JsonObject)result.FunctionResult;
-    object messageValue;
-    jsonResult.TryGetValue("messageValue", out messageValue);
-    Debug.Log((string)messageValue);
-}
-
-#endregion Level_HighScore_Cash_StatPush
-
-#region Clothing_StatPush
-public void StartCloudUpdatePlayerClothes()
-{
-    PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+    private static void OnCloudUpdateStats(ExecuteCloudScriptResult result)
     {
-        FunctionName = "UpdatePlayerClothes", 
-        FunctionParameter = new { Hat = playerHat, Accessories = Playeraccessory , Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes, Skin = playerSkin, Sex = playerSex, Head = playerHead}, // The parameter provided to your function
-        GeneratePlayStreamEvent = true, 
-    }, OnCloudUpdateClothes, OnErrorShared);
-}
+        JsonObject jsonResult = (JsonObject)result.FunctionResult;
+        object messageValue;
+        jsonResult.TryGetValue("messageValue", out messageValue);
+        Debug.Log((string)messageValue);
+    }
 
-private static void OnCloudUpdateClothes(ExecuteCloudScriptResult result) {
-    // Cloud Script returns arbitrary results, so you have to evaluate them one step and one parameter at a time
-    //Debug.Log(JsonWrapper.SerializeObject(result.FunctionResult));
-    JsonObject jsonResult = (JsonObject)result.FunctionResult;
-    object messageValue;
-    jsonResult.TryGetValue("messageValue", out messageValue); // note how "messageValue" directly corresponds to the JSON values set in Cloud Script
-    Debug.Log((string)messageValue);
-}
-#endregion Clothing_StatPush
+    #endregion Level_HighScore_Cash_StatPush
 
-//Error reporting for StatPush
-private static void OnErrorShared(PlayFabError error)
-{
-    Debug.Log(error.GenerateErrorReport());
-}
+    #region Clothing_StatPush
+    public void StartCloudUpdatePlayerClothes()
+    {
+        PlayFabClientAPI.ExecuteCloudScript(new ExecuteCloudScriptRequest()
+        {
+            FunctionName = "UpdatePlayerClothes",
+            FunctionParameter = new { Hat = playerHat, Accessories = Playeraccessory, Top = playerTop, Jacket = playerJacket, Underware = playerUnderware, Bottom = playerBottom, Shoes = playerShoes, Skin = playerSkin, Sex = playerSex, Head = playerHead },
+            GeneratePlayStreamEvent = true,
+        }, OnCloudUpdateClothes, OnErrorShared);
+    }
+
+    private static void OnCloudUpdateClothes(ExecuteCloudScriptResult result)
+    {
+        // Cloud Script returns arbitrary results, so you have to evaluate them one step and one parameter at a time
+        //Debug.Log(JsonWrapper.SerializeObject(result.FunctionResult));
+        JsonObject jsonResult = (JsonObject)result.FunctionResult;
+        object messageValue;
+        jsonResult.TryGetValue("messageValue", out messageValue); // note how "messageValue" directly corresponds to the JSON values set in Cloud Script
+        Debug.Log((string)messageValue);
+    }
+    #endregion Clothing_StatPush
+
+    //Error reporting for StatPush
+    private static void OnErrorShared(PlayFabError error)
+    {
+        Debug.Log(error.GenerateErrorReport());
+    }
 
 
     #endregion PlayerStats
 
     #region Leaderboard
 
-    public GameObject ListingPrefab;
-    public GameObject leaderBoardPanel;
-    public Transform listingContainer;
-
-
-
-public void GetLeaderboarder()
-{
-var requestLeaderboard = new GetLeaderboardRequest{StartPosition = 0,StatisticName = "ObjectsDestroyed", MaxResultsCount = 20};
-PlayFabClientAPI.GetLeaderboard(requestLeaderboard,OnGetLeaderboard,OnErrorLeaderboard);
-}
-
-void OnGetLeaderboard(GetLeaderboardResult result)
-{
-    leaderBoardPanel.SetActive(true);
-    //Debug.Log(result.Leaderboard[0].StatValue);
-    foreach (PlayerLeaderboardEntry player in result.Leaderboard)
+    public void GetLeaderboarder()
     {
-        GameObject tempListing = Instantiate(ListingPrefab, listingContainer);
-        ListingPrefabb LL = tempListing.GetComponent<ListingPrefabb>();
-        LL.playerNameText.text = player.DisplayName;
-        LL.playerScoreText.text = player.StatValue.ToString();
-        Debug.Log(player.DisplayName+ ": " + player.StatValue);
+        var requestLeaderboard = new GetLeaderboardRequest { StartPosition = 0, StatisticName = "ObjectsDestroyed", MaxResultsCount = 20 };
+        PlayFabClientAPI.GetLeaderboard(requestLeaderboard, OnGetLeaderboard, OnErrorLeaderboard);
     }
-}
+    public void GetLeaderBoardPauseMenu()
+    {
+        pausePanel.SetActive(false);
+        leaderBoardPanel.SetActive(true);
+        leaderBoard.SetActive(true);
+        GetLeaderboarder();
+    }
+
+    void OnGetLeaderboard(GetLeaderboardResult result)
+    {
+        //leaderBoardPanel.SetActive(true);
+        //Debug.Log(result.Leaderboard[0].StatValue);
+        foreach (PlayerLeaderboardEntry player in result.Leaderboard)
+        {
+            GameObject tempListing = Instantiate(ListingPrefab, listingContainer);
+            ListingPrefabb LL = tempListing.GetComponent<ListingPrefabb>();
+            LL.playerNameText.text = player.DisplayName;
+            LL.playerScoreText.text = player.StatValue.ToString();
+            Debug.Log(player.DisplayName + ": " + player.StatValue);
+        }
+    }
 
     public void CloseLeaderboardPanel()
     {
         leaderBoardPanel.SetActive(false);
-        for (int i = listingContainer.childCount - 1; i>= 0; i--)
+        for (int i = listingContainer.childCount - 1; i >= 0; i--)
         {
             Destroy(listingContainer.GetChild(i).gameObject);
         }
+        pauseMenu.SetActive(true);
+        pausePanel.SetActive(true);
     }
 
-void OnErrorLeaderboard(PlayFabError error)
-{
-    Debug.LogError(error.GenerateErrorReport());
-}
+    void OnErrorLeaderboard(PlayFabError error)
+    {
+        Debug.LogError(error.GenerateErrorReport());
+    }
 
-#endregion Leaderboard
+    #endregion Leaderboard
 
-#region PlayerData
+    #region PlayerData
 
-public void GetStatistics()
-{
-    PlayFabClientAPI.GetPlayerStatistics(
-        new GetPlayerStatisticsRequest(),
-        OnGetStatistics,
-        error => Debug.LogError(error.GenerateErrorReport())
-    );
-}
+    public void GetStatistics()
+    {
+        PlayFabClientAPI.GetPlayerStatistics(
+            new GetPlayerStatisticsRequest(),
+            OnGetStatistics,
+            error => Debug.LogError(error.GenerateErrorReport())
+        );
+    }
 
 
-void OnGetStatistics(GetPlayerStatisticsResult result)
-{
-    //Debug.Log("Received the following Statistics:");
-    foreach (var eachStat in result.Statistics){
-        //Debug.Log("Statistic (" + eachStat.StatisticName + "): " + eachStat.Value);
-        switch(eachStat.StatisticName){
-            case "Hat" :
-            playerHat = eachStat.Value;
-            break;
-             case "Accessories" :
-            Playeraccessory = eachStat.Value;
-            break;
-             case "Top" :
-            playerTop = eachStat.Value;
-            break;
-             case "Jacket" :
-            playerJacket = eachStat.Value;
-            break;
-             case "Underware" :
-            playerUnderware = eachStat.Value;
-            break;
-             case "Bottom" :
-            playerBottom = eachStat.Value;
-            break;
-             case "Shoes" :
-            playerShoes = eachStat.Value;
-            break;
-             case "Skin" :
-            playerSkin = eachStat.Value;
-            break;
-             case "Sex" :
-            playerSex = eachStat.Value;
-            break;
-             case "Head" :
-            playerHead = eachStat.Value;
-            break;
+    void OnGetStatistics(GetPlayerStatisticsResult result)
+    {
+
+        //Debug.Log("Received the following Statistics:");
+        foreach (var eachStat in result.Statistics)
+        {
+            //Debug.Log("Statistic (" + eachStat.StatisticName + "): " + eachStat.Value);
+            switch (eachStat.StatisticName)
+            {
+                case "Hat":
+                    playerHat = eachStat.Value;
+                    break;
+                case "Accessories":
+                    Playeraccessory = eachStat.Value;
+                    break;
+                case "Top":
+                    playerTop = eachStat.Value;
+                    break;
+                case "Jacket":
+                    playerJacket = eachStat.Value;
+                    break;
+                case "Underware":
+                    playerUnderware = eachStat.Value;
+                    break;
+                case "Bottom":
+                    playerBottom = eachStat.Value;
+                    break;
+                case "Shoes":
+                    playerShoes = eachStat.Value;
+                    break;
+                case "Skin":
+                    playerSkin = eachStat.Value;
+                    break;
+                case "Sex":
+                    playerSex = eachStat.Value;
+                    break;
+                case "Head":
+                    playerHead = eachStat.Value;
+                    break;
+            }
         }
-    }    
-}
-
-
-public void GetPlayerData()
-{
-    PlayFabClientAPI.GetUserData(new GetUserDataRequest()
-    {
-        PlayFabId = myID,
-        Keys = null
-    }, UserDataSuccess, OnErrorLeaderboard);
-}
-
-void UserDataSuccess(GetUserDataResult result)
-{
-    if(result.Data == null || !result.Data.ContainsKey("Skins"))
-    {
-        Debug.Log("Skins not set");
     }
-    else
-    {
-        PersistantData.PD.SkinsStringToData(result.Data["Skins"].Value);
-    }
-}
 
-public void SetUserData(string SkinsData)
-{
-    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+    public void GetPlayerData()
     {
-        Data = new Dictionary<string, string>()
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = myID,
+            Keys = null
+        }, UserDataSuccess, OnErrorLeaderboard);
+    }
+
+    void UserDataSuccess(GetUserDataResult result)
+    {
+        if (result.Data == null || !result.Data.ContainsKey("Skins"))
+        {
+            Debug.Log("Skins not set");
+        }
+        else
+        {
+            PersistantData.PD.SkinsStringToData(result.Data["Skins"].Value);
+        }
+    }
+
+
+
+    public void GetUserData()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = myID,
+            Keys = null
+        }, result => {
+            Debug.Log("Got user data:");
+            if (result.Data == null || !result.Data.ContainsKey("playerID")) Debug.Log("No playerID");
+            else playerID = result.Data["playerID"].Value; //Debug.Log("playerID: " + result.Data["playerID"].Value);
+        }, (error) => {
+            Debug.Log("Got error retrieving user data:");
+            Debug.Log(error.GenerateErrorReport());
+        });
+    }
+
+    public void SetUserData(string SkinsData)
+    {
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        {
+            Data = new Dictionary<string, string>()
         {
             {"Skins", SkinsData}
         }
-    }, SetDataSuccess, OnErrorLeaderboard);
-}
+        }, SetDataSuccess, OnErrorLeaderboard);
+    }
 
-void SetDataSuccess(UpdateUserDataResult result)
-{
-    Debug.Log(result.DataVersion);
-}
+    void SetDataSuccess(UpdateUserDataResult result)
+    {
+        Debug.Log(result.DataVersion);
+    }
 
 
     #endregion PlayerData
 
     #region Friends
     [SerializeField]
-    Transform friendScrollView;
     List<FriendInfo> myFriends;
 
-    
+    public void GetFriendPanelPauseMenu()
+    {
+        pausePanel.SetActive(false);
+        friendListPanel.SetActive(true);
+        friendPanel.SetActive(true);
+        GetFriends();
+    }
+
     void DisplayFriends(List<FriendInfo> friendsCache)
     {
         foreach (FriendInfo f in friendsCache)
@@ -619,22 +711,23 @@ void SetDataSuccess(UpdateUserDataResult result)
                 {
                     if (f.FriendPlayFabId == g.FriendPlayFabId)
                     {
-                        isFound = true ;
+                        isFound = true;
                     }
                 }
             }
             if (isFound == false)
             {
-            GameObject listing = Instantiate(ListingPrefab, friendScrollView);
-            ListingPrefabb tempListing = listing.GetComponent<ListingPrefabb>();
-            //Debug.Log(tempListing.playerNameText);
-            //Debug.Log(f.TitleDisplayName);
-            tempListing.playerNameText.text = f.TitleDisplayName;
+                GameObject listing = Instantiate(ListingPrefab, friendScrollView);
+                ListingPrefabb tempListing = listing.GetComponent<ListingPrefabb>();
+                //Debug.Log(tempListing.playerNameText);
+                //Debug.Log(f.TitleDisplayName);
+                tempListing.playerNameText.text = f.TitleDisplayName;
             }
         }
         myFriends = friendsCache;
+        //HERE
     }
-    
+
     IEnumerator WaitForFriend()
     {
         yield return new WaitForSeconds(2);
@@ -645,7 +738,7 @@ void SetDataSuccess(UpdateUserDataResult result)
     {
         StartCoroutine(WaitForFriend());
     }
-    
+
     enum FriendIdType { PlayFabId, Username, Email, DisplayName };
 
     void AddFriend(FriendIdType idType, string friendId)
@@ -673,12 +766,13 @@ void SetDataSuccess(UpdateUserDataResult result)
     }
 
     List<FriendInfo> _friends = null;
-    
+
     public void GetFriends()
     {
         PlayFabClientAPI.GetFriendsList(new GetFriendsListRequest
-        { IncludeSteamFriends = false,
-          IncludeFacebookFriends = false
+        {
+            IncludeSteamFriends = false,
+            IncludeFacebookFriends = false
         }, result =>
         {
             _friends = result.Friends;
@@ -686,9 +780,6 @@ void SetDataSuccess(UpdateUserDataResult result)
         }, OnErrorShared);
     }
     
-    string friendSearch;
-    [SerializeField]
-    public GameObject friendPanel;
 
     public void InputFriendID(string idIn)
     {
@@ -702,7 +793,10 @@ void SetDataSuccess(UpdateUserDataResult result)
 
     public void OpenCloseFriends()
     {
+        
         friendPanel.SetActive(!friendPanel.activeInHierarchy);
+        pauseMenu.SetActive(true);
+        pausePanel.SetActive(true);
     }
 
     #endregion Friends

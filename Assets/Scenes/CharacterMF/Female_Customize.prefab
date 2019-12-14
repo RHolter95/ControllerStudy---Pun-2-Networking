@@ -106,7 +106,6 @@ GameObject:
   - component: {fileID: 4517944687796097433}
   - component: {fileID: 8500825896906465320}
   - component: {fileID: 7405586772241157211}
-  - component: {fileID: 8435160943598239700}
   - component: {fileID: 828470526492018792}
   - component: {fileID: 7126888903733273519}
   - component: {fileID: 6591479327601090428}
@@ -190,39 +189,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.98, z: -0.11}
---- !u!114 &8435160943598239700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190768809799479259}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31bae486de6c6e43be498edb5ab52b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
-  joystickOne: {fileID: 7153566873098300659}
-  joystickTwo: {fileID: 2060828136896026689}
-  crosshair: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
-  animator: {fileID: 0}
-  jumpSpeed: 8
-  gravity: 20
-  Camera: {fileID: 6595816145332190978}
-  walkSpeed: 1.75
-  walkBackSpeed: 1
-  strafeSpeed: 2.75
-  rotateSpeed: 80
-  isGrounded: 1
-  chest: {fileID: 0}
-  target: {fileID: 9047773235270334001}
-  offset: {x: 10, y: 56, z: 12}
-  CameraPivot: {fileID: 8980216596792600534}
-  upTime: -0.03793123
-  downTime: 0.03793123
-  canvas: {fileID: 7153816204712226394}
-  itemPV: {fileID: 0}
 --- !u!114 &828470526492018792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  GSC: {fileID: 0}
+  PFC: {fileID: 0}
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
   targetPosition: {x: 0, y: 0, z: 0}
   offset: {x: 10, y: 56, z: 12}
@@ -244,7 +212,20 @@ MonoBehaviour:
   local_spine: {fileID: 0}
   local_chest: {fileID: 0}
   target: {fileID: 0}
+  sentFirstUpdate: 0
   gotFirstUpdate: 0
+  playerCustomizeChildOBJ: {fileID: 0}
+  playerHat: 0
+  Playeraccessory: 0
+  playerTop: 0
+  playerJacket: 0
+  playerUnderware: 0
+  playerHead: 0
+  playerSkin: 0
+  playerBottom: 0
+  playerShoes: 0
+  playerSex: 0
+  playerID: 
 --- !u!114 &7126888903733273519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageCenterVector: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}
 --- !u!1 &1394010201656872417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,11 +3173,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5177139776191854898}
     m_Modifications:
-    - target: {fileID: 7390273141950806244, guid: 8178b657d59916a42932cee0035ecb64,
-        type: 3}
-      propertyPath: m_Name
-      value: Character@Idle
-      objectReference: {fileID: 0}
     - target: {fileID: 7390273141950506180, guid: 8178b657d59916a42932cee0035ecb64,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3250,6 +3227,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7390273141950806244, guid: 8178b657d59916a42932cee0035ecb64,
+        type: 3}
+      propertyPath: m_Name
+      value: Character@Idle
       objectReference: {fileID: 0}
     - target: {fileID: 7390273141958183714, guid: 8178b657d59916a42932cee0035ecb64,
         type: 3}

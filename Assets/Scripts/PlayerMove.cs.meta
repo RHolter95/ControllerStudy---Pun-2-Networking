@@ -3,7 +3,24 @@ guid: f31bae486de6c6e43be498edb5ab52b4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - inventory: {instanceID: 0}
+  - PFC: {instanceID: 0}
+  - joystickOne: {instanceID: 0}
+  - joystickTwo: {instanceID: 0}
+  - crosshair: {instanceID: 0}
+  - animator: {instanceID: 0}
+  - Camera: {instanceID: 0}
+  - chest: {instanceID: 0}
+  - target: {instanceID: 0}
+  - CameraPivot: {instanceID: 0}
+  - canvas: {instanceID: 0}
+  - itemPV: {instanceID: 0}
+  - pauseMenu: {fileID: 4452445490103209285, guid: 5490d493ef8bee744bf2bf13a6b19e74,
+      type: 3}
+  - pausePanel: {instanceID: 0}
+  - friendButton: {instanceID: 0}
+  - leaderBoardButton: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

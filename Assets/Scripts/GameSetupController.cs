@@ -20,6 +20,7 @@ public class GameSetupController : MonoBehaviour
     public int headIndex = 0;
     public int skinIndex = 0;
     public int playerSex = 0;
+    public string playerID = "";
 
     //Add the index of all shirts with no arms
     public int[] femaleShirtsWithNoArms = new int[] {3, 4, 6, 7, 8};
@@ -66,17 +67,10 @@ public class GameSetupController : MonoBehaviour
         headIndex = PFC.playerHead;
         skinIndex = PFC.playerSkin;
         playerSex = PFC.playerSex;
+        playerID = PFC.myID;
 
-        /*
-        Debug.Log("Accesories "+accessoryIndex);
-        Debug.Log("Hat "+hatIndex);
-        Debug.Log("Shirt "+shirtIndex);
-        Debug.Log("Pant "+pantIndex);
-        Debug.Log("Shoes "+shoesIndex);
-        Debug.Log("Head "+headIndex);
-        Debug.Log("Skin "+skinIndex);
-        Debug.Log("Sex "+playerSex);
-        */
+
+   
         
 
         
@@ -281,7 +275,6 @@ public class GameSetupController : MonoBehaviour
     private void CreatePlayer()
     {
         //THIS IS POTENTIALLY HOW TO SPAWN AT ANY VECTOR MEANING WE CAN SETUP "SPAWN POINTS"
-        //Debug.Log("Creating Player");
         
         //Spawn Base Model 
         if(playerSex == 0){
@@ -294,6 +287,9 @@ public class GameSetupController : MonoBehaviour
         if(Myplayer == null){
             Debug.Log("Couldn't grab instantiated player!");
         }
+
+        //Sets player name to ID for social interaction
+        Myplayer.name = playerID;
 
         ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
@@ -314,7 +310,6 @@ public class GameSetupController : MonoBehaviour
         var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
 
         //Slow AF but hopefully lists are small, Iterate over Entire list w/o order (Lists == unordered)
-
         SetupPlayerAccessory(accessoryIndex, playerCustomizeChildOBJ);
         SetupPlayerHat(hatIndex, playerCustomizeChildOBJ);
         SetupPlayerShirt(shirtIndex, playerCustomizeChildOBJ);

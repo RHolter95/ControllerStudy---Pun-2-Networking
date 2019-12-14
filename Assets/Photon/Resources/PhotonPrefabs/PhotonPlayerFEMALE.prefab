@@ -4362,6 +4362,11 @@ MonoBehaviour:
   downTime: 0.03793123
   canvas: {fileID: 5930923303774431762}
   itemPV: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  pausePanel: {fileID: 0}
+  friendButton: {fileID: 0}
+  leaderBoardButton: {fileID: 0}
+  getPauseMenu: 1
 --- !u!114 &4212830685828844576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4376,11 +4381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 936625025445081048}
   GSC: {fileID: 0}
-  clothesInt: 0
-  clothesStr: 
-  tempClothesStr: 
-  CharacterCustomizeClothesSlots: 0000000000000000000000000000000000000000
-  CharacterCustomizeBodySlots: 0000000000000000000000000000000000000000
+  PFC: {fileID: 0}
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
   targetPosition: {x: 0, y: 0, z: 0}
   offset: {x: 10, y: 56, z: 12}
@@ -4402,8 +4403,7 @@ MonoBehaviour:
   playerBottom: 0
   playerShoes: 0
   playerSex: 0
-  run: 1
-  updateArray: 0
+  playerID: 
 --- !u!114 &6047878068627859431
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -169,43 +169,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11072}
     - Class: 114
-      Script: {instanceID: 11130}
+      Script: {instanceID: 11132}
     - Class: 114
-      Script: {instanceID: 11190}
+      Script: {instanceID: 11192}
     - Class: 114
-      Script: {instanceID: 11218}
+      Script: {instanceID: 11220}
     - Class: 114
-      Script: {instanceID: 11250}
+      Script: {instanceID: 11252}
     - Class: 114
-      Script: {instanceID: 11354}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 11376}
+      Script: {instanceID: 11378}
     - Class: 114
-      Script: {instanceID: 11406}
+      Script: {instanceID: 11408}
     - Class: 114
-      Script: {instanceID: 11430}
+      Script: {instanceID: 11432}
     - Class: 114
-      Script: {instanceID: 11474}
+      Script: {instanceID: 11476}
     - Class: 114
-      Script: {instanceID: 11498}
+      Script: {instanceID: 11500}
     - Class: 114
-      Script: {instanceID: 11508}
+      Script: {instanceID: 11510}
     - Class: 114
-      Script: {instanceID: 11668}
+      Script: {instanceID: 11670}
     - Class: 114
-      Script: {instanceID: 11690}
+      Script: {instanceID: 11692}
     - Class: 114
-      Script: {instanceID: 11756}
+      Script: {instanceID: 11758}
     - Class: 114
-      Script: {instanceID: 11912}
+      Script: {instanceID: 11914}
     - Class: 114
-      Script: {instanceID: 12168}
+      Script: {instanceID: 12170}
     - Class: 114
-      Script: {instanceID: 12252}
+      Script: {instanceID: 12254}
     - Class: 114
-      Script: {instanceID: 12282}
+      Script: {instanceID: 12284}
     - Class: 114
-      Script: {instanceID: 12332}
+      Script: {instanceID: 12334}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -268,25 +268,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11014}
     - Class: 114
-      Script: {instanceID: 11142}
+      Script: {instanceID: 11144}
     - Class: 114
-      Script: {instanceID: 11354}
+      Script: {instanceID: 11356}
     - Class: 114
-      Script: {instanceID: 11498}
+      Script: {instanceID: 11500}
     - Class: 114
-      Script: {instanceID: 11502}
+      Script: {instanceID: 11504}
     - Class: 114
-      Script: {instanceID: 11892}
+      Script: {instanceID: 11894}
     - Class: 114
-      Script: {instanceID: 12066}
+      Script: {instanceID: 12068}
     - Class: 114
-      Script: {instanceID: 12118}
+      Script: {instanceID: 12120}
     - Class: 114
-      Script: {instanceID: 12168}
+      Script: {instanceID: 12170}
     - Class: 114
-      Script: {instanceID: 12252}
+      Script: {instanceID: 12254}
     - Class: 114
-      Script: {instanceID: 12332}
+      Script: {instanceID: 12334}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -766,7 +766,7 @@ ScriptsOnlyBuild:
     className: PlayerShooting
   - hash:
       serializedVersion: 2
-      Hash: 47ee0c9798ee4d80efbe25e30cbfee46
+      Hash: d334e04a4c334f78220374b237e69a15
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayFabsController
@@ -904,7 +904,7 @@ ScriptsOnlyBuild:
     className: OnClickDestroy
   - hash:
       serializedVersion: 2
-      Hash: 6516cc62e153d253ceab7b4f553c4303
+      Hash: a32f5f5094c61d3ae289e8a7d3bf8a40
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnderdogCity
     className: PlayerMove
@@ -946,7 +946,7 @@ ScriptsOnlyBuild:
     className: ServerSettings
   - hash:
       serializedVersion: 2
-      Hash: d6bdb4be15e3f8f4bd2cef996065596c
+      Hash: 3e4c7c94c65c9ad2d4e464697c1a3aae
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkPlayer
@@ -1240,7 +1240,7 @@ ScriptsOnlyBuild:
     className: TextMeshPro
   - hash:
       serializedVersion: 2
-      Hash: f1a2fa94e21a0452fa8f180d0250c7d7
+      Hash: ce183aa086719ae9ad75e498a41b7878
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetupController

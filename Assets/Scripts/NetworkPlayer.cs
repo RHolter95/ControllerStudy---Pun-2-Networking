@@ -50,11 +50,16 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField]
     private int playerSex = 0;
 
+    public string[] iDsArray = new string[] { "Matt", "Joanne", "Robert" };
+    public int idIndex = 0;
+
     //I cant figure out how to make the player ID stay per char
     //NetworkPlayer runs this @Awake which is ran immediatly at start since prefabs have "NetworkPlayer" which may be an issue? IDK yet.
-    //Lets just try to get it off their friendslist panel since its there for refrence and the panel should NEVER go away since its Start funct.
     [SerializeField]
     private string playerID = "";
+    public string OtherID = "";
+  
+
 
     private void Awake()
     {
@@ -73,8 +78,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             playerBottom = PFC.playerBottom;
             playerShoes = PFC.playerShoes;
             playerSex = PFC.playerSex;
-            //Were getting the ID of the player based off whats set in friendlist panel [TRASH I KNOW]
-            //playerID = GameObject.Find("FriendPanel").transform.GetChild(0).GetChild(6).transform.GetComponent<Text>().text;
+            playerID = PFC.myID;
         }
         else
         {
@@ -137,6 +141,8 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
     public void Update()
     {
+        //Debug.Log(OtherID);
+
         if (this.photonView.IsMine)
         {
             //Do Nothing -- Everything is already enabled
@@ -144,12 +150,14 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         else
         {
 
-            SetupPlayerHat(playerHat, playerCustomizeChildOBJ);
-            SetupPlayerAccessory(Playeraccessory, playerCustomizeChildOBJ);
-            SetupPlayerShirt(playerTop, playerCustomizeChildOBJ);
-            SetupPlayerPants(playerBottom, playerCustomizeChildOBJ);
-            SetupPlayerShoes(playerShoes, playerCustomizeChildOBJ);
-
+           
+                SetupPlayerHat(playerHat, playerCustomizeChildOBJ);
+                SetupPlayerAccessory(Playeraccessory, playerCustomizeChildOBJ);
+                SetupPlayerShirt(playerTop, playerCustomizeChildOBJ);
+                SetupPlayerPants(playerBottom, playerCustomizeChildOBJ);
+                SetupPlayerShoes(playerShoes, playerCustomizeChildOBJ);
+            
+           
             transform.position = Vector3.Lerp(transform.position, realPosition, 0.1f);
             transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, 0.1f);
         }
@@ -187,6 +195,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             stream.SendNext(playerShoes);
             stream.SendNext(playerTop);
             stream.SendNext(playerBottom);
+            stream.SendNext(playerID);
 
         }
         else
@@ -206,6 +215,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             playerShoes = (int)stream.ReceiveNext();
             playerTop = (int)stream.ReceiveNext();
             playerBottom = (int)stream.ReceiveNext();
+            OtherID = (string)stream.ReceiveNext();
 
             if (gotFirstUpdate == false)
             {
@@ -217,6 +227,35 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
+
+    [PunRPC]//Stores encountered ID
+    public void StoreID(string ID, int playerViewID)
+    {
+        var player = PhotonView.Find(playerViewID).transform;
+
+        if (player.name != PFC.myID)
+        {
+            player.name = ID;
+            
+        }
+        else
+        {
+            return;
+        }
+
+        while (player.transform.parent && player.name != "PhotonPlayerFEMALE(Clone)") {
+            player = player.transform.parent;
+            Debug.Log(player.name);
+            if (player.name == "PhotonPlayerFEMALE(Clone)")
+            {
+                player.name = ID;
+            }
+        }
+        Debug.Log("Inside RPC");
+        //iDsArray[idIndex] = ID;
+        //idIndex++;
+    }
+
 
     public void SetupPlayerAccessory(int accessoryIndex, GameObject playerCustomizeChildOBJ)
     {

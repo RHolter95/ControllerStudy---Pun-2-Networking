@@ -57,7 +57,11 @@ namespace UnderdogCity
         public GameObject friendButton = null;
         public GameObject leaderBoardButton = null;
 
+        GameObject playerCustomizeChildOBJ;
+
         public bool getPauseMenu = true;
+        public string otherID = "";
+        public int idInt = 0;
 
         private void Start()
         {
@@ -69,6 +73,9 @@ namespace UnderdogCity
             temp = GameObject.Find("Character@Idle");
 
             animator = temp.GetComponentInChildren<Animator>();
+
+            playerCustomizeChildOBJ = animator.gameObject;
+
             chest = animator.GetBoneTransform(HumanBodyBones.Chest);
             chest = chest.transform.GetChild(0).transform;
 
@@ -171,9 +178,63 @@ namespace UnderdogCity
             animator.SetFloat("AimAngle", aimAngle);
         }
 
+        [SerializeField]
+        public NetworkPlayer NWplayer;
+
         public void OnTriggerEnter(Collider other)
         {
+
+            var otherTag = other.transform.GetComponentInParent<PhotonView>().gameObject.tag;
+
+            //If the obj we collided with is ourselves, return, else we collided with something important
+            if (other.transform.GetComponentInParent<NetworkPlayer>().gameObject.name == PFC.myID)
+            {
+                Debug.Log("Collided with self");
+                return;
+            }
+            else
+            {
+
+        
+            //If we collide with Player
+            if (otherTag == "Player")
+            {
+
+                NetworkPlayer NWP = null;
+                NWP = other.GetComponent<NetworkPlayer>();
+                Transform temp = other.transform;
+
+                while (NWP == null && temp.transform.parent)
+                {
+                    temp = temp.transform.parent;
+                    NWP = temp.GetComponent<NetworkPlayer>();
+                }
+
+                if (NWP != null)
+                {
+                    PhotonView PhotonView = NWP.GetComponent<PhotonView>();
+                    idInt = PhotonView.ViewID;
+
+                    if (PhotonView == null)
+                    {
+                        Debug.Log("There is no PhotonView");
+                        return;
+                    }
+                    else
+                    {
+                        NWP.GetComponent<PhotonView>().RPC("StoreID", RpcTarget.All, PFC.myID, idInt);
+                    }
+                }
+                else
+                {
+                    //Didnt find a working NetworkPlayer
+                    return;
+                }
+            }
+
+            //Must not be a player, so Item
             var item = other.GetComponent<Item>();
+
             if (item)
             {
                 itemPV = item.GetComponent<PhotonView>();
@@ -194,6 +255,7 @@ namespace UnderdogCity
                         Destroy(other.gameObject);
                     }
                 }
+            }
             }
         }
 

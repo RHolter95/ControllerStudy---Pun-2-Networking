@@ -38,5 +38,7 @@ MonoBehaviour:
   - SniperBulletFX
   - SyncBoneRotation
   - RPC_UpdateBoneRotations
+  - SendID
+  - StoreID
   DisableAutoOpenWizard: 1
   ShowSettings: 1

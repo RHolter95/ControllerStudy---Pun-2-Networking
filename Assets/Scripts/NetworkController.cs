@@ -36,8 +36,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public GameObject userEmailGO = null;
     public GameObject userPassGO = null;
 
-    public GameObject PauseMenu = null;
-
     public Component userInputEmail = null;
     public Component userInputName = null;
     public Component userInputPass = null;
@@ -124,9 +122,6 @@ public class NetworkController : MonoBehaviourPunCallbacks
         maleCharCustomizer.SetActive(false);
         maleSex.SetActive(false);
         femaleSex.SetActive(false);
-
-        if (PauseMenu == null){
-            Debug.Log("Couldn't Find PauseMenu");}
 
         if (maleSex == null){
             Debug.Log("Couldn't Find Male Sex Button");}

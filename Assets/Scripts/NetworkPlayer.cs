@@ -58,7 +58,9 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     [SerializeField]
     private string playerID = "";
     public string OtherID = "";
-  
+
+    public Material skinMaterial = null;
+
 
 
     private void Awake()
@@ -149,15 +151,6 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         }
         else
         {
-
-           
-                SetupPlayerHat(playerHat, playerCustomizeChildOBJ);
-                SetupPlayerAccessory(Playeraccessory, playerCustomizeChildOBJ);
-                SetupPlayerShirt(playerTop, playerCustomizeChildOBJ);
-                SetupPlayerPants(playerBottom, playerCustomizeChildOBJ);
-                SetupPlayerShoes(playerShoes, playerCustomizeChildOBJ);
-            
-           
             transform.position = Vector3.Lerp(transform.position, realPosition, 0.1f);
             transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, 0.1f);
         }
@@ -227,34 +220,49 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
+    #region RPC
 
     [PunRPC]//Stores encountered ID
-    public void StoreID(string ID, int playerViewID)
+    public void SetupRemotePlayer(int PhotonViewID, string PlayFabID , int shoesIndex, int accessoryIndex, int hatIndex, int shirtIndex, int pantIndex, int headIndex, int skinIndex, int sexIndex)
     {
-        var player = PhotonView.Find(playerViewID).transform;
+        var player = PhotonView.Find(PhotonViewID).gameObject;
+        player.name = PlayFabID;
+        player = player.transform.GetChild(0).gameObject;
 
-        if (player.name != PFC.myID)
-        {
-            player.name = ID;
-            
-        }
-        else
-        {
-            return;
-        }
+        SetupPlayerAccessory(accessoryIndex, player);
+        SetupPlayerShirt(shirtIndex, player, sexIndex);
+        SetupPlayerPants(pantIndex, player, sexIndex);
+        SetupPlayerShoes(shoesIndex, player);
+        SetupPlayerHead(headIndex, player);
+        SetupPlayerSkin(skinIndex, player);
+        SetupPlayerHat(hatIndex, player);
+        
 
-        while (player.transform.parent && player.name != "PhotonPlayerFEMALE(Clone)") {
-            player = player.transform.parent;
-            Debug.Log(player.name);
-            if (player.name == "PhotonPlayerFEMALE(Clone)")
+
+
+       
+   
+    }
+    #endregion RPC
+
+    #region BuildCharacter
+
+    public void SetupPlayerHead(int headIndex, GameObject playerCustomizeChildOBJ)
+    {
+        //Bump because list is not propperly setup
+        headIndex++;
+        var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
+
+        foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().headsPresets)
+        {
+            if (item.name == "Head" + headIndex)
             {
-                player.name = ID;
+                meshRenderer.sharedMesh = item.mesh;
+                break;
             }
         }
-        Debug.Log("Inside RPC");
-        //iDsArray[idIndex] = ID;
-        //idIndex++;
     }
+
 
 
     public void SetupPlayerAccessory(int accessoryIndex, GameObject playerCustomizeChildOBJ)
@@ -284,7 +292,46 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
-    public void SetupPlayerPants(int pantIndex, GameObject playerCustomizeChildOBJ)
+
+    public void SetupPlayerSkin(int skinIndex, GameObject playerCustomizeChildOBJ)
+    {
+        //Increment Because List Is Not Setup Propperly
+        skinIndex++;
+        foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().skinMaterialPresets)
+        {
+            if (item.name == "Skin" + skinIndex)
+            {
+                skinMaterial = item;
+                break;
+            }
+        }
+
+        var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(3).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(4).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(7).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(9).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(12).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+    }
+
+    public void SetupPlayerPants(int pantIndex, GameObject playerCustomizeChildOBJ, int playerSex)
     {
         var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
 
@@ -333,7 +380,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void SetupPlayerShirt(int shirtIndex, GameObject playerCustomizeChildOBJ)
+    public void SetupPlayerShirt(int shirtIndex, GameObject playerCustomizeChildOBJ, int playerSex)
     {
         var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
         bool removeChest = true;
@@ -447,81 +494,6 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
-    /*
-    #region GetClothesStats
-    public void GetStatistics()
-        {
-            PlayFabClientAPI.GetPlayerStatistics(
-                new GetPlayerStatisticsRequest(),
-                OnGetStatistics,
-                error => Debug.LogError(error.GenerateErrorReport())
-            );
-        }
 
-        void OnGetStatistics(GetPlayerStatisticsResult result)
-        {
-            //Debug.Log("Received the following Statistics:");
-            foreach (var eachStat in result.Statistics)
-            {
-                //Debug.Log("Statistic (" + eachStat.StatisticName + "): " + eachStat.Value);
-                switch (eachStat.StatisticName)
-                {
-                    case "Hat":
-                        playerHat = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value, 0);
-                        //tempClothesStr = eachStat.Value.ToString();
-                        break;
-                    case "Accessories":
-                        Playeraccessory = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value,1);
-                        break;
-                    case "Top":
-                        playerTop = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value,2);
-                        break;
-                    case "Jacket":
-                        playerJacket = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value,5);
-                        break;
-                    case "Underware":
-                        playerUnderware = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value,6);
-                        break;
-                    case "Bottom":
-                        playerBottom = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value,3);
-                        break;
-                    case "Shoes":
-                        playerShoes = eachStat.Value;
-                        //CharacterCustomizeClothesSlotSetup(eachStat.Value, 4);
-                        break;
-                    case "Skin":
-                        playerSkin = eachStat.Value;
-                        //CharacterCustomizeBodySlotSetup(eachStat.Value,0);
-                        break;
-                    case "Sex":
-                        playerSex = eachStat.Value;
-                        //CharacterCustomizeBodySlotSetup(eachStat.Value,1);
-                        break;
-                    case "Head":
-                        playerHead = eachStat.Value;
-                        //CharacterCustomizeBodySlotSetup(eachStat.Value,2);
-                        break;
-                   case "PlayFabID":
-                        playerID = eachStat.Value;
-                    //CharacterCustomizeBodySlotSetup(eachStat.Value,2);
-                    break;
-            }
-            }
-            //Might not need the bool below
-            run = false;
-        }
-    
-        private static void OnErrorShared(PlayFabError error)
-        {
-            Debug.Log(error.GenerateErrorReport());
-        }
-
-        #endregion GetClothesStats
-        */
+    #endregion BuildCharacter
 }

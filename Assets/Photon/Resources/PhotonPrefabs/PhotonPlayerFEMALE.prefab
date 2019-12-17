@@ -4414,6 +4414,7 @@ MonoBehaviour:
   idIndex: 0
   playerID: 
   OtherID: 
+  skinMaterial: {fileID: 0}
 --- !u!114 &6047878068627859431
 MonoBehaviour:
   m_ObjectHideFlags: 0

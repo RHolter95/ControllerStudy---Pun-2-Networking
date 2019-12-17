@@ -946,7 +946,7 @@ ScriptsOnlyBuild:
     className: ServerSettings
   - hash:
       serializedVersion: 2
-      Hash: 3e4c7c94c65c9ad2d4e464697c1a3aae
+      Hash: 5e4a17212b61c86525b5487da1758776
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkPlayer
@@ -1240,7 +1240,7 @@ ScriptsOnlyBuild:
     className: TextMeshPro
   - hash:
       serializedVersion: 2
-      Hash: ce183aa086719ae9ad75e498a41b7878
+      Hash: 2f9cfec33da2c6063d0e506dce2c23c3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetupController

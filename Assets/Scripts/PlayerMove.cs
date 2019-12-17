@@ -63,6 +63,9 @@ namespace UnderdogCity
         public string otherID = "";
         public int idInt = 0;
 
+        [SerializeField]
+        public NetworkPlayer NWplayer;
+
         private void Start()
         {
             //Set aim up and aim down limits to 0 for aiming at center
@@ -178,9 +181,6 @@ namespace UnderdogCity
             animator.SetFloat("AimAngle", aimAngle);
         }
 
-        [SerializeField]
-        public NetworkPlayer NWplayer;
-
         public void OnTriggerEnter(Collider other)
         {
 
@@ -195,42 +195,14 @@ namespace UnderdogCity
             else
             {
 
-        
             //If we collide with Player
             if (otherTag == "Player")
             {
-
-                NetworkPlayer NWP = null;
-                NWP = other.GetComponent<NetworkPlayer>();
-                Transform temp = other.transform;
-
-                while (NWP == null && temp.transform.parent)
-                {
-                    temp = temp.transform.parent;
-                    NWP = temp.GetComponent<NetworkPlayer>();
-                }
-
-                if (NWP != null)
-                {
-                    PhotonView PhotonView = NWP.GetComponent<PhotonView>();
-                    idInt = PhotonView.ViewID;
-
-                    if (PhotonView == null)
-                    {
-                        Debug.Log("There is no PhotonView");
-                        return;
-                    }
-                    else
-                    {
-                        NWP.GetComponent<PhotonView>().RPC("StoreID", RpcTarget.All, PFC.myID, idInt);
-                    }
-                }
-                else
-                {
-                    //Didnt find a working NetworkPlayer
-                    return;
-                }
+                var player = other.GetComponentInParent<NetworkPlayer>().gameObject;
+                Debug.Log("Collided with another player with ID: " + player.name + ", set bool value here for social menu");
+                return;
             }
+
 
             //Must not be a player, so Item
             var item = other.GetComponent<Item>();
@@ -241,6 +213,7 @@ namespace UnderdogCity
                 if (itemPV == null)
                 {
                     Debug.Log("PhotonView of item is missing!");
+                    return;
                 }
                 else
                 {
@@ -249,14 +222,17 @@ namespace UnderdogCity
                     {
                         //This deletes INSTANTIATED items on the Network
                         PhotonNetwork.Destroy(other.gameObject);
+                        return;
                     }
                     if (itemPV.InstantiationId == 0)
                     {
                         Destroy(other.gameObject);
+                        return;
                     }
                 }
             }
             }
+
         }
 
         // Update is called once per frame

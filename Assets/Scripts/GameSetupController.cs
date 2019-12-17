@@ -35,6 +35,8 @@ public class GameSetupController : MonoBehaviour
     public int[] maleShirtsWithNoSpine = new int[] { };
     public int[] malePantsWithNoLegs = new int[] { 1, 3, 4, 5, 6, 7, 8, 9, 10 };
 
+    public Material skinMaterial = null;
+
 
 
 
@@ -102,6 +104,61 @@ public class GameSetupController : MonoBehaviour
             }
         }
     }
+
+    public void SetupPlayerHead(int headIndex, GameObject playerCustomizeChildOBJ)
+    {
+        //Bump because list is not propperly setup
+        headIndex++;
+        var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
+
+        foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().headsPresets)
+        {
+            if (item.name == "Head" + headIndex)
+            {
+                meshRenderer.sharedMesh = item.mesh;
+                break;
+            }
+        }
+    }
+
+    public void SetupPlayerSkin(int skinIndex, GameObject playerCustomizeChildOBJ)
+    {
+        //Increment Because List Is Not Setup Propperly
+        skinIndex++;
+        foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().skinMaterialPresets)
+        {
+            if (item.name == "Skin" + skinIndex)
+            {
+                skinMaterial = item;
+                break;
+            }
+        }
+
+        var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(3).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(4).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(7).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(9).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(12).GetComponent<SkinnedMeshRenderer>();
+        if (meshRenderer.sharedMesh != null) { meshRenderer.sharedMaterial = skinMaterial; }
+    }
+
 
     public void SetupPlayerPants(int pantIndex, GameObject playerCustomizeChildOBJ)
     {
@@ -315,12 +372,19 @@ public class GameSetupController : MonoBehaviour
         SetupPlayerShirt(shirtIndex, playerCustomizeChildOBJ);
         SetupPlayerPants(pantIndex, playerCustomizeChildOBJ);
         SetupPlayerShoes(shoesIndex, playerCustomizeChildOBJ);
-  
-        //HEAD always exists
-        //Set Head
-        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(6).GetComponent<SkinnedMeshRenderer>();
-        meshRenderer.sharedMesh = CC.headsPresets[headIndex].mesh;
-        //FOREARMS always exists
+        SetupPlayerHead(headIndex, playerCustomizeChildOBJ);
+        SetupPlayerSkin(skinIndex, playerCustomizeChildOBJ);
+
+        PhotonView photonView = Myplayer.GetComponent<PhotonView>();
+        if (photonView != null)
+        {
+            photonView.RPC("SetupRemotePlayer", RpcTarget.OthersBuffered, photonView.ViewID, Myplayer.name, PFC.playerShoes, PFC.Playeraccessory, PFC.playerHat, PFC.playerTop, PFC.playerBottom, PFC.playerHead, PFC.playerSkin, PFC.playerSex);
+        }
+        else
+        {
+            Debug.Log("No PhotonView Found On New Player");
+        }
+
         
     }
 }

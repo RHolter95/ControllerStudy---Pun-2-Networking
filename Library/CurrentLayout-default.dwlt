@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 394}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -110,10 +110,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 772
-  m_MinSize: {x: 679, y: 344}
-  m_MaxSize: {x: 12004, y: 8044}
+  m_MinSize: {x: 683, y: 494}
+  m_MaxSize: {x: 14004, y: 14044}
   vertical: 1
-  controlID: 145
+  controlID: 31
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -135,10 +135,10 @@ MonoBehaviour:
     y: 0
     width: 1536
     height: 772
-  m_MinSize: {x: 679, y: 344}
-  m_MaxSize: {x: 12004, y: 8044}
+  m_MinSize: {x: 683, y: 494}
+  m_MaxSize: {x: 14004, y: 14044}
   vertical: 0
-  controlID: 146
+  controlID: 32
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -160,10 +160,10 @@ MonoBehaviour:
     y: 0
     width: 1027
     height: 772
-  m_MinSize: {x: 404, y: 344}
-  m_MaxSize: {x: 8004, y: 8044}
+  m_MinSize: {x: 406, y: 494}
+  m_MaxSize: {x: 10002, y: 14044}
   vertical: 1
-  controlID: 85
+  controlID: 33
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -185,10 +185,10 @@ MonoBehaviour:
     y: 0
     width: 1027
     height: 427
-  m_MinSize: {x: 404, y: 222}
-  m_MaxSize: {x: 8004, y: 4022}
+  m_MinSize: {x: 406, y: 222}
+  m_MaxSize: {x: 8006, y: 4022}
   vertical: 0
-  controlID: 86
+  controlID: 34
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -208,12 +208,11 @@ MonoBehaviour:
     y: 0
     width: 334
     height: 427
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 222}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
-  - {fileID: 13}
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &10
@@ -235,8 +234,8 @@ MonoBehaviour:
     y: 0
     width: 693
     height: 427
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 222}
+  m_MaxSize: {x: 4004, y: 4022}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 16}
@@ -263,14 +262,14 @@ MonoBehaviour:
     y: 427
     width: 1027
     height: 345
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 18}
+  m_MinSize: {x: 232, y: 272}
+  m_MaxSize: {x: 10002, y: 10022}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
   - {fileID: 18}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -290,8 +289,8 @@ MonoBehaviour:
     y: 0
     width: 509
     height: 772
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 72}
+  m_MaxSize: {x: 4002, y: 4022}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 21}
@@ -434,9 +433,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 0c35feff4241feff7041feff8a63feffba63feff1897feff86affeffb4affeffced1feff02d2feff0c10ffff1e10ffff0031ffff404affff524affff466bffff4aebfffff8f5ffff16f6ffff74fbffff
+      m_SelectedIDs: 9e1afaff
+      m_LastClickedID: -386402
+      m_ExpandedIDs: 643bfaff666bfafffe93faff5cc7faffaafafaff4a0efbff4e0efbff520efbff560efbffac0efbffbe0efbff942ffbff7c6afbff049efbffd8b6fbffe6d7fbffa4fcfbff2030fcffb235fcffe035fcfff857fcff2858fcff1c89fcffa0bdfcff04f0fcffc625fdff5235fdffa660fdffc885fdfff0b5fdffc4c5fdff26f1fdff8c15feffba46feff844cfeffb24cfeffd06efeff006ffeff78aafefffeaffeff2cb0feff4ad2feff7ad2feff5807ffff840cffffb20cffffd02effff002ffffff067ffffea6cffff186dffff3a8fffff6e8fffff84c9ffffb2c9ffffd4ebffff08ecffff44fbfffff4ffffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -525,20 +524,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\mrmug\OneDrive\Desktop\Heist\ControllerStudy---Pun-2-NetworkingBackup
+  m_LastProjectPath: C:\Users\mrmug\OneDrive\Desktop\Heist\ControllerStudy---Pun-2-Networking
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 346}
-    m_SelectedIDs: 8e3d0000
-    m_LastClickedID: 15758
-    m_ExpandedIDs: 00000000c2330000f43400003c3600006e360000c03600004437000078390000943a0000c63a00008e3d0000b23d00003c3e00003e3e0000323f00002e4000003e4100001e420000c84300005e44000062440000824600003e4800004e5c0000505c0000525c0000545c0000565c0000585c00005a5c00005c5c000000ca9a3b
+    scrollPos: {x: 0, y: 510}
+    m_SelectedIDs: d63a0000
+    m_LastClickedID: 15062
+    m_ExpandedIDs: 000000006a300000aa310000083300003c33000092330000203400006e36000098370000cc370000b23a0000d63a0000643b0000663b0000643c0000743d0000943e0000763f00002e41000094410000c8410000cc41000004440000d04500004c5900004e59000050590000525900005459000056590000585900005a59000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -566,7 +565,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c2330000f43400003c3600006e360000c036000044370000943a0000c63a00008e3d0000b23d00003c3e00003e3e0000323f00002e4000003e4100001e420000c84300005e44000062440000824600003e4800004e5c0000505c0000525c0000545c0000565c0000585c00005a5c00005c5c0000
+    m_ExpandedIDs: 000000006a300000aa310000083300003c33000092330000203400006e36000098370000cc370000b23a0000d63a0000643b0000663b0000643c0000743d0000943e0000763f00002e41000094410000c8410000cc41000004440000d04500004c5900004e59000050590000525900005459000056590000585900005a590000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

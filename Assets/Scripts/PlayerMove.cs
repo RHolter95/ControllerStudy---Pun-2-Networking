@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnderdogCity
 {
@@ -186,29 +187,31 @@ namespace UnderdogCity
 
             var otherTag = other.transform.GetComponentInParent<PhotonView>().gameObject.tag;
 
-            //If the obj we collided with is ourselves, return, else we collided with something important
-            if (other.transform.GetComponentInParent<NetworkPlayer>().gameObject.name == PFC.myID)
-            {
-                Debug.Log("Collided with self");
-                return;
-            }
-            else
-            {
-
             //If we collide with Player
             if (otherTag == "Player")
             {
-                var player = other.GetComponentInParent<NetworkPlayer>().gameObject;
-                Debug.Log("Collided with another player with ID: " + player.name + ", set bool value here for social menu");
-                return;
+                //If the obj we collided with is ourselves, return, else we collided with something important
+                if (other.transform.GetComponentInParent<NetworkPlayer>().gameObject.name == PFC.myID)
+                {
+                    Debug.Log("Collided with self");
+                    return;
+                }
+                else
+                {
+                    var player = other.GetComponentInParent<NetworkPlayer>().gameObject;
+                    Debug.Log("Collided with another player with ID: " + player.name + ", set bool value here for social menu");
+                    //Setup Pause Menu inside player model prefabs instead of GO inside hirearchy and re-assign links and store ID of player were infront of in our panel for easy Add Req
+                    //PFC.friendListPanel.transform.GetChild(3).GetComponent<Text>().text = player.name;
+                    return;
+                }
             }
 
 
-            //Must not be a player, so Item
-            var item = other.GetComponent<Item>();
-
-            if (item)
+            if (otherTag == "Item")
             {
+
+                var item = other.GetComponent<Item>();
+
                 itemPV = item.GetComponent<PhotonView>();
                 if (itemPV == null)
                 {
@@ -231,8 +234,7 @@ namespace UnderdogCity
                     }
                 }
             }
-            }
-
+          
         }
 
         // Update is called once per frame
@@ -250,12 +252,6 @@ namespace UnderdogCity
                 {
                     pauseMenu.SetActive(true);
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                PFC.friendPanel.SetActive(true);
-                PFC.GetFriends();
             }
 
             if (Physics.Raycast(transform.position, -Vector3.up, 0.05f) == true)

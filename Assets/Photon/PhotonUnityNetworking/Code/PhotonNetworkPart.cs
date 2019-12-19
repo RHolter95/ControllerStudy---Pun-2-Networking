@@ -51,6 +51,8 @@ namespace Photon.Pun
 
         }
 
+  
+
         /// <summary>Parameters: PhotonView for which ownership changed, previous owner of the view.</summary>
         private static event Action<PhotonView, Player> OnOwnershipRequestEv;
         /// <summary>Parameters: PhotonView for which ownership was requested, player who requests ownership.</summary>
@@ -549,6 +551,7 @@ namespace Photon.Pun
                 
             }
         }
+
 
         /// <summary>
         /// Check if all types match with parameters. We can have more paramters then types (allow last RPC type to be different).

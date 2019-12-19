@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Globalization;
 using UnityEngine.UI;
+using Photon.Realtime;
 
 public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 {
@@ -14,6 +15,8 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
 
     public Animator animator;
+    public PhotonView photonView = null;
+
     public GameSetupController GSC = null;
     public PlayFabsController PFC = null;
 
@@ -49,26 +52,34 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     private int playerShoes = 0;
     [SerializeField]
     private int playerSex = 0;
-
-    public string[] iDsArray = new string[] { "Matt", "Joanne", "Robert" };
-    public int idIndex = 0;
-
-    //I cant figure out how to make the player ID stay per char
-    //NetworkPlayer runs this @Awake which is ran immediatly at start since prefabs have "NetworkPlayer" which may be an issue? IDK yet.
     [SerializeField]
     private string playerID = "";
-    public string OtherID = "";
 
-    public Material skinMaterial = null;
+    private Material skinMaterial = null;
+    [SerializeField]
+    public int ping = 0;
 
 
-
+#region Setup
     private void Awake()
     {
-
+        //Assigning various components/GameObj's to vars for use
+        photonView = transform.GetComponent<PhotonView>();
         PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
+        animator = GetComponentInChildren<Animator>();
+        playerCustomizeChildOBJ = animator.gameObject;
+        target = transform.Find("CameraPivot/Target");
 
-        if (PFC != null)
+        if (SceneManager.GetActiveScene().name == "Network")
+        {
+            GSC = GameObject.Find("GameSetupController").GetComponent<GameSetupController>();
+            if (GSC == null)
+            {
+                Debug.Log("Network Player Couldn't find GameSetupController  ");
+            }
+        }
+
+        if (PFC != null && GSC != null)
         {
             Playeraccessory = PFC.Playeraccessory;
             playerHat = PFC.playerHat;
@@ -87,64 +98,45 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             Debug.Log("Network Player Couldn't find PlayFabsController ");
         }
 
-        if (SceneManager.GetActiveScene().name == "Network")
-        {
-            GSC = GameObject.Find("GameSetupController").GetComponent<GameSetupController>();
-            if (GSC == null)
-            {
-                Debug.Log("Network Player Couldn't find GameSetupController  ");
-            }
-        }
-
-        animator = GetComponentInChildren<Animator>();
-        playerCustomizeChildOBJ = animator.gameObject;
-        target = transform.Find("CameraPivot/Target");
-        if (animator == null || playerCustomizeChildOBJ == null || target == null) { Debug.Log("Couldn't find: PlayerOBJ || Target || Animator"); }
     }
 
     void Start()
     {
-        if (target == null)
-        {
-            Debug.Log("Network Player Couldn't find Target in child ");
-        }
+        //Gets player Ping With 5s delay, repeat every 5s
+        InvokeRepeating("WaitForPingUpdate", 5f, 5f);
 
-        if (animator == null)
-        {
-            Debug.Log("Animator Empty in child");
-        }
-
-        //HumanBodyBones gets Spine 2, not chest, grab immediate child
-        local_chest = animator.GetBoneTransform(HumanBodyBones.Chest);
-        local_chest = local_chest.transform.GetChild(0);
-
+        //HumanBodyBones gets body parts
+        local_chest = animator.GetBoneTransform(HumanBodyBones.Chest).GetChild(0);
         local_head = animator.GetBoneTransform(HumanBodyBones.Head);
         local_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
         local_spine = animator.GetBoneTransform(HumanBodyBones.Spine);
 
-        if (local_chest == null)
-        {
-            Debug.Log("Network Player Couldn't find Chest");
-        }
-        if (local_head == null)
-        {
-            Debug.Log("Network Player Couldn't find Head");
-        }
-        if (local_neck == null)
-        {
-            Debug.Log("Network Player Couldn't find Neck");
-        }
-        if (local_spine == null)
-        {
-            Debug.Log("Network Player Couldn't find Spine");
-        }
-    }
+        if (target == null){
+            Debug.Log("Network Player Couldn't find Target in child ");}
 
+        if (animator == null){
+            Debug.Log("Animator Empty in child");}
+
+        if (local_chest == null){
+            Debug.Log("Network Player Couldn't find Chest");}
+
+        if (local_head == null){
+            Debug.Log("Network Player Couldn't find Head");}
+
+        if (local_neck == null){
+            Debug.Log("Network Player Couldn't find Neck");}
+        
+        if (local_spine == null){
+            Debug.Log("Network Player Couldn't find Spine");}
+
+        if (animator == null || playerCustomizeChildOBJ == null || target == null){
+            Debug.Log("Couldn't find: PlayerOBJ || Target || Animator");}
+
+    }
+#endregion Setup
 
     public void Update()
     {
-        //Debug.Log(OtherID);
-
         if (this.photonView.IsMine)
         {
             //Do Nothing -- Everything is already enabled
@@ -156,6 +148,49 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         }
     }
 
+#region Sync
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(target.transform.position);
+            stream.SendNext(local_chest.transform.rotation);
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+            stream.SendNext(animator.GetFloat("Speed"));
+            stream.SendNext(animator.GetBool("IsGrounded"));
+            stream.SendNext(animator.GetFloat("JoyStickX"));
+            stream.SendNext(animator.GetFloat("JoyStickY"));
+            
+
+        }
+        else
+        {
+            //This is someone else' player. we need to get their positions
+            //as of a few milliseconds ago and update or version of that player
+            targetPosition = (Vector3)stream.ReceiveNext();
+            chestRotation = (Quaternion)stream.ReceiveNext();
+            realPosition = (Vector3)stream.ReceiveNext();
+            realRotation = (Quaternion)stream.ReceiveNext();
+            animator.SetFloat("Speed", (float)stream.ReceiveNext());
+            animator.SetBool("IsGrounded", (bool)stream.ReceiveNext());
+            animator.SetFloat("JoyStickX", (float)stream.ReceiveNext());
+            animator.SetFloat("JoyStickY", (float)stream.ReceiveNext());
+     
+
+            if (gotFirstUpdate == false)
+            {
+                targetPosition = target.transform.position;
+                chestRotation = local_chest.transform.rotation;
+                transform.position = realPosition;
+                transform.rotation = realRotation;
+                gotFirstUpdate = true;
+            }
+        }
+    }
+#endregion Sync
+
+#region ChestLookAt()
     public void LateUpdate()
     {
         if (this.photonView.IsMine)
@@ -171,81 +206,43 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         }
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(target.transform.position);
-            stream.SendNext(local_chest.transform.rotation);
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-            stream.SendNext(animator.GetFloat("Speed"));
-            stream.SendNext(animator.GetBool("IsGrounded"));
-            stream.SendNext(animator.GetFloat("JoyStickX"));
-            stream.SendNext(animator.GetFloat("JoyStickY"));
-            stream.SendNext(playerHat);
-            stream.SendNext(Playeraccessory);
-            stream.SendNext(playerShoes);
-            stream.SendNext(playerTop);
-            stream.SendNext(playerBottom);
-            stream.SendNext(playerID);
+#endregion ChestLookAt()
 
-        }
-        else
-        {
-            //This is someone else' player. we need to get their positions
-            //as of a few milliseconds ago and update or version of that player
-            targetPosition = (Vector3)stream.ReceiveNext();
-            chestRotation = (Quaternion)stream.ReceiveNext();
-            realPosition = (Vector3)stream.ReceiveNext();
-            realRotation = (Quaternion)stream.ReceiveNext();
-            animator.SetFloat("Speed", (float)stream.ReceiveNext());
-            animator.SetBool("IsGrounded", (bool)stream.ReceiveNext());
-            animator.SetFloat("JoyStickX", (float)stream.ReceiveNext());
-            animator.SetFloat("JoyStickY", (float)stream.ReceiveNext());
-            playerHat = (int)stream.ReceiveNext();
-            Playeraccessory = (int)stream.ReceiveNext();
-            playerShoes = (int)stream.ReceiveNext();
-            playerTop = (int)stream.ReceiveNext();
-            playerBottom = (int)stream.ReceiveNext();
-            OtherID = (string)stream.ReceiveNext();
+#region Ping
+    public void WaitForPingUpdate()
+{
+    ping = PhotonNetwork.GetPing();
+    //photonView.RPC("SendPing", RpcTarget.Others, photonView.ViewID);
+}
+#endregion Ping
 
-            if (gotFirstUpdate == false)
-            {
-                targetPosition = target.transform.position;
-                chestRotation = local_chest.transform.rotation;
-                transform.position = realPosition;
-                transform.rotation = realRotation;
-                gotFirstUpdate = true;
-            }
-        }
-    }
-    #region RPC
+#region RPC
 
     [PunRPC]//Stores encountered ID
-    public void SetupRemotePlayer(int PhotonViewID, string PlayFabID , int shoesIndex, int accessoryIndex, int hatIndex, int shirtIndex, int pantIndex, int headIndex, int skinIndex, int sexIndex)
-    {
-        var player = PhotonView.Find(PhotonViewID).gameObject;
-        player.name = PlayFabID;
-        player = player.transform.GetChild(0).gameObject;
+public void SetupRemotePlayer(int PhotonViewID, string photonUserID, string PlayFabID, int shoesIndex, int accessoryIndex, int hatIndex, int shirtIndex, int pantIndex, int headIndex, int skinIndex, int sexIndex)
+{
 
-        SetupPlayerAccessory(accessoryIndex, player);
-        SetupPlayerShirt(shirtIndex, player, sexIndex);
-        SetupPlayerPants(pantIndex, player, sexIndex);
-        SetupPlayerShoes(shoesIndex, player);
-        SetupPlayerHead(headIndex, player);
-        SetupPlayerSkin(skinIndex, player);
-        SetupPlayerHat(hatIndex, player);
-        
+    var playerPhotonView = PhotonView.Find(PhotonViewID);
+    var player = playerPhotonView.gameObject;
 
+    player.name = PlayFabID;
+    player = player.transform.GetChild(0).gameObject;
 
+    //Store PlayerFabID as Name & ViewID & UserID for server refrence
+    //Add player to list for server refrence
+    GSC.networkObjects.Add(new NetworkObjectsClass(PlayFabID, PhotonView.Find(PhotonViewID), photonUserID));
 
-       
-   
-    }
+    SetupPlayerAccessory(accessoryIndex, player);
+    SetupPlayerShirt(shirtIndex, player, sexIndex);
+    SetupPlayerPants(pantIndex, player, sexIndex);
+    SetupPlayerShoes(shoesIndex, player);
+    SetupPlayerHead(headIndex, player);
+    SetupPlayerSkin(skinIndex, player);
+    SetupPlayerHat(hatIndex, player);
+}
     #endregion RPC
 
-    #region BuildCharacter
+#region BuildCharacter
 
     public void SetupPlayerHead(int headIndex, GameObject playerCustomizeChildOBJ)
     {

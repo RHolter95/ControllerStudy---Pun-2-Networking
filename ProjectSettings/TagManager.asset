@@ -21,6 +21,8 @@ TagManager:
   - Slot8
   - Slot9
   - Slot10
+  - Canvas
+  - Item
   layers:
   - Default
   - TransparentFX

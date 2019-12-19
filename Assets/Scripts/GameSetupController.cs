@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using UnityEngine;
 
-public class GameSetupController : MonoBehaviour
-{
 
+
+
+public class GameSetupController : MonoBehaviourPunCallbacks
+{
+   
     public GameObject playerCustomizeChildOBJ = null;
     GameObject Myplayer = null;
     public NetworkController NWC = null;
@@ -23,9 +27,9 @@ public class GameSetupController : MonoBehaviour
     public string playerID = "";
 
     //Add the index of all shirts with no arms
-    public int[] femaleShirtsWithNoArms = new int[] {3, 4, 6, 7, 8};
-    public int[] femaleShirtsWithNoSpine = new int[] {6,7};
-    public int[] femalePantsWithNoLegs = new int[] {6};
+    public int[] femaleShirtsWithNoArms = new int[] { 3, 4, 6, 7, 8 };
+    public int[] femaleShirtsWithNoSpine = new int[] { 6, 7 };
+    public int[] femalePantsWithNoLegs = new int[] { 6 };
 
     //Chest is usually [OFF] when shirt [On] except here
     public int[] maleShirtsWithChest = new int[] { 2 };
@@ -38,28 +42,46 @@ public class GameSetupController : MonoBehaviour
     public Material skinMaterial = null;
 
 
+    [SerializeField]
+    public List<NetworkObjectsClass> networkObjects = new List<NetworkObjectsClass>();
 
 
-
-
-    public SkinnedMeshRenderer SMR;
     void Update()
     {
+        for (int i = 0; i < networkObjects.Count; i++)
+        {
+            /*
+            if (networkObjects[i].Ping )
+            {
 
+            }
+            */
+        }
+        //Get Player count constantly, If it changes : search your networkObjects list and find missing PhotonView
+        //Once Photonview index is found get index.Player for PlayFabsID
+        //Call Quit RPC for that ID so other players can also remove them from list
+        //Possible complications: Does PhotonNetwork.room.PlayerCount work on every client?
+        //If it does then then no RPC is needed but if Only Master can use then we must send RPC from master to Others
+        //Because without PhotonNetwork.room.PlayerCount we wont be able to determine a change in value
     }
+
+
+
+
     void Awake()
     {
         PFC = GameObject.Find("NetworkController").GetComponentInChildren<PlayFabsController>();
-        if(PFC == null){
+        if (PFC == null)
+        {
             Debug.Log("There is no PlayFabsController");
         }
 
         NWC = GameObject.Find("NetworkController").GetComponentInChildren<NetworkController>();
-        if(NWC == null){
+        if (NWC == null)
+        {
             Debug.Log("There is no NetworkController");
         }
 
-        //PFC.GetStatistics();
         //Get stats from PFC
         accessoryIndex = PFC.Playeraccessory;
         hatIndex = PFC.playerHat;
@@ -70,13 +92,10 @@ public class GameSetupController : MonoBehaviour
         skinIndex = PFC.playerSkin;
         playerSex = PFC.playerSex;
         playerID = PFC.myID;
-
-
-   
-        
-
-        
     }
+
+    #region BuildPlayer
+
     public void SetupPlayerAccessory(int accessoryIndex, GameObject playerCustomizeChildOBJ)
     {
         var meshRenderer = playerCustomizeChildOBJ.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
@@ -171,7 +190,7 @@ public class GameSetupController : MonoBehaviour
             meshRenderer.sharedMesh = null;
 
             //If female
-            if(playerSex == 0)
+            if (playerSex == 0)
             {
                 for (int i = 0; i < femalePantsWithNoLegs.Length; i++)
                 {
@@ -197,7 +216,7 @@ public class GameSetupController : MonoBehaviour
             }
         }
 
-         meshRenderer = playerCustomizeChildOBJ.transform.GetChild(8).GetComponent<SkinnedMeshRenderer>();
+        meshRenderer = playerCustomizeChildOBJ.transform.GetChild(8).GetComponent<SkinnedMeshRenderer>();
 
         foreach (var item in playerCustomizeChildOBJ.GetComponent<CharacterCustomization>().pantsPresets)
         {
@@ -218,7 +237,7 @@ public class GameSetupController : MonoBehaviour
         if (shirtIndex > 0)
         {
             //If female
-            if(playerSex == 0)
+            if (playerSex == 0)
             {
                 for (int i = 0; i < femaleShirtsWithChest.Length; i++)
                 {
@@ -277,7 +296,7 @@ public class GameSetupController : MonoBehaviour
                         break;
                     }
                 }
-            } 
+            }
         }
 
         if (removeChest == true)
@@ -323,41 +342,49 @@ public class GameSetupController : MonoBehaviour
         }
     }
 
-    // This script will be added to any multiplayer scene
+    #endregion BuildPlayer
+
     void Start()
-    {  
+    {
         CreatePlayer(); //Create a networked player object for each player that loads into the multiplayer scenes.
     }
 
     private void CreatePlayer()
     {
         //THIS IS POTENTIALLY HOW TO SPAWN AT ANY VECTOR MEANING WE CAN SETUP "SPAWN POINTS"
-        
+
         //Spawn Base Model 
-        if(playerSex == 0){
+        if (playerSex == 0)
+        {
             //Female
-            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerFEMALE"), new Vector3 (-2.8f,0.0f,0.736f), Quaternion.identity);
-        }else{
-            //Male
-            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerMALE"), new Vector3 (-2.8f,0.0f,0.736f), Quaternion.identity);
+            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerFEMALE"), new Vector3(-2.8f, 0.0f, 0.736f), Quaternion.identity);
         }
-        if(Myplayer == null){
+        else
+        {
+            //Male
+            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerMALE"), new Vector3(-2.8f, 0.0f, 0.736f), Quaternion.identity);
+            
+            
+        }
+        if (Myplayer == null)
+        {
             Debug.Log("Couldn't grab instantiated player!");
         }
 
         //Sets player name to ID for social interaction
         Myplayer.name = playerID;
 
+        //Enables/Disables components that are/arn't required
         ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
-        ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;//true
+        ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("StayOnStage")).enabled = false;
         Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
         Myplayer.transform.Find("Canvas").gameObject.SetActive(true);
 
         //Leave customization script active until we customize, then get the CharCustomize script
         ((MonoBehaviour)Myplayer.transform.GetChild(0).GetComponent("CharacterCustomization")).enabled = true;
-        
+
         CC = Myplayer.transform.GetChild(0).GetComponent<CharacterCustomization>();
 
         //Grabbing CharCustomize GO (Character@Idle)
@@ -375,16 +402,24 @@ public class GameSetupController : MonoBehaviour
         SetupPlayerHead(headIndex, playerCustomizeChildOBJ);
         SetupPlayerSkin(skinIndex, playerCustomizeChildOBJ);
 
+        
+
         PhotonView photonView = Myplayer.GetComponent<PhotonView>();
         if (photonView != null)
         {
-            photonView.RPC("SetupRemotePlayer", RpcTarget.OthersBuffered, photonView.ViewID, Myplayer.name, PFC.playerShoes, PFC.Playeraccessory, PFC.playerHat, PFC.playerTop, PFC.playerBottom, PFC.playerHead, PFC.playerSkin, PFC.playerSex);
+            //Add player to list for server refrence
+            networkObjects.Add(new NetworkObjectsClass(Myplayer.name.ToString(), Myplayer.GetPhotonView(), PhotonNetwork.LocalPlayer.UserId));
+
+            //Send our data to futrue players
+            photonView.RPC("SetupRemotePlayer", RpcTarget.OthersBuffered, photonView.ViewID, PhotonNetwork.LocalPlayer.UserId, Myplayer.name, PFC.playerShoes, PFC.Playeraccessory, PFC.playerHat, PFC.playerTop, PFC.playerBottom, PFC.playerHead, PFC.playerSkin, PFC.playerSex);
         }
         else
         {
             Debug.Log("No PhotonView Found On New Player");
         }
 
-        
+            //Enables Statistic gathering for room by enabling component on GameSetupController GameObject
+            //Eanabling it here allows us to utilize information in the NetworkObjects<List>
+            ((MonoBehaviour)transform.GetComponent("StatisticsForLobby")).enabled = true;
     }
 }

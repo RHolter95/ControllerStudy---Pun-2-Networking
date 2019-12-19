@@ -4384,6 +4384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 936625025445081048}
+  photonView: {fileID: 0}
   GSC: {fileID: 0}
   PFC: {fileID: 0}
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4407,14 +4408,8 @@ MonoBehaviour:
   playerBottom: 0
   playerShoes: 0
   playerSex: 0
-  iDsArray:
-  - Matt
-  - Joanne
-  - Robert
-  idIndex: 0
   playerID: 
-  OtherID: 
-  skinMaterial: {fileID: 0}
+  ping: 0
 --- !u!114 &6047878068627859431
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{633D2B7E-E3E5-A3B1-B595-38D9CA9ADE18}</ProjectGuid>
+    <ProjectGuid>{B3611A1C-AA11-4655-6972-9E8DA3985CB0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -97,47 +97,48 @@
     <Compile Include="Assets\PlayFabEditorExtensions\Editor\Scripts\Utils\PlayFabGuiFieldHelper.cs" />
     <Compile Include="Assets\PlayFabSdk\Shared\Editor\PlayFabHelp.cs" />
     <Compile Include="Assets\PlayFabSdk\Shared\Models\Editor\MakeSharedSettingsObj.cs" />
+    <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Editor\ReporterEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -335,28 +336,28 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-NetworkingBackup/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>C:/Users/mrmug/OneDrive/Desktop/Heist/ControllerStudy---Pun-2-Networking/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.14f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -721,39 +722,39 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{774E90DC-47DA-F1A8-37BE-35520A3B8309}</Project>
+      <Project>{847B3E80-EF48-4096-20D4-D066C8B4B6CA}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
-      <Project>{E77F2371-FDC9-CF28-D4FB-84B5447FF3BE}</Project>
+      <Project>{ADE1256A-4A97-8105-CF4E-1BF9510DF81E}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{B6B19B4F-9E4C-1C40-34B0-7BBD02BD3672}</Project>
+      <Project>{6F733D65-9E54-6E39-836B-BEA3667FBC12}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonWebSocket.csproj">
-      <Project>{D48CF49A-95D8-0511-6751-1F29DFDFFB43}</Project>
+      <Project>{1544BF08-8544-DFE3-9320-716B28591DD6}</Project>
       <Name>PhotonWebSocket</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{F18961E6-8009-E637-B979-C8E4FB23B30F}</Project>
+      <Project>{87C96E49-E97E-D20C-4DF5-5231810A49E0}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{40E3CB45-9B5A-4019-B3FB-E35AF599BCEC}</Project>
+      <Project>{586C902D-A1AC-F5CE-09EB-3F731AB2EF92}</Project>
       <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonChat.csproj">
-      <Project>{3F9473F3-7FE9-9477-350C-D70323C2CE21}</Project>
+      <Project>{94FA4217-5FC4-6317-8930-74E4DB6C244F}</Project>
       <Name>PhotonChat</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
-      <Project>{70E3540A-45A7-64DF-92A7-920CA832EC46}</Project>
+      <Project>{F9E6FBA1-1B45-FBCE-76D5-00D992E3C3D7}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{A2FFE98E-C196-0BB1-D440-4E77A8D82285}</Project>
+      <Project>{A32EB214-101C-E6EE-9CA7-B5C8EC1C5B04}</Project>
       <Name>PhotonUnityNetworking.Editor</Name>
     </ProjectReference>
   </ItemGroup>

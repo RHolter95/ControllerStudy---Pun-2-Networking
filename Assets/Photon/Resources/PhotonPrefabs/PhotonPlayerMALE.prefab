@@ -2948,6 +2948,7 @@ GameObject:
   - component: {fileID: 6757547341050344599}
   - component: {fileID: 3773800707152486224}
   - component: {fileID: 5061630234570691365}
+  - component: {fileID: 7599198855631612872}
   m_Layer: 0
   m_Name: PhotonPlayerMALE
   m_TagString: Player
@@ -3041,6 +3042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
+  PFC: {fileID: 0}
   clothesInt: 0
   joystickOne: {fileID: 3890656144603369484}
   joystickTwo: {fileID: 5341682886029452478}
@@ -3062,6 +3064,14 @@ MonoBehaviour:
   downTime: 0.03793123
   canvas: {fileID: 3890975811331609253}
   itemPV: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  pausePanel: {fileID: 0}
+  friendButton: {fileID: 0}
+  leaderBoardButton: {fileID: 0}
+  getPauseMenu: 1
+  otherID: 
+  idInt: 0
+  NWplayer: {fileID: 0}
 --- !u!114 &6757547341050344599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3075,12 +3085,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7757426831222840541}
+  photonView: {fileID: 0}
   GSC: {fileID: 0}
-  clothesInt: 0
-  clothesStr: 
-  tempClothesStr: 
-  CharacterCustomizeClothesSlots: 0000000000000000000000000000000000000000
-  CharacterCustomizeBodySlots: 0000000000000000000000000000000000000000
+  PFC: {fileID: 0}
   chestRotation: {x: 0, y: 0, z: 0, w: 1}
   targetPosition: {x: 0, y: 0, z: 0}
   offset: {x: 10, y: 56, z: 12}
@@ -3092,7 +3099,6 @@ MonoBehaviour:
   sentFirstUpdate: 0
   gotFirstUpdate: 0
   playerCustomizeChildOBJ: {fileID: 0}
-  playerClothesComp: {fileID: 0}
   playerHat: 0
   Playeraccessory: 0
   playerTop: 0
@@ -3103,8 +3109,8 @@ MonoBehaviour:
   playerBottom: 0
   playerShoes: 0
   playerSex: 0
-  run: 1
-  updateArray: 0
+  playerID: 
+  ping: 0
 --- !u!114 &3773800707152486224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3134,6 +3140,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageCenterVector: {x: -4.89, y: 1.646, z: -1.119}
   target: {fileID: 0}
+--- !u!114 &7599198855631612872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7560762846300775358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb6e3b8a6d17fd46b7a1c37a4b8e6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoints: 100
 --- !u!1 &7757426831230135937
 GameObject:
   m_ObjectHideFlags: 0

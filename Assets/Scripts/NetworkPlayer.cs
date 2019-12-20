@@ -218,12 +218,13 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
 #region RPC
 
-    [PunRPC]//Stores encountered ID
+[PunRPC]//Stores encountered ID
 public void SetupRemotePlayer(int PhotonViewID, string photonUserID, string PlayFabID, int shoesIndex, int accessoryIndex, int hatIndex, int shirtIndex, int pantIndex, int headIndex, int skinIndex, int sexIndex)
 {
-
+    Debug.Log("RPC");
     var playerPhotonView = PhotonView.Find(PhotonViewID);
     var player = playerPhotonView.gameObject;
+    
 
     player.name = PlayFabID;
     player = player.transform.GetChild(0).gameObject;
@@ -239,6 +240,24 @@ public void SetupRemotePlayer(int PhotonViewID, string photonUserID, string Play
     SetupPlayerHead(headIndex, player);
     SetupPlayerSkin(skinIndex, player);
     SetupPlayerHat(hatIndex, player);
+
+    /*
+    //Duplicte char we just made, get upper most parent before save
+    GameObject duplicateChar = Instantiate(player.GetComponentInParent<PhotonView>().gameObject);
+
+    //Disable all scripts on duplicate
+    MonoBehaviour[] scripts = duplicateChar.GetComponents<MonoBehaviour>();
+    foreach (MonoBehaviour script in scripts)
+    {
+        script.enabled = false;
+    }
+
+    //Hide duplicate char
+    duplicateChar.SetActive(false);
+
+    GSC.playerTempOBJs.Add(new PlayerPool(playerID, duplicateChar));
+    Debug.Log("After Store RPC");
+    */
 }
     #endregion RPC
 

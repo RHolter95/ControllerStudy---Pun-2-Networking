@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StayOnStage : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class StayOnStage : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        stageCenterVector = GameObject.Find("StageCenter").transform.position;
+
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            stageCenterVector = GameObject.Find("StageCenter").transform.position;
+        }
+
     }
 
     void Update()

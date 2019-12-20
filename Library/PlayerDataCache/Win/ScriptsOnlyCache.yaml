@@ -1,7 +1,6 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp-Editor.dll:
-    - PlayFab.PfEditor.PlayFabEditor
     - PlayFab.PfEditor.PlayFabEditorPrefsSO
     Assembly-CSharp.dll:
     - BulletForward
@@ -126,13 +125,9 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 662}
-    - Class: 114
       Script: {instanceID: 9750}
     - Class: 114
       Script: {instanceID: 9784}
-    - Class: 114
-      Script: {instanceID: 9852}
     - Class: 114
       Script: {instanceID: 9878}
     - Class: 114
@@ -151,8 +146,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10318}
     - Class: 114
       Script: {instanceID: 10344}
-    - Class: 114
-      Script: {instanceID: 10472}
     - Class: 114
       Script: {instanceID: 10474}
     - Class: 114
@@ -180,6 +173,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11144}
     - Class: 114
+      Script: {instanceID: 11156}
+    - Class: 114
       Script: {instanceID: 11204}
     - Class: 114
       Script: {instanceID: 11232}
@@ -205,6 +200,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 11704}
     - Class: 114
       Script: {instanceID: 11770}
+    - Class: 114
+      Script: {instanceID: 11906}
     - Class: 114
       Script: {instanceID: 11926}
     - Class: 114
@@ -719,7 +716,7 @@ ScriptsOnlyBuild:
     className: NamePickGui
   - hash:
       serializedVersion: 2
-      Hash: 01b987c418dab1e5864c83fc10129a70
+      Hash: 4aa91071ba17f6d136618fcd2636f5ef
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnderdogCity
     className: StatisticsForLobby
@@ -995,7 +992,7 @@ ScriptsOnlyBuild:
     className: ServerSettings
   - hash:
       serializedVersion: 2
-      Hash: c21d9a5c465aa74cd5684b3c7a49e294
+      Hash: 933b64f725ff0f2b34cbd3ef77f9d779
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NetworkPlayer
@@ -1295,7 +1292,7 @@ ScriptsOnlyBuild:
     className: TextMeshPro
   - hash:
       serializedVersion: 2
-      Hash: be45d575428c40061c1c6d44c317ef74
+      Hash: da9171f99a770926dbedff1f50670368
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetupController

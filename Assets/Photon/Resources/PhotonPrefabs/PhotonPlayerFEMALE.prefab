@@ -4247,6 +4247,7 @@ GameObject:
   - component: {fileID: 4212830685828844576}
   - component: {fileID: 6047878068627859431}
   - component: {fileID: 7669640317510867764}
+  - component: {fileID: 232738006442836541}
   m_Layer: 0
   m_Name: PhotonPlayerFEMALE
   m_TagString: Player
@@ -4439,6 +4440,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageCenterVector: {x: -4.89, y: 1.646, z: -1.119}
   target: {fileID: 0}
+--- !u!114 &232738006442836541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4072695232193313831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb6e3b8a6d17fd46b7a1c37a4b8e6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoints: 100
 --- !u!1 &4191730225368806916
 GameObject:
   m_ObjectHideFlags: 0
@@ -4560,8 +4574,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5067396152010888099}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.9799999, z: -0.110000014}
-  m_LocalScale: {x: 3.742862, y: 1.3089, z: 3.719763}
+  m_LocalPosition: {x: 0, y: -0.65, z: -0.110000014}
+  m_LocalScale: {x: 3.742862, y: 0.41749468, z: 3.1747572}
   m_Children: []
   m_Father: {fileID: 8953045954964434167}
   m_RootOrder: 3
@@ -7430,6 +7444,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WeaponHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.010167995
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.9990474
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.248
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.019326854
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.03778089
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -362.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 4.308
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.000003850786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.104183435
+      objectReference: {fileID: 0}
+    - target: {fileID: 2312426119814006628, guid: 9ffad23bafac9c349912d8ff261cb72f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.6604681
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ffad23bafac9c349912d8ff261cb72f, type: 3}

@@ -384,7 +384,6 @@ public class PlayFabsController : MonoBehaviour
 
     public void WipeTextFields()
     {
-        Debug.Log("Here");
         networkController.userNameInput.text = "";
         networkController.userEmailInput.text = "";
         networkController.userPassInput.text = "";

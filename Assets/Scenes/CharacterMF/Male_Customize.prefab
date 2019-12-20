@@ -2845,7 +2845,6 @@ GameObject:
   - component: {fileID: 9113146745907532223}
   - component: {fileID: 3833566527184789518}
   - component: {fileID: 2742548695288663165}
-  - component: {fileID: 5455479703379920974}
   - component: {fileID: 2462725578630996873}
   - component: {fileID: 5786251973218414588}
   m_Layer: 0
@@ -2891,7 +2890,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3833566527184789518}
-  - {fileID: 5455479703379920974}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: -999
   isRuntimeInstantiated: 1
@@ -2928,43 +2927,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.98, z: -0.11}
---- !u!114 &5455479703379920974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5786251973218414589}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe41a82939a454845af1c9e2fb64f76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  GSC: {fileID: 0}
-  PFC: {fileID: 0}
-  chestRotation: {x: 0, y: 0, z: 0, w: 1}
-  targetPosition: {x: 0, y: 0, z: 0}
-  offset: {x: 10, y: 56, z: 12}
-  local_head: {fileID: 0}
-  local_neck: {fileID: 0}
-  local_spine: {fileID: 0}
-  local_chest: {fileID: 0}
-  target: {fileID: 0}
-  sentFirstUpdate: 0
-  gotFirstUpdate: 0
-  playerCustomizeChildOBJ: {fileID: 0}
-  playerHat: 0
-  Playeraccessory: 0
-  playerTop: 0
-  playerJacket: 0
-  playerUnderware: 0
-  playerHead: 0
-  playerSkin: 0
-  playerBottom: 0
-  playerShoes: 0
-  playerSex: 0
-  playerID: 
 --- !u!114 &2462725578630996873
 MonoBehaviour:
   m_ObjectHideFlags: 0

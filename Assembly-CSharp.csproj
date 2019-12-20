@@ -208,10 +208,10 @@
     <Compile Include="Assets\Scripts\ScriptableObjects\ItemObject.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\WeaponObject.cs" />
     <Compile Include="Assets\Scripts\SelfDestruct.cs" />
+    <Compile Include="Assets\Scripts\StatisticsForLobby.cs" />
     <Compile Include="Assets\Scripts\StayOnStage.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\WeaponData.cs" />
-    <Compile Include="Assets\StatisticsForLobby.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Reporter.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterGUI.cs" />

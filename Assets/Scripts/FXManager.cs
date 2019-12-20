@@ -49,21 +49,11 @@ public class FXManager : MonoBehaviour {
 
 		if(SniperBulletFXPrefab != null){
 			GameObject sniperFX = (GameObject)Instantiate(SniperBulletFXPrefab, startPos ,Quaternion.LookRotation(startPos - endPos));
-			//lr = sniperFX.transform.Find("LineFX").GetComponent<LineRenderer>();
-			// if(lr != null){
-			// }else{
-			// 	Debug.LogError("SniperBulletFXPrefabs LineRenderer Is Missing");
-			// }
+			
 		}else{
 			Debug.LogError("SniperBulletFXPrefab Is Missing");
 		}
 		
-		
-
-		//Make sound at startPos of ray & make it follow player
-		//GameObject audioSource = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX", "AudioSource"), startPos, Quaternion.identity);
-		//AudioSource.PlayClipAtPoint(SniperBulletFXAudio,startPos);
-
 		
 		}
 }

@@ -85,7 +85,7 @@ public class PlayerShooting : MonoBehaviour
                 if(PhotonView == null){
                     Debug.Log("There is no PhotonView");
                 }else{
-                h.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, currentWepDmg);
+                h.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, currentWepDmg, h.GetComponent<PhotonView>().gameObject.tag);
                 }
                 //h.TakeDamage(damage); This is offline version of above code./
             }

@@ -8,6 +8,7 @@ namespace UnderdogCity
     {
         public InventoryObject inventory;
         public PlayFabsController PFC = null;
+        public Health health = null;
 
         public int clothesInt = 0;
         public FixedJoystick joystickOne;
@@ -67,6 +68,10 @@ namespace UnderdogCity
         [SerializeField]
         public NetworkPlayer NWplayer;
 
+        public bool changeScenes = false;
+
+
+
         private void Start()
         {
             //Set aim up and aim down limits to 0 for aiming at center
@@ -92,7 +97,13 @@ namespace UnderdogCity
 
         // Start is called before the first frame update
         private void Awake()
-        {   
+        {
+
+            health = transform.GetComponent<Health>();
+            if (health == null)
+            {
+                Debug.Log("Couldn't find Health Component");
+            }
 
             PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
             if (PFC == null)
@@ -182,13 +193,24 @@ namespace UnderdogCity
             animator.SetFloat("AimAngle", aimAngle);
         }
 
+        public void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "ChangeScene")
+            {
+                if (other.transform.GetComponent<ChangeScene>())
+                {
+                    changeScenes = false;
+                    return;
+                }
+            }
+        }
+
         public void OnTriggerEnter(Collider other)
         {
-
-            var otherTag = other.transform.GetComponentInParent<PhotonView>().gameObject.tag;
+            var parentTag = other.transform.root.tag;
 
             //If we collide with Player
-            if (otherTag == "Player")
+            if (parentTag == "Player")
             {
                 //If the obj we collided with is ourselves, return, else we collided with something important
                 if (other.transform.GetComponentInParent<NetworkPlayer>().gameObject.name == PFC.myID)
@@ -206,8 +228,18 @@ namespace UnderdogCity
                 }
             }
 
+            //If we collide with ChangeScene OBJ
+            if (parentTag == "ChangeScene")
+            {
+                if (other.transform.GetComponent<ChangeScene>())
+                {
+                    changeScenes = true;
+                    return;
+                }
+            }
 
-            if (otherTag == "Item")
+
+            if (parentTag == "Item")
             {
 
                 var item = other.GetComponent<Item>();
@@ -240,8 +272,23 @@ namespace UnderdogCity
         // Update is called once per frame
         private void Update()
         {
-           
 
+            if (health.hitPoints <= 0)
+            {
+                transform.GetChild(0).GetComponent<Animator>().SetBool("IsDead", true);
+            }
+            else
+            {
+                 transform.GetChild(0).GetComponent<Animator>().SetBool("IsDead", false);
+            }
+            
+            //Press E for INTERACT
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Calling Action");
+            }
+
+            //Press Esc for PAUSE MENU
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (pauseMenu.activeInHierarchy)

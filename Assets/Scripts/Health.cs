@@ -12,10 +12,20 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHitPoints = hitPoints;
+        //currentHitPoints = hitPoints;
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        //If youre alive you have permission to die!
+        if (GetComponentInParent<Animator>().GetBool("IsDead") == false)
+        {
+            currentHitPoints = hitPoints;
+        }
+    }
+
+
+
     [PunRPC]
     public void TakeDamage(float amount, string tag)
     {
@@ -26,6 +36,7 @@ public class Health : MonoBehaviour
         }
     }
 
+
     void Die(string tag)
     {
 
@@ -34,19 +45,15 @@ public class Health : MonoBehaviour
 
             case "Player":
 
+                //Set respawn timer
                 GameObject.FindObjectOfType<GameSetupController>().respawnTimer = RESPAWNTIME;
-
-                //If GO was instantiated over the network
-                if (GetComponent<PhotonView>().IsMine)
-                {
-                    //use this to ensure the destroy message is only sent once over the network y photonview owner
-
-                    //This deletes INSTANTIATED items on the Network
-                    PhotonNetwork.Destroy(gameObject);
-                    
-                }
+                //Set Animation to "IsDead"
+                GameObject.FindObjectOfType<Animator>().SetBool("IsDead", true);
+                //Sends message for server stream
+                GetComponent<PhotonView>().RPC("BroadcastDeath", RpcTarget.All, GetComponent<PhotonView>().ViewID);
                 break;
 
+            case "Object":
             case "Item":
                 //If GO was part of original level, delete.
                 if (GetComponent<PhotonView>().InstantiationId == 0)

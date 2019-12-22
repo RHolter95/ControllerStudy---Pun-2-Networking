@@ -7775,7 +7775,7 @@ GameObject:
   - component: {fileID: 251697048}
   m_Layer: 0
   m_Name: Crate
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57129,6 +57129,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Computer_02
       objectReference: {fileID: 0}
+    - target: {fileID: 126364, guid: e6713b154bb529444ac8f8d31d1db8a9, type: 3}
+      propertyPath: m_TagString
+      value: ChangeScene
+      objectReference: {fileID: 0}
     - target: {fileID: 465362, guid: e6713b154bb529444ac8f8d31d1db8a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.449
@@ -66415,8 +66419,9 @@ MonoBehaviour:
   maleShirtsWithNoSpine: 
   malePantsWithNoLegs: 01000000030000000400000005000000060000000700000008000000090000000a000000
   skinMaterial: {fileID: 0}
+  playerToRespawn: 0
   networkObjects: []
-  playerTempOBJs: []
+  respawnPoints: []
   respawnTimer: 0
 --- !u!1 &2086403240 stripped
 GameObject:

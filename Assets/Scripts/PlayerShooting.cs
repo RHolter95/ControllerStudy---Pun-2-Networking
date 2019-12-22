@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 public class PlayerShooting : MonoBehaviour
 {
-
+    Animator animator = null;
     GameObject fxManagerOBJ;
     [SerializeField]
     FXManager fxManager;
@@ -17,7 +17,7 @@ public class PlayerShooting : MonoBehaviour
 
     void Start()
     {
-        
+        animator = GetComponentInChildren<Animator>();
         weaponData = gameObject.GetComponentInChildren<WeaponData>();
         fxManagerOBJ = GameObject.Find("FXManager");
         fxManager = fxManagerOBJ.GetComponent<FXManager>();
@@ -55,10 +55,16 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        if(coolDown > 0){
+        
+        if(coolDown > 0 || animator.GetBool("IsDead") == true)
+        {
+            if (animator.GetBool("IsDead") == true)
+            {
+                Debug.Log("Invisible People Can't Shoot!");
+                return;
+            }
             return;
         }
-
 
         Ray ray = new Ray(Camera.main.transform.position,Camera.main.transform.forward);
         Transform hitTransform;

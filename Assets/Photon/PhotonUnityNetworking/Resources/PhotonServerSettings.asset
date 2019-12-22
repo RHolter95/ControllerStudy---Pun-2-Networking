@@ -43,5 +43,8 @@ MonoBehaviour:
   - SetupRemotePlayer
   - PlayerLeftRoom
   - SendPing
+  - SetupPlayerDeath
+  - BroadcastDeath
+  - BroadcastSpawn
   DisableAutoOpenWizard: 1
   ShowSettings: 1

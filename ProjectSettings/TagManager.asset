@@ -23,6 +23,8 @@ TagManager:
   - Slot10
   - Canvas
   - Item
+  - ChangeScene
+  - Object
   layers:
   - Default
   - TransparentFX

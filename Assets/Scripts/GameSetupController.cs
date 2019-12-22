@@ -14,8 +14,6 @@ public class GameSetupController : MonoBehaviourPunCallbacks
     public GameObject playerCustomizeChildOBJ = null;
 
     GameObject Myplayer = null;
-    GameObject MyplayerCopy = null;
-
 
     public NetworkController NWC = null;
     public PlayFabsController PFC = null;
@@ -44,11 +42,14 @@ public class GameSetupController : MonoBehaviourPunCallbacks
     public int[] malePantsWithNoLegs = new int[] { 1, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public Material skinMaterial = null;
-    GameObject duplicateChar = null;
+    public int playerToRespawn = 0;
 
 
     [SerializeField]
     public List<NetworkObjectsClass> networkObjects = new List<NetworkObjectsClass>();
+
+    [SerializeField]
+    public List<GameObject> respawnPoints = new List<GameObject>();
 
     public float respawnTimer = 0;
 
@@ -146,15 +147,17 @@ void Start()
         PhotonView photonView = Myplayer.GetComponent<PhotonView>();
         PhotonTransformView photonTransformView = Myplayer.GetComponent<PhotonTransformView>();
 
+       //Remove un-needed components
+        Destroy(((MonoBehaviour)Myplayer.GetComponent("StayOnStage")));
+
         //Enables/Disables components that are/arn't required
+        ((MonoBehaviour)Myplayer.GetComponent("Health")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;
-        ((MonoBehaviour)Myplayer.GetComponent("StayOnStage")).enabled = false;
         Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
         Myplayer.transform.Find("Canvas").gameObject.SetActive(true);
-        Destroy(Myplayer.GetComponent<StayOnStage>());
-
+        
 
         if (photonView != null)
         {
@@ -425,9 +428,17 @@ void Start()
 
     #endregion BuildPlayer
 
+
 void Respawn()
 {
-    CreatePlayer(); //Create a networked player object for each player that loads into the multiplayer scenes.
-}
+        //Vector3 spawn = new Vector3(2f, 0f, 2f);
+
+        //Find GameObj sendout its respawn
+        //GameObject tempPlayer = PhotonView.Find(playerToRespawn).gameObject;
+
+        //tempPlayer.GetComponent<PhotonView>().RPC("BroadcastSpawn", RpcTarget.All, tempPlayer.GetComponent<PhotonView>().ViewID, spawn);
+
+    }
 
 }
+

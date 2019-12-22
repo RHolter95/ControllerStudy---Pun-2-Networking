@@ -11,7 +11,6 @@ public class StayOnStage : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             stageCenterVector = GameObject.Find("StageCenter").transform.position;
@@ -21,12 +20,18 @@ public class StayOnStage : MonoBehaviour
 
     void Update()
     {
-        this.transform.position =  stageCenterVector;
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            this.transform.position = stageCenterVector;
+        }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        this.transform.position =  stageCenterVector;
+        if (SceneManager.GetActiveScene().name == "Menu")
+        {
+            this.transform.position = stageCenterVector;
+        }
     }
 }

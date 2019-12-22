@@ -8,6 +8,7 @@ using System.Linq;
 using System.Globalization;
 using UnityEngine.UI;
 using Photon.Realtime;
+using System.Collections;
 
 public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 {
@@ -63,13 +64,6 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 #region Setup
     private void Awake()
     {
-        //Assigning various components/GameObj's to vars for use
-        photonView = transform.GetComponent<PhotonView>();
-        PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
-        animator = GetComponentInChildren<Animator>();
-        playerCustomizeChildOBJ = animator.gameObject;
-        target = transform.Find("CameraPivot/Target");
-
         if (SceneManager.GetActiveScene().name == "Network")
         {
             GSC = GameObject.Find("GameSetupController").GetComponent<GameSetupController>();
@@ -78,6 +72,13 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
                 Debug.Log("Network Player Couldn't find GameSetupController  ");
             }
         }
+
+        //Assigning various components/GameObj's to vars for use
+        photonView = transform.GetComponent<PhotonView>();
+        PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
+        animator = GetComponentInChildren<Animator>();
+        playerCustomizeChildOBJ = animator.gameObject;
+        target = transform.Find("CameraPivot/Target");
 
         if (PFC != null && GSC != null)
         {
@@ -159,6 +160,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             stream.SendNext(transform.rotation);
             stream.SendNext(animator.GetFloat("Speed"));
             stream.SendNext(animator.GetBool("IsGrounded"));
+            stream.SendNext(animator.GetBool("IsDead"));
             stream.SendNext(animator.GetFloat("JoyStickX"));
             stream.SendNext(animator.GetFloat("JoyStickY"));
             
@@ -174,6 +176,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             realRotation = (Quaternion)stream.ReceiveNext();
             animator.SetFloat("Speed", (float)stream.ReceiveNext());
             animator.SetBool("IsGrounded", (bool)stream.ReceiveNext());
+            animator.SetBool("IsDead", (bool)stream.ReceiveNext());
             animator.SetFloat("JoyStickX", (float)stream.ReceiveNext());
             animator.SetFloat("JoyStickY", (float)stream.ReceiveNext());
      
@@ -214,14 +217,91 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     ping = PhotonNetwork.GetPing();
     //photonView.RPC("SendPing", RpcTarget.Others, photonView.ViewID);
 }
-#endregion Ping
+    #endregion Ping
 
 #region RPC
+
+[PunRPC]//Gets info on dead player for stream and anim sync
+public void BroadcastDeath(int PhotonViewID)
+{
+    //Set anim to "IsDead" via health == 0 (PlayerMove)
+    PhotonView.Find(PhotonViewID).GetComponent<Health>().hitPoints = 0; 
+
+    string PlayFabID = "";
+
+    //Use given ID to extrapolate further info on player locally
+    for (int i = 0; i< GSC.networkObjects.Count; i++)
+    {
+        if (GSC.networkObjects[i].viewID.ViewID == PhotonViewID)
+        {
+            PlayFabID = GSC.networkObjects[i].Player;
+            break;
+        }
+    }
+
+    //Stream local info
+    Debug.Log("Player: " + PlayFabID + " Has Died.");
+
+    //Wait 5 seconds
+    StartCoroutine(waiter(PhotonViewID));
+
+}
+
+    IEnumerator waiter(int PhotonViewID)
+    {
+        float waitTime = 5;
+        yield return wait(waitTime);
+
+        //After 5 seconds get player OBJ
+        GameObject deadPlayer = PhotonView.Find(PhotonViewID).gameObject;
+
+        //Random Spawn
+        Vector3 spawn = new Vector3(2f, 0f, 2f);
+
+        //Hide dead player
+        deadPlayer.SetActive(false);
+
+        //Reset their HP
+        deadPlayer.GetComponent<Health>().hitPoints = 100;
+
+        //spawn deap player @ point
+        deadPlayer.gameObject.transform.position = spawn;
+
+        //Dead player is "alive"
+        deadPlayer.GetComponent<Health>().gameObject.SetActive(true);
+    }
+
+    IEnumerator wait(float waitTime)
+    {
+        float counter = 0;
+
+        while (counter < waitTime)
+        {
+            //Increment Timer until counter >= waitTime
+            counter += Time.deltaTime;
+            //Debug.Log("We have waited for: " + counter + " seconds");
+          
+            //Wait for a frame so that Unity doesn't freeze
+            yield return null;
+        }
+    }
+
+[PunRPC]//Sends new spawn position of newly spawned char
+public void BroadcastSpawn(int PhotonViewID, Vector3 spawnPos)
+{
+   PhotonView.Find(PhotonViewID).GetComponent<Health>().hitPoints = 100;
+   //Find OBJ of newly spawned player and set them to spawn position.
+   PhotonView.Find(PhotonViewID).gameObject.transform.position = spawnPos;
+   //Find OBJ of newly spawned player and set Animator to Idle.
+   //PhotonView.Find(PhotonViewID).gameObject.GetComponentInChildren<Animator>().SetBool("IsDead", false);
+}
+
+
 
 [PunRPC]//Stores encountered ID
 public void SetupRemotePlayer(int PhotonViewID, string photonUserID, string PlayFabID, int shoesIndex, int accessoryIndex, int hatIndex, int shirtIndex, int pantIndex, int headIndex, int skinIndex, int sexIndex)
 {
-    Debug.Log("RPC");
+    
     var playerPhotonView = PhotonView.Find(PhotonViewID);
     var player = playerPhotonView.gameObject;
     
@@ -241,25 +321,9 @@ public void SetupRemotePlayer(int PhotonViewID, string photonUserID, string Play
     SetupPlayerSkin(skinIndex, player);
     SetupPlayerHat(hatIndex, player);
 
-    /*
-    //Duplicte char we just made, get upper most parent before save
-    GameObject duplicateChar = Instantiate(player.GetComponentInParent<PhotonView>().gameObject);
 
-    //Disable all scripts on duplicate
-    MonoBehaviour[] scripts = duplicateChar.GetComponents<MonoBehaviour>();
-    foreach (MonoBehaviour script in scripts)
-    {
-        script.enabled = false;
-    }
-
-    //Hide duplicate char
-    duplicateChar.SetActive(false);
-
-    GSC.playerTempOBJs.Add(new PlayerPool(playerID, duplicateChar));
-    Debug.Log("After Store RPC");
-    */
 }
-    #endregion RPC
+#endregion RPC
 
 #region BuildCharacter
 

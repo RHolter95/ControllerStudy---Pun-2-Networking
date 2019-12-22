@@ -4247,7 +4247,7 @@ GameObject:
   - component: {fileID: 4212830685828844576}
   - component: {fileID: 6047878068627859431}
   - component: {fileID: 7669640317510867764}
-  - component: {fileID: 232738006442836541}
+  - component: {fileID: 1653940240029436069}
   m_Layer: 0
   m_Name: PhotonPlayerFEMALE
   m_TagString: Player
@@ -4343,6 +4343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
   PFC: {fileID: 0}
+  health: {fileID: 0}
   clothesInt: 0
   joystickOne: {fileID: 5931022553862056123}
   joystickTwo: {fileID: 3283162578293939209}
@@ -4372,6 +4373,7 @@ MonoBehaviour:
   otherID: 
   idInt: 0
   NWplayer: {fileID: 0}
+  changeScenes: 0
 --- !u!114 &4212830685828844576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4440,7 +4442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageCenterVector: {x: -4.89, y: 1.646, z: -1.119}
   target: {fileID: 0}
---- !u!114 &232738006442836541
+--- !u!114 &1653940240029436069
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

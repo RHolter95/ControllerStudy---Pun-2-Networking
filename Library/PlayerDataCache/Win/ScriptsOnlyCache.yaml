@@ -4,6 +4,7 @@ ScriptsOnlyBuild:
     - PlayFab.PfEditor.PlayFabEditorPrefsSO
     Assembly-CSharp.dll:
     - BulletForward
+    - ChangeScene
     - CharacterCustomization
     - DontDestroyOnLoaded
     - EquipmentObject
@@ -141,77 +142,75 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10234}
     - Class: 114
-      Script: {instanceID: 10272}
+      Script: {instanceID: 10274}
     - Class: 114
-      Script: {instanceID: 10318}
+      Script: {instanceID: 10320}
     - Class: 114
-      Script: {instanceID: 10344}
+      Script: {instanceID: 10346}
     - Class: 114
-      Script: {instanceID: 10474}
+      Script: {instanceID: 10476}
     - Class: 114
-      Script: {instanceID: 10624}
+      Script: {instanceID: 10626}
     - Class: 114
-      Script: {instanceID: 10700}
+      Script: {instanceID: 10702}
     - Class: 114
-      Script: {instanceID: 10720}
+      Script: {instanceID: 10722}
     - Class: 114
-      Script: {instanceID: 10766}
+      Script: {instanceID: 10768}
     - Class: 114
-      Script: {instanceID: 10770}
+      Script: {instanceID: 10772}
     - Class: 114
-      Script: {instanceID: 10876}
+      Script: {instanceID: 10878}
     - Class: 114
-      Script: {instanceID: 10886}
+      Script: {instanceID: 10888}
     - Class: 114
-      Script: {instanceID: 11002}
+      Script: {instanceID: 11004}
     - Class: 114
-      Script: {instanceID: 11026}
+      Script: {instanceID: 11028}
     - Class: 114
-      Script: {instanceID: 11050}
+      Script: {instanceID: 11052}
     - Class: 114
-      Script: {instanceID: 11084}
+      Script: {instanceID: 11086}
     - Class: 114
-      Script: {instanceID: 11144}
+      Script: {instanceID: 11146}
     - Class: 114
-      Script: {instanceID: 11156}
+      Script: {instanceID: 11158}
     - Class: 114
-      Script: {instanceID: 11204}
+      Script: {instanceID: 11206}
     - Class: 114
-      Script: {instanceID: 11232}
+      Script: {instanceID: 11234}
     - Class: 114
-      Script: {instanceID: 11264}
+      Script: {instanceID: 11266}
     - Class: 114
-      Script: {instanceID: 11368}
+      Script: {instanceID: 11370}
     - Class: 114
-      Script: {instanceID: 11390}
+      Script: {instanceID: 11392}
     - Class: 114
-      Script: {instanceID: 11420}
+      Script: {instanceID: 11422}
     - Class: 114
-      Script: {instanceID: 11444}
+      Script: {instanceID: 11446}
     - Class: 114
-      Script: {instanceID: 11488}
+      Script: {instanceID: 11490}
     - Class: 114
-      Script: {instanceID: 11512}
+      Script: {instanceID: 11514}
     - Class: 114
-      Script: {instanceID: 11522}
+      Script: {instanceID: 11524}
     - Class: 114
-      Script: {instanceID: 11682}
+      Script: {instanceID: 11684}
     - Class: 114
-      Script: {instanceID: 11704}
+      Script: {instanceID: 11706}
     - Class: 114
-      Script: {instanceID: 11770}
+      Script: {instanceID: 11772}
     - Class: 114
-      Script: {instanceID: 11906}
+      Script: {instanceID: 11928}
     - Class: 114
-      Script: {instanceID: 11926}
+      Script: {instanceID: 12190}
     - Class: 114
-      Script: {instanceID: 12188}
+      Script: {instanceID: 12274}
     - Class: 114
-      Script: {instanceID: 12272}
+      Script: {instanceID: 12304}
     - Class: 114
-      Script: {instanceID: 12302}
-    - Class: 114
-      Script: {instanceID: 12352}
+      Script: {instanceID: 12354}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -274,33 +273,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9878}
     - Class: 114
-      Script: {instanceID: 10472}
+      Script: {instanceID: 10272}
     - Class: 114
-      Script: {instanceID: 10544}
+      Script: {instanceID: 10474}
     - Class: 114
-      Script: {instanceID: 10624}
+      Script: {instanceID: 10546}
     - Class: 114
-      Script: {instanceID: 11026}
+      Script: {instanceID: 10626}
     - Class: 114
-      Script: {instanceID: 11156}
+      Script: {instanceID: 11028}
     - Class: 114
-      Script: {instanceID: 11368}
+      Script: {instanceID: 11158}
     - Class: 114
-      Script: {instanceID: 11512}
+      Script: {instanceID: 11370}
     - Class: 114
-      Script: {instanceID: 11516}
+      Script: {instanceID: 11514}
     - Class: 114
-      Script: {instanceID: 11906}
+      Script: {instanceID: 11518}
     - Class: 114
-      Script: {instanceID: 12084}
+      Script: {instanceID: 11908}
     - Class: 114
-      Script: {instanceID: 12138}
+      Script: {instanceID: 12086}
     - Class: 114
-      Script: {instanceID: 12188}
+      Script: {instanceID: 12140}
     - Class: 114
-      Script: {instanceID: 12272}
+      Script: {instanceID: 12190}
     - Class: 114
-      Script: {instanceID: 12352}
+      Script: {instanceID: 12274}
+    - Class: 114
+      Script: {instanceID: 12354}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -594,6 +595,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Postprocessing.Runtime.dll
     namespaceName: UnityEngine.Rendering.PostProcessing
     className: Vignette
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ChangeScene
   - hash:
       serializedVersion: 2
       Hash: 1e081a53e03701ae02ea3af23b30faba
@@ -950,7 +957,7 @@ ScriptsOnlyBuild:
     className: OnClickDestroy
   - hash:
       serializedVersion: 2
-      Hash: a32f5f5094c61d3ae289e8a7d3bf8a40
+      Hash: 02e8f547860c82f2385a23abffe3d766
     assemblyName: Assembly-CSharp.dll
     namespaceName: UnderdogCity
     className: PlayerMove
@@ -1292,7 +1299,7 @@ ScriptsOnlyBuild:
     className: TextMeshPro
   - hash:
       serializedVersion: 2
-      Hash: da9171f99a770926dbedff1f50670368
+      Hash: cd6c4cbb5458106415f641ff9d8776f2
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameSetupController

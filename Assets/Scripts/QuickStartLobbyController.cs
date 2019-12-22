@@ -45,7 +45,7 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
         offlineButton = GameObject.Find("Offline");
         quickStartButton = GameObject.Find("QuickStart");
         quickCancelButton = GameObject.Find("QuickCancel");
-//      quickStartButton.SetActive(false);
+
         onlineButton.SetActive(false);
         offlineButton.SetActive(false);
     }
@@ -55,11 +55,8 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
         PhotonNetwork.OfflineMode = false;
         PhotonNetwork.ConnectUsingSettings();
 
-        //PFC.GetStatistics();
-        
-        //quickStartButton.SetActive(false);
-        //quickCancelButton.SetActive(true);
-        PhotonNetwork.JoinRandomRoom(); //First tries to join an existing room
+        //First tries to join an existing room
+        PhotonNetwork.JoinRandomRoom(); 
         Debug.Log("Quick start");
     }
 

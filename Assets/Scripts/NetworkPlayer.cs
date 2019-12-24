@@ -221,7 +221,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
 #region RPC
 
-[PunRPC]//Gets info on dead player for stream and anim sync
+[PunRPC]//On dead client and everyone else, stream killfeed,wait 5s(while death anim plays),Hide Player,Reset Health,Teleport to spawn point,Show Player!
 public void BroadcastDeath(int PhotonViewID)
 {
     //Set anim to "IsDead" via health == 0 (PlayerMove)

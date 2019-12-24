@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1408175043137677212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1408175043137677186}
+  - component: {fileID: 1408175043137677187}
+  - component: {fileID: 1408175043137677213}
+  m_Layer: 0
+  m_Name: GameSetupController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1408175043137677186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408175043137677212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.8244932, y: 0.85944474, z: 2.3650782}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1408175043137677187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408175043137677212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed4ec6e2e286f84dafba0c6afc1240d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCustomizeChildOBJ: {fileID: 0}
+  NWC: {fileID: 0}
+  PFC: {fileID: 0}
+  CC: {fileID: 0}
+  accessoryIndex: 0
+  hatIndex: 0
+  pantIndex: 0
+  shirtIndex: 0
+  shoesIndex: 0
+  headIndex: 0
+  skinIndex: 0
+  playerSex: 0
+  playerID: 
+  femaleShirtsWithNoArms: 0300000004000000060000000700000008000000
+  femaleShirtsWithNoSpine: 0600000007000000
+  femalePantsWithNoLegs: 06000000
+  maleShirtsWithChest: 02000000
+  femaleShirtsWithChest: 
+  maleShirtsWithNoArms: 0300000004000000050000000600000007000000
+  maleShirtsWithNoSpine: 
+  malePantsWithNoLegs: 01000000030000000400000005000000060000000700000008000000090000000a000000
+  skinMaterial: {fileID: 0}
+  playerToRespawn: 0
+  networkObjects: []
+  respawnPoints: []
+  respawnTimer: 0
+--- !u!114 &1408175043137677213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408175043137677212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9584674461b4b64a868f88e87500591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 0}
+  GSC: {fileID: 0}

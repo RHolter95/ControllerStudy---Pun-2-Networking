@@ -66,7 +66,8 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
         CreateRoom();
     }
 
-    void CreateRoom() //trying to create our own room
+
+    public void CreateRoom() //trying to create our own room
     {
         Debug.Log("Creating room now");
         int randomRoomNumber = Random.Range(0, 10000); //creating a random name for the room
@@ -77,8 +78,8 @@ public class QuickStartLobbyController : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message) //callback function for if we fail to create a room. Most likely fail because room name was taken.
     {
-        Debug.Log("Failed to create room... trying again");
-        CreateRoom(); //Retrying to create a new room with a different name.
+            Debug.Log("Failed to create room... trying again");
+            CreateRoom(); //Retrying to create a new room with a different name. 
     }
 
     public void QuickCancel() //Paired to the cancel button. Used to stop looking for a room to join.

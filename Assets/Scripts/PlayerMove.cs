@@ -68,6 +68,7 @@ namespace UnderdogCity
         [SerializeField]
         public NetworkPlayer NWplayer;
 
+        public GameObject currrentSceneChageOBJ = null;
         public bool changeScenes = false;
 
 
@@ -195,10 +196,13 @@ namespace UnderdogCity
 
         public void OnTriggerExit(Collider other)
         {
-            if (other.tag == "ChangeScene")
+            var parentTag = other.transform.root.tag;
+
+            if (parentTag == "ChangeScene")
             {
                 if (other.transform.GetComponent<ChangeScene>())
                 {
+                    currrentSceneChageOBJ = null;
                     changeScenes = false;
                     return;
                 }
@@ -233,6 +237,8 @@ namespace UnderdogCity
             {
                 if (other.transform.GetComponent<ChangeScene>())
                 {
+                    Debug.Log("Press E To Change Scene");
+                    currrentSceneChageOBJ = other.gameObject;
                     changeScenes = true;
                     return;
                 }
@@ -285,7 +291,13 @@ namespace UnderdogCity
             //Press E for INTERACT
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("Calling Action");
+                
+                //If were interacting within a "SceneChange" taged Trigger
+                if (changeScenes && currrentSceneChageOBJ != null)
+                {
+                    //Access script of SceneChange OBJ and Send in int for scene selection. CHANGE TO GAME MODE 1
+                    currrentSceneChageOBJ.GetComponentInChildren<ChangeScene>().ChangeSceneController(1);
+                }
             }
 
             //Press Esc for PAUSE MENU

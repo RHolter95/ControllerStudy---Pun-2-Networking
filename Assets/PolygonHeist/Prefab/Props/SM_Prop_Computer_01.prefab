@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2326640}
   m_Layer: 0
   m_Name: SM_Prop_Computer_01
-  m_TagString: Untagged
+  m_TagString: ChangeScene
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -4373,6 +4373,7 @@ MonoBehaviour:
   otherID: 
   idInt: 0
   NWplayer: {fileID: 0}
+  currrentSceneChageOBJ: {fileID: 0}
   changeScenes: 0
 --- !u!114 &4212830685828844576
 MonoBehaviour:
@@ -4454,6 +4455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb6e3b8a6d17fd46b7a1c37a4b8e6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   hitPoints: 100
 --- !u!1 &4191730225368806916
 GameObject:

@@ -45,6 +45,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     public string userEmailStr = null;
 	public string userNameStr = null;
 	public string userPassStr = null;
+    public int gameMode = 0;
     bool offlineButtonPressed = false;
     bool onlineButtonPressed = false;
     //bool playFab = true;
@@ -68,7 +69,10 @@ public class NetworkController : MonoBehaviourPunCallbacks
     }
 
     void Awake()
-    {     
+    {
+
+        
+
         DontDestroyOnLoad(this.gameObject); 
 
         //playFab = true;

@@ -5,23 +5,22 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+
+    public Animator animator = null;
     public float hitPoints = 100f;
     float currentHitPoints;
     float RESPAWNTIME = 5f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //currentHitPoints = hitPoints;
+       
+        animator = GetComponentInChildren<Animator>();
+        currentHitPoints = hitPoints;
     }
 
     private void Update()
     {
-        //If youre alive you have permission to die!
-        if (GetComponentInParent<Animator>().GetBool("IsDead") == false)
-        {
-            currentHitPoints = hitPoints;
-        }
     }
 
 
@@ -29,10 +28,19 @@ public class Health : MonoBehaviour
     [PunRPC]
     public void TakeDamage(float amount, string tag)
     {
-        currentHitPoints -= amount;
+        //If you are dead you cannot take damage else you're alive
+        if (animator.GetBool("IsDead") == true)
+        {
+            return;
+        }
+        else
+        {
+            currentHitPoints -= amount;
 
-        if(currentHitPoints <= 0){
-            Die(tag);
+            if (currentHitPoints <= 0)
+            {
+                Die(tag);
+            }
         }
     }
 
@@ -49,7 +57,7 @@ public class Health : MonoBehaviour
                 GameObject.FindObjectOfType<GameSetupController>().respawnTimer = RESPAWNTIME;
                 //Set Animation to "IsDead"
                 GameObject.FindObjectOfType<Animator>().SetBool("IsDead", true);
-                //Sends message for server stream
+                //Sends message to respawn player to everyone even its own client
                 GetComponent<PhotonView>().RPC("BroadcastDeath", RpcTarget.All, GetComponent<PhotonView>().ViewID);
                 break;
 

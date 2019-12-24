@@ -183,6 +183,7 @@
     <Compile Include="Assets\Scripts\ChangeScene.cs" />
     <Compile Include="Assets\Scripts\DontDestroyOnLoaded.cs" />
     <Compile Include="Assets\Scripts\FXManager.cs" />
+    <Compile Include="Assets\Scripts\GameModeController.cs" />
     <Compile Include="Assets\Scripts\GameSetupController.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />

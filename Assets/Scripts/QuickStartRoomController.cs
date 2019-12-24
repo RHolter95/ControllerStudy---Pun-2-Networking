@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class QuickStartRoomController : MonoBehaviourPunCallbacks
 {
+
+
     [SerializeField]
-    private int multiplayerSceneIndex; //Number for the build index to the multiplay scene.
+    public int multiplayerSceneIndex; //Number for the build index to the multiplay scene.
     public static QuickStartRoomController QSRC;
 
     public override void OnEnable()
@@ -41,8 +43,19 @@ public class QuickStartRoomController : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("Starting Game");
-            PhotonNetwork.LoadLevel(multiplayerSceneIndex); //because of AutoSyncScene all players who join the room will also be loaded into the multiplayer scene.
+            //Take action on specific Game Mode inst
+            switch (GameObject.Find("NetworkController").GetComponent<NetworkController>().gameMode)
+            {
+                case 1:
+                    Debug.Log("Zombies");
+                    PhotonNetwork.LoadLevel(2);
+                    break;
+                default:
+                    Debug.Log("Starting Game");
+                    PhotonNetwork.LoadLevel(multiplayerSceneIndex); //because of AutoSyncScene all players who join the room will also be loaded into the multiplayer scene.
+                    break;
+            }
+
         }
     }
 }

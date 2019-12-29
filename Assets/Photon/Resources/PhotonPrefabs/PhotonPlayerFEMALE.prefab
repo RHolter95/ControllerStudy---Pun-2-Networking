@@ -4426,6 +4426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916cd7c5897585a4191888140f355844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GSC: {fileID: 0}
   fxManager: {fileID: 0}
   weaponData: {fileID: 0}
   currentWepDmg: 0

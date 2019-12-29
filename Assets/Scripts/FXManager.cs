@@ -2,11 +2,13 @@
 using System.Collections;
 using Photon.Pun;
 using System.IO;
+using UnityEngine.SceneManagement;
 
+public class FXManager : MonoBehaviour 
+{
 
-public class FXManager : MonoBehaviour {
-
-	public float soundCoolDown = 3f;
+    public GameSetupController GSC = null;
+    public float soundCoolDown = 3f;
 	public int audioSourceHash;
 	public GameObject SniperBulletFXPrefab;
 	public AudioClip SniperBulletFXAudio;
@@ -32,8 +34,18 @@ public class FXManager : MonoBehaviour {
 		//weaponDataTransform = weaponData.transform.position;
 	}
 
-	void Start() {
-	}
+	void Start() 
+    {
+        //Looks for GameSetupController as long as were in a game and NOT in Menu
+        if (SceneManager.GetActiveScene().name != "Menu")
+        {
+            GSC = GameObject.Find("GameSetupController").GetComponent<GameSetupController>();
+            if (GSC == null)
+            {
+                Debug.Log("Network Player Couldn't find GameSetupController  ");
+            }
+        }
+    }
 
 	void Update()
 	{
@@ -44,16 +56,18 @@ public class FXManager : MonoBehaviour {
 	[PunRPC]
 	public void SniperBulletFX(Vector3 startPos, Vector3 endPos) {
 		Debug.Log("SniperBulletFX");
-
-		
-
-		if(SniperBulletFXPrefab != null){
-			GameObject sniperFX = (GameObject)Instantiate(SniperBulletFXPrefab, startPos ,Quaternion.LookRotation(startPos - endPos));
-			
-		}else{
-			Debug.LogError("SniperBulletFXPrefab Is Missing");
-		}
-		
-		
-		}
+        foreach (var item in GSC.WeaponFXPooling)
+        {
+            //Search for a sniper FX OBJ in list that is NOT playing currently and places @ shot location and plays audio
+            if (item && item.GetComponent<AudioSource>().isPlaying == false)
+            {
+                item.transform.root.position = startPos;
+                item.transform.root.rotation = Quaternion.LookRotation(startPos - endPos);
+                item.GetComponent<AudioSource>().enabled = true;
+                item.GetComponent<AudioSource>().Play();
+                return;
+            }
+        }
+       		
+	}
 }

@@ -5,15 +5,17 @@ using UnityEngine;
 public class BulletForward : MonoBehaviour
 {
     public float bulletSpeed = 130f;
+    public GameObject target = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.Translate(Vector3.back * Time.deltaTime * bulletSpeed);
+        this.transform.Translate(Vector3.forward * Time.deltaTime * bulletSpeed);
     }
 }

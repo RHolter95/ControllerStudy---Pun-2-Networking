@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6877519531664370259}
   - component: {fileID: 4061565506342575366}
-  - component: {fileID: 8663568419552801753}
   - component: {fileID: 1066900671270692527}
   - component: {fileID: -534219174336341110}
   m_Layer: 0
@@ -43,7 +42,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3454999087216064235}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 16d9e79bb3552c345aa5b77cc2e9f42a, type: 3}
@@ -132,21 +131,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8663568419552801753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3454999087216064235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffea9ed9d60abdb4d9917136a8f8538d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfDestructTime: 10
-  pv: {fileID: 1066900671270692527}
-  thisObj: {fileID: 3454999087216064235}
 --- !u!114 &1066900671270692527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,9 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffea9ed9d60abdb4d9917136a8f8538d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfDestructTime: 0.1
-  pv: {fileID: 0}
-  thisObj: {fileID: 0}
 --- !u!114 &1596598553230098106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c75fa0230a4934fa2878ce4b18a789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpeed: 130
+  target: {fileID: 0}
 --- !u!1001 &8663568417911100574
 PrefabInstance:
   m_ObjectHideFlags: 0

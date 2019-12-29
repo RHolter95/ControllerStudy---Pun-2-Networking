@@ -5,6 +5,7 @@ using Photon.Pun;
 public class PlayerShooting : MonoBehaviour
 {
     Animator animator = null;
+    public GameSetupController GSC = null;
     GameObject fxManagerOBJ;
     [SerializeField]
     FXManager fxManager;
@@ -28,7 +29,6 @@ public class PlayerShooting : MonoBehaviour
         }
 
         Debug.Log(this.weaponData.damage);
-
     }
 
     // Start is called before the first frame update
@@ -60,8 +60,7 @@ public class PlayerShooting : MonoBehaviour
         {
             if (animator.GetBool("IsDead") == true)
             {
-                Debug.Log("Invisible People Can't Shoot!");
-                return;
+                Debug.Log("Dead People Can't Shoot!");
             }
             return;
         }
@@ -72,7 +71,9 @@ public class PlayerShooting : MonoBehaviour
 
        hitTransform = FindClosestHitObject(ray, out hitPoint);
 
+
         if(hitTransform.transform != null){
+            
             Debug.Log("We Hit: " + hitTransform.name);
 
             //Do special effect at hit location
@@ -93,7 +94,6 @@ public class PlayerShooting : MonoBehaviour
                 }else{
                 h.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, currentWepDmg, h.GetComponent<PhotonView>().gameObject.tag);
                 }
-                //h.TakeDamage(damage); This is offline version of above code./
             }
         }
         if(fxManager != null){

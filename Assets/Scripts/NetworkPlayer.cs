@@ -64,7 +64,8 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 #region Setup
     private void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "Network")
+        //Looks for GameSetupController as long as were in a game and NOT in Menu
+        if (SceneManager.GetActiveScene().name != "Menu")
         {
             GSC = GameObject.Find("GameSetupController").GetComponent<GameSetupController>();
             if (GSC == null)

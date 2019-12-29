@@ -149,12 +149,20 @@ namespace UnderdogCity
             CharacterController = GetComponent<CharacterController>();
         }
 
+        //Controls bone animation after anim is playing.
         private void LateUpdate()
         {
             //Handles late physics chest rotation
             Camera.main.transform.LookAt(target.transform.position);
             chest.LookAt(target.transform.position);
             chest.rotation = chest.rotation * Quaternion.Euler(offset);
+
+            //If youre dead
+            if(animator.GetBool("IsDead") == true)
+            {
+                transform.root.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+                transform.root.position = new Vector3(transform.root.position.x, transform.root.position.y, transform.root.position.z);
+            }
         }
 
         private void AdjustAimAngle(float verticalTwo)
@@ -285,13 +293,13 @@ namespace UnderdogCity
             }
             else
             {
-                 transform.GetChild(0).GetComponent<Animator>().SetBool("IsDead", false);
+                transform.GetChild(0).GetComponent<Animator>().SetBool("IsDead", false);
             }
-            
+
             //Press E for INTERACT
             if (Input.GetKeyDown(KeyCode.E))
             {
-                
+
                 //If were interacting within a "SceneChange" taged Trigger
                 if (changeScenes && currrentSceneChageOBJ != null)
                 {
@@ -353,23 +361,28 @@ namespace UnderdogCity
                 verticalVelocity = jumpSpeed;
             }
 
-            transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
-
-            //If were walking backwards
-            if (joystickOne.Direction.y < -.1f)
+            //If were alive we can move
+            if (animator.GetBool("IsDead") == false)
             {
-                transform.Translate(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
-            }
-            //Limit side to side strafe speed
-            else if (joystickOne.Direction.x < -.1f && joystickOne.Direction.y < -.1f || joystickOne.Direction.x > .1f && joystickOne.Direction.y < -.1f)
-            {
-                transform.Translate(joystickOne.Horizontal * strafeSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
-            }
-            else
-            {
-                //Just move if not strafing or walking backwards
                 transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
+
+                //If were walking backwards
+                if (joystickOne.Direction.y < -.1f)
+                {
+                    transform.Translate(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
+                }
+                //Limit side to side strafe speed
+                else if (joystickOne.Direction.x < -.1f && joystickOne.Direction.y < -.1f || joystickOne.Direction.x > .1f && joystickOne.Direction.y < -.1f)
+                {
+                    transform.Translate(joystickOne.Horizontal * strafeSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    //Just move if not strafing or walking backwards
+                    transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
+                }
             }
+
         }
 
         private void OnGUI()

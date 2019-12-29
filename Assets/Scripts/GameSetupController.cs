@@ -12,8 +12,8 @@ public class GameSetupController : MonoBehaviourPunCallbacks
 {
    
     public GameObject playerCustomizeChildOBJ = null;
-
-    GameObject Myplayer = null;
+    [SerializeField]
+   public GameObject Myplayer = null;
 
     public NetworkController NWC = null;
     public PlayFabsController PFC = null;
@@ -44,6 +44,15 @@ public class GameSetupController : MonoBehaviourPunCallbacks
     public Material skinMaterial = null;
     public int playerToRespawn = 0;
 
+    [SerializeField]
+    public GameObject tempBulletFX = null;
+    //Works only for "snipers" rn
+    [SerializeField]
+    public List<GameObject> WeaponFXPooling = new List<GameObject>();
+    //List all individual weapon FXs, Eventually maybe Sub-Sounds like Sniper types
+    public GameObject SniperBulletFXPrefab = null;
+    public GameObject AssaultRifleBulletFXPrefab = null;
+
 
     [SerializeField]
     public List<NetworkObjectsClass> networkObjects = new List<NetworkObjectsClass>();
@@ -61,13 +70,15 @@ public class GameSetupController : MonoBehaviourPunCallbacks
 
             if (respawnTimer <= 0)
             {
-                Respawn();
+                //Respawn();
             }
         }
     }
 
     void Awake()
     {
+        SniperBulletFXPrefab = (GameObject)Resources.Load("SoundFX/M82Barrett");
+
         PFC = GameObject.Find("NetworkController").GetComponentInChildren<PlayFabsController>();
         if (PFC == null)
         {
@@ -98,11 +109,32 @@ public class GameSetupController : MonoBehaviourPunCallbacks
 
 void Start()
 {
+    WeaponFXInstantiate();//Pooling possible weaponFX to avoid later Instantiation
     CreatePlayer(); //Create a networked player object for each player that loads into the multiplayer scenes.
 }
 
-//Instantiates Player
-#region CreatePlayer()
+private void WeaponFXInstantiate()
+{
+        //Find its own prefab FX in Resources folder starting @ sniperFX
+        
+        if (SniperBulletFXPrefab == null){
+            Debug.Log("Couldn't find SniperBulletFXPrefab");}
+
+        Debug.Log("Instantiatinggg");
+        
+        //Find a way to make all pooling FX into one PARENT : WeaponPoolingParentOBJ
+
+
+        //Makes 2 sniperFXBullets 5 times
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers * 2; i++)
+        {
+              WeaponFXPooling.Add((GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX", "M82Barrett"), new Vector3(0, 100, 0), Quaternion.identity));
+        }
+        
+    }
+
+    //Instantiates Player
+    #region CreatePlayer()
 
     private void CreatePlayer()
     {
@@ -429,16 +461,6 @@ void Start()
     #endregion BuildPlayer
 
 
-void Respawn()
-{
-        //Vector3 spawn = new Vector3(2f, 0f, 2f);
-
-        //Find GameObj sendout its respawn
-        //GameObject tempPlayer = PhotonView.Find(playerToRespawn).gameObject;
-
-        //tempPlayer.GetComponent<PhotonView>().RPC("BroadcastSpawn", RpcTarget.All, tempPlayer.GetComponent<PhotonView>().ViewID, spawn);
-
-    }
 
 }
 

@@ -202,6 +202,7 @@
     <Compile Include="Assets\Scripts\PlayFab Scripts\PlayFabsController.cs" />
     <Compile Include="Assets\Scripts\QuickStartLobbyController.cs" />
     <Compile Include="Assets\Scripts\QuickStartRoomController.cs" />
+    <Compile Include="Assets\Scripts\ResetMuzzleFlash.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\DefaultObject.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\EquipmentObject.cs" />
     <Compile Include="Assets\Scripts\ScriptableObjects\FoodObject.cs" />

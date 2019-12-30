@@ -4429,6 +4429,7 @@ MonoBehaviour:
   GSC: {fileID: 0}
   fxManager: {fileID: 0}
   weaponData: {fileID: 0}
+  weaponType: 
   currentWepDmg: 0
 --- !u!114 &7669640317510867764
 MonoBehaviour:

@@ -6,16 +6,14 @@ public class WeaponData : MonoBehaviour
 {
     public float fireRate = 0.1f;
     public float damage = 50f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string weaponType = "";
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (weaponType == "")
+        {
+            weaponType = gameObject.transform.tag;
+        }
     }
 }

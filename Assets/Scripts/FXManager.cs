@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class FXManager : MonoBehaviour 
 {
+    [SerializeField]
+    public float SNIPERBULLETPLAYTIME = 0.75f;
 
     public GameSetupController GSC = null;
     public float soundCoolDown = 3f;
@@ -53,19 +55,25 @@ public class FXManager : MonoBehaviour
 
 	}
 
-	[PunRPC]
-	public void SniperBulletFX(Vector3 startPos, Vector3 endPos) {
+	[PunRPC]//If its "lighter" maybe pass in ONLY a boolean value and an int ( less bytes ) to find local PhotonViewID and spawn FX @ local players WeaponData
+    public void SniperBulletFX(Vector3 startPos, Vector3 endPos) {
 		Debug.Log("SniperBulletFX");
-        foreach (var item in GSC.WeaponFXPooling)
+
+        foreach (var item in GSC.sniperWeaponFXPooling)
         {
             //Search for a sniper FX OBJ in list that is NOT playing currently and places @ shot location and plays audio
             if (item && item.GetComponent<AudioSource>().isPlaying == false)
             {
+                //Set position of bulletFX
                 item.transform.root.position = startPos;
                 item.transform.root.rotation = Quaternion.LookRotation(startPos - endPos);
+
+                //Set to play for only SNIPERBULLETPLAYTIME and enable audio/Play() and set MuzzleFlash to true ( to appear )
+                item.transform.GetChild(1).GetComponent<ResetMuzzleFlash>().timer = SNIPERBULLETPLAYTIME;
                 item.GetComponent<AudioSource>().enabled = true;
                 item.GetComponent<AudioSource>().Play();
-                return;
+                item.transform.GetChild(1).gameObject.SetActive(true);
+                break;
             }
         }
        		

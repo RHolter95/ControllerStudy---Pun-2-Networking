@@ -11,10 +11,9 @@ using UnityEngine;
 public class GameSetupController : MonoBehaviourPunCallbacks
 {
    
+    //Setup OBJ Refs and prep default stats
     public GameObject playerCustomizeChildOBJ = null;
-    [SerializeField]
-   public GameObject Myplayer = null;
-
+    public GameObject Myplayer = null;
     public NetworkController NWC = null;
     public PlayFabsController PFC = null;
     public CharacterCustomization CC;
@@ -27,38 +26,37 @@ public class GameSetupController : MonoBehaviourPunCallbacks
     public int skinIndex = 0;
     public int playerSex = 0;
     public string playerID = "";
+    public Material skinMaterial = null;
+
+    //List all individual weapon FXs, Eventually maybe Sub-Sounds like Sniper types
+    public GameObject AssaultRifleBulletFXPrefab = null;
+    public GameObject SniperBulletFXPrefab = null;
+    public GameObject WeaponFXPoolParent = null;
+    public GameObject instantiate = null;
+    public GameObject tempObject = null;
 
     //Add the index of all shirts with no arms
     public int[] femaleShirtsWithNoArms = new int[] { 3, 4, 6, 7, 8 };
     public int[] femaleShirtsWithNoSpine = new int[] { 6, 7 };
     public int[] femalePantsWithNoLegs = new int[] { 6 };
-
     //Chest is usually [OFF] when shirt [On] except here
     public int[] maleShirtsWithChest = new int[] { 2 };
     public int[] femaleShirtsWithChest = new int[] { };
-
     public int[] maleShirtsWithNoArms = new int[] { 3, 4, 5, 6, 7 };
     public int[] maleShirtsWithNoSpine = new int[] { };
     public int[] malePantsWithNoLegs = new int[] { 1, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-    public Material skinMaterial = null;
-    public int playerToRespawn = 0;
-
+    //Lists for Game Ref
     [SerializeField]
-    public GameObject tempBulletFX = null;
-    //Works only for "snipers" rn
+    public List<GameObject> sniperWeaponFXPooling = new List<GameObject>();
     [SerializeField]
-    public List<GameObject> WeaponFXPooling = new List<GameObject>();
-    //List all individual weapon FXs, Eventually maybe Sub-Sounds like Sniper types
-    public GameObject SniperBulletFXPrefab = null;
-    public GameObject AssaultRifleBulletFXPrefab = null;
-
-
+    public List<GameObject> assaultWeaponFXPooling = new List<GameObject>();
     [SerializeField]
     public List<NetworkObjectsClass> networkObjects = new List<NetworkObjectsClass>();
-
     [SerializeField]
     public List<GameObject> respawnPoints = new List<GameObject>();
+
+
 
     public float respawnTimer = 0;
 
@@ -77,23 +75,97 @@ public class GameSetupController : MonoBehaviourPunCallbacks
 
     void Awake()
     {
+    #region WeaponPooling 
+
+        //Create pooling GameObject catagory holders
+        #region PoolCategoryCreation() 
+
+        Debug.Log("Building SoundFX Pool");
+        //Create all pooling parent OBJs for organization (WeaponFXPool) IS: (WeaponFXPoolParent)
+        tempObject = (GameObject)Resources.Load("SoundFX/Prefabs/WeaponFXPool");//Getting prefab to check if it's there
+
+        if (tempObject == null) {
+            Debug.Log("Couldn't find SoundFX/Prefabs/WeaponFXPool");}
+        else {
+            instantiate = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX/Prefabs", "WeaponFXPool"), new Vector3(0, 100, 0), Quaternion.identity);
+            WeaponFXPoolParent = instantiate;}
+        
+
+        //Create all pooling parent OBJs for organization (SniperFXPool) & assign to (WeaponFXPoolParent)
+        tempObject = (GameObject)Resources.Load("SoundFX/Prefabs/SniperFXPool");//Getting prefab to check if it's there
+
+        if (tempObject == null) {
+            Debug.Log("Couldn't find SoundFX/Prefabs/SniperFXPool");}
+        else {
+            instantiate = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX/Prefabs", "SniperFXPool"), new Vector3(0, 100, 0), Quaternion.identity);
+            instantiate.transform.parent = WeaponFXPoolParent.transform;}
+
+        //Create all pooling parent OBJs for organization (AssaultFXPool) & assign to (WeaponFXPoolParent)
+        tempObject = (GameObject)Resources.Load("SoundFX/Prefabs/AssaultFXPool");//Getting prefab to check if it's there
+
+        if (tempObject == null) {
+            Debug.Log("Couldn't find SoundFX/Prefabs/AssaultFXPool");}
+        else {
+            instantiate = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX/Prefabs", "AssaultFXPool"), new Vector3(0, 100, 0), Quaternion.identity);
+            instantiate.transform.parent = WeaponFXPoolParent.transform;}
+
+        #endregion PoolCategoryCreation() 
+
+        //After instantiate actual FXs
+        #region WeaponFXPrefabCreation()
+
+
+        //Load SNIPERRIFLE prefab and Alert if null, then instantiate Pooling OBJs for Weapon 
         SniperBulletFXPrefab = (GameObject)Resources.Load("SoundFX/M82Barrett");
+        if (SniperBulletFXPrefab == null){
+            Debug.Log("Couldn't find SniperBulletFXPrefab");}
+        else{
+            //Makes sniperFXBullets for pool
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers * 2; i++){
+                sniperWeaponFXPooling.Add(tempObject = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX", "M82Barrett"), new Vector3(0, 100, 0), Quaternion.identity));
+                tempObject.transform.parent = WeaponFXPoolParent.transform.GetChild(0);
+            }}
+
+        //Load ASSAULTRIFLE prefab and Alert if null, then instantiate Pooling OBJs for Weapon 
+        AssaultRifleBulletFXPrefab = (GameObject)Resources.Load("SoundFX/AssaultRifleBasic");
+        if (AssaultRifleBulletFXPrefab == null){
+            Debug.Log("Couldn't find AssaultBulletFXPrefab");}
+        else{
+            //Makes AssaultRifleBasic for pool
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers * 2; i++){
+                assaultWeaponFXPooling.Add(tempObject = (GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX", "AssaultRifleBasic"), new Vector3(0, 100, 0), Quaternion.identity));
+                tempObject.transform.parent = WeaponFXPoolParent.transform.GetChild(1);
+            }}
+
+
+
+
+
+        #endregion WeaponFXPrefabCreation()
+
+
+
+        
+
+        #endregion WeaponPooling
+
+    #region SetupGameObjects()
 
         PFC = GameObject.Find("NetworkController").GetComponentInChildren<PlayFabsController>();
-        if (PFC == null)
-        {
-            Debug.Log("There is no PlayFabsController");
-        }
+        if (PFC == null){
+            Debug.Log("There is no PlayFabsController");}
 
         NWC = GameObject.Find("NetworkController").GetComponentInChildren<NetworkController>();
-        if (NWC == null)
-        {
-            Debug.Log("There is no NetworkController");
-        }
+        if (NWC == null){
+            Debug.Log("There is no NetworkController");}
 
         //Enables Statistic gathering for room by enabling component on GameSetupController GameObject
         //Eanabling it here allows us to utilize information in the NetworkObjects<List>
         ((MonoBehaviour)transform.GetComponent("StatisticsForLobby")).enabled = true;
+
+        #endregion SetupGameObjects()
+
+    #region SetStats()
 
         //Get stats from PFC
         accessoryIndex = PFC.Playeraccessory;
@@ -105,36 +177,19 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         skinIndex = PFC.playerSkin;
         playerSex = PFC.playerSex;
         playerID = PFC.myID;
-    }
 
-void Start()
+        #endregion SetStats()
+}
+
+    void Start()
 {
-    WeaponFXInstantiate();//Pooling possible weaponFX to avoid later Instantiation
     CreatePlayer(); //Create a networked player object for each player that loads into the multiplayer scenes.
 }
 
-private void WeaponFXInstantiate()
-{
-        //Find its own prefab FX in Resources folder starting @ sniperFX
-        
-        if (SniperBulletFXPrefab == null){
-            Debug.Log("Couldn't find SniperBulletFXPrefab");}
-
-        Debug.Log("Instantiatinggg");
-        
-        //Find a way to make all pooling FX into one PARENT : WeaponPoolingParentOBJ
 
 
-        //Makes 2 sniperFXBullets 5 times
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers * 2; i++)
-        {
-              WeaponFXPooling.Add((GameObject)PhotonNetwork.Instantiate(Path.Combine("SoundFX", "M82Barrett"), new Vector3(0, 100, 0), Quaternion.identity));
-        }
-        
-    }
-
-    //Instantiates Player
-    #region CreatePlayer()
+//Instantiates Player
+#region CreatePlayer()
 
     private void CreatePlayer()
     {

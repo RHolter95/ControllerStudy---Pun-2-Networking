@@ -11,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     FXManager fxManager;
     float coolDown = 0f;
     public WeaponData weaponData = null;
+    public string weaponType = "";
     public float currentWepDmg = 0;
 
 
@@ -20,6 +21,7 @@ public class PlayerShooting : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         weaponData = gameObject.GetComponentInChildren<WeaponData>();
+        //weaponType = gameObject.GetComponentInChildren<WeaponData>().weaponType;
         fxManagerOBJ = GameObject.Find("FXManager");
         fxManager = fxManagerOBJ.GetComponent<FXManager>();
 
@@ -34,6 +36,18 @@ public class PlayerShooting : MonoBehaviour
     // Start is called before the first frame update
     void Update()
     {
+        if (animator.GetBool("RifleEquiped") == false)
+        {
+            weaponData = null;
+            weaponType = "None";
+        }
+        else
+        {
+            weaponData = gameObject.GetComponentInChildren<WeaponData>();
+            weaponType = gameObject.GetComponentInChildren<WeaponData>().weaponType;
+        }
+
+
      currentWepDmg = weaponData.damage;
      //Debug.Log("currentWepDmg = " + currentWepDmg);
      coolDown -= Time.deltaTime;
@@ -50,7 +64,8 @@ public class PlayerShooting : MonoBehaviour
     { 
         if(weaponData == null){
             weaponData = gameObject.GetComponentInChildren<WeaponData>();
-            if(weaponData == null)
+            weaponType = weaponData.weaponType;
+            if (weaponData == null)
                 Debug.Log("Couldn't Find WeaponData in our children");
             return;
         }
@@ -97,23 +112,36 @@ public class PlayerShooting : MonoBehaviour
             }
         }
         if(fxManager != null){
-            DoGunFX(hitPoint);
+            DoGunFX(hitPoint, weaponType);
         }
         else
         {
             //We didnt hit anything but empty space, lets do FX anyways
             if(fxManager != null){
             hitPoint = Camera.main.transform.position + (Camera.main.transform.forward*100f);
-            DoGunFX(hitPoint);
+            DoGunFX(hitPoint, weaponType);
             }
         }
         coolDown = weaponData.fireRate;
     }
 
-    void DoGunFX(Vector3 hitPoint)
+    void DoGunFX(Vector3 hitPoint, string weaponType)
     {
+        Debug.Log("Searching for: "+ weaponType);
         //wd is the game object component location at the end of the barrel of the gun
-        fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX",RpcTarget.All, weaponData.transform.position, hitPoint);
+        switch (weaponType)
+        {
+            case "SniperRifle":
+                Debug.Log("Sniper");
+                fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX", RpcTarget.All, weaponData.transform.position, hitPoint);
+                break;
+                Debug.Log("AssaultRifle");
+            case "AssaultRifle":
+                fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX", RpcTarget.All, weaponData.transform.position, hitPoint);
+                break;
+        }
+        
+        //fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX",RpcTarget.All, weaponData.transform.position, hitPoint);
     }
 
     Transform FindClosestHitObject(Ray ray, out Vector3 hitPoint){

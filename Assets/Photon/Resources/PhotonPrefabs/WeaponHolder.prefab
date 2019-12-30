@@ -42,6 +42,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Wep_RifleSwat_01
       objectReference: {fileID: 0}
+    - target: {fileID: 199910, guid: 8be86b86610077a47be3a9a99fc8f89e, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 410062, guid: 8be86b86610077a47be3a9a99fc8f89e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -95,6 +99,11 @@ PrefabInstance:
         type: 3}
       propertyPath: damage
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890978112369278176, guid: 8be86b86610077a47be3a9a99fc8f89e,
+        type: 3}
+      propertyPath: m_TagString
+      value: AssaultRifle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be86b86610077a47be3a9a99fc8f89e, type: 3}

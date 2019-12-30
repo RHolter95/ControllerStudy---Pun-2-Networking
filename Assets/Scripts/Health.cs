@@ -29,10 +29,14 @@ public class Health : MonoBehaviour
     public void TakeDamage(float amount, string tag)
     {
         //If you are dead you cannot take damage else you're alive
-        if (animator.GetBool("IsDead") == true)
+        if (animator != null)
         {
-            return;
+            if (animator.GetBool("IsDead") == true)
+            {
+                return;
+            }
         }
+
         else
         {
             currentHitPoints -= amount;

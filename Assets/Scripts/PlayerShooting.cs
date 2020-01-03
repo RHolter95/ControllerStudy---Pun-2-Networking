@@ -45,17 +45,16 @@ public class PlayerShooting : MonoBehaviour
         {
             weaponData = gameObject.GetComponentInChildren<WeaponData>();
             weaponType = gameObject.GetComponentInChildren<WeaponData>().weaponType;
+            currentWepDmg = weaponData.damage;
+
+            coolDown -= Time.deltaTime;
+
+            if (Input.GetButton("Fire1"))
+            {
+                Fire();
+            }
+
         }
-
-
-     currentWepDmg = weaponData.damage;
-     //Debug.Log("currentWepDmg = " + currentWepDmg);
-     coolDown -= Time.deltaTime;
-
-
-     if(Input.GetButton("Fire1")){
-         Fire();
-     }   
     }
 
 
@@ -84,7 +83,7 @@ public class PlayerShooting : MonoBehaviour
         Transform hitTransform;
         Vector3 hitPoint;
 
-       hitTransform = FindClosestHitObject(ray, out hitPoint);
+       hitTransform = FindClosestHitObject(ray, out hitPoint, "Fire" , "");
 
 
         if(hitTransform.transform != null){
@@ -135,8 +134,9 @@ public class PlayerShooting : MonoBehaviour
                 Debug.Log("Sniper");
                 fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX", RpcTarget.All, weaponData.transform.position, hitPoint);
                 break;
-                Debug.Log("AssaultRifle");
+                
             case "AssaultRifle":
+                Debug.Log("AssaultRifle");
                 fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX", RpcTarget.All, weaponData.transform.position, hitPoint);
                 break;
         }
@@ -144,13 +144,49 @@ public class PlayerShooting : MonoBehaviour
         //fxManager.GetComponent<PhotonView>().RPC("SniperBulletFX",RpcTarget.All, weaponData.transform.position, hitPoint);
     }
 
-    Transform FindClosestHitObject(Ray ray, out Vector3 hitPoint){
+    public Transform FindClosestHitObject(Ray ray, out Vector3 hitPoint, string tag, string currentCover){
         RaycastHit[] hits = Physics.RaycastAll(ray);
+
 
         Transform closestHit = null;
         float distance = 0f;
         hitPoint = Vector3.zero;
 
+        switch (tag)
+        {
+            case "Cover":
+                Debug.Log("Calling raycast closest hit on tag with currentCover: " + currentCover);
+                foreach (RaycastHit hit in hits)
+                {
+                    if (hit.transform != this.transform && (closestHit == null || hit.distance < distance) && hit.transform.tag == "Cover" && hit.transform.name != currentCover)
+                    {
+                        closestHit = hit.transform;
+                        distance = hit.distance;
+                        hitPoint = hit.point;
+                    }
+                }
+                return closestHit;
+
+            case "Fire":
+                Debug.Log("Calling raycast closest hit on fire bullet");
+                foreach (RaycastHit hit in hits)
+                {
+                    if (hit.transform != this.transform && (closestHit == null || hit.distance < distance))
+                    {
+                        closestHit = hit.transform;
+                        distance = hit.distance;
+                        hitPoint = hit.point;
+                    }
+                }
+                return closestHit;
+
+            default:
+                Debug.Log("Find closest hit error / missing case");
+                return null;
+        }
+
+
+        /*
         foreach(RaycastHit hit in hits)
         {
          if(hit.transform != this.transform && (closestHit == null || hit.distance < distance))  {
@@ -160,6 +196,7 @@ public class PlayerShooting : MonoBehaviour
          } 
         }
         return closestHit;
+        */
     }
 
 }

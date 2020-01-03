@@ -15215,6 +15215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Wall_Interior_Window_Ground_11
       objectReference: {fileID: 0}
+    - target: {fileID: 184292, guid: 88f568977f13ae0438cf940abe674b29, type: 3}
+      propertyPath: m_TagString
+      value: Cover
+      objectReference: {fileID: 0}
     - target: {fileID: 475868, guid: 88f568977f13ae0438cf940abe674b29, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10
@@ -42754,6 +42758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Pillar_08
       objectReference: {fileID: 0}
+    - target: {fileID: 175004, guid: fc90a43fa1070334fa80362482043901, type: 3}
+      propertyPath: m_TagString
+      value: Cover
+      objectReference: {fileID: 0}
     - target: {fileID: 444550, guid: fc90a43fa1070334fa80362482043901, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.5
@@ -59976,6 +59984,10 @@ PrefabInstance:
     - target: {fileID: 149424, guid: db95b51e45d46e649804e51b38ecb83f, type: 3}
       propertyPath: m_Name
       value: SM_Env_Pillar_Interior_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 149424, guid: db95b51e45d46e649804e51b38ecb83f, type: 3}
+      propertyPath: m_TagString
+      value: Cover
       objectReference: {fileID: 0}
     - target: {fileID: 443674, guid: db95b51e45d46e649804e51b38ecb83f, type: 3}
       propertyPath: m_LocalPosition.x

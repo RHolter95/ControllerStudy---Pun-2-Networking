@@ -25,6 +25,9 @@ TagManager:
   - Item
   - ChangeScene
   - Object
+  - AssaultRifle
+  - Cover
+  - CoverRegion
   layers:
   - Default
   - TransparentFX

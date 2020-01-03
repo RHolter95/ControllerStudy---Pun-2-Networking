@@ -6,16 +6,18 @@ namespace UnderdogCity
 {
     public class PlayerMove : MonoBehaviourPun, IPunObservable
     {
+        public PlayerShooting playerShooting = null;
         public InventoryObject inventory;
         public PlayFabsController PFC = null;
+        public NetworkPlayer NWP = null;
         public Health health = null;
+        public CharacterController charController = null;
 
         public int clothesInt = 0;
         public FixedJoystick joystickOne;
         public FixedJoystick joystickTwo;
         public Texture2D crosshair;
         private bool showMessage = false;
-        private CharacterController CharacterController;
 
         [SerializeField]
         public Animator animator;
@@ -29,13 +31,13 @@ namespace UnderdogCity
         public Camera Camera;
 
         [SerializeField]
-        private float walkSpeed = 10.0f;
+        private float walkSpeed = 3f;
 
         [SerializeField]
-        private float walkBackSpeed = 0.5f;
+        private float walkBackSpeed = 1.0f;
 
         [SerializeField]
-        private float strafeSpeed = 2f;
+        private float strafeSpeed = 2.75f;
 
         [SerializeField]
         private float rotateSpeed = 10.0f;
@@ -65,40 +67,86 @@ namespace UnderdogCity
         public string otherID = "";
         public int idInt = 0;
 
-        [SerializeField]
-        public NetworkPlayer NWplayer;
-
         public GameObject currrentSceneChageOBJ = null;
         public bool changeScenes = false;
+        public bool enterCover = false;
+
+        public Transform bestTarget = null;
+        public string bestTargetName = "";
+        public bool inCover = false;
+        public string currentCover = "";
+        public Vector3 closestPoint;
+        public bool transitioning = false;
+        public GameObject coverRegion = null;
+        public bool stopLerp = false;
+
+        //Midpoint between player and target GO. This is to run to closeby cover!
+        public Vector3 midpoint;
+       
 
 
 
+        // Start is called before the first frame update
         private void Start()
+        {
+            
+        }
+
+        
+        private void Awake()
         {
             //Set aim up and aim down limits to 0 for aiming at center
             downTime = 0f;
             upTime = 0f;
 
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.Log("Couldn't find animator Component && playerCustomizeChildOBJ && chest");
+            }
+            else
+            {
+                animator.SetBool("IsGrounded", true);
+                playerCustomizeChildOBJ = animator.gameObject;
+                chest = animator.GetBoneTransform(HumanBodyBones.Chest);
+                chest = chest.transform.GetChild(0).transform;
+            }
+
             CameraPivot = GameObject.Find("CameraPivot");
+            if (CameraPivot == null)
+            {
+                Debug.Log("Couldn't find CameraPivot GameObject");
+            }
+
             temp = GameObject.Find("Character@Idle");
+            if (temp == null)
+            {
+                Debug.Log("Couldn't find Character@Idle GameObject");
+            }
 
-            animator = temp.GetComponentInChildren<Animator>();
+            coverRegion = GameObject.Find("CoverRegion");
+            if (coverRegion == null)
+            {
+                Debug.Log("Couldn't find coverRegion GameObject");
+            }
 
-            playerCustomizeChildOBJ = animator.gameObject;
+            playerShooting = transform.GetComponent<PlayerShooting>();
+            if (playerShooting == null)
+            {
+                Debug.Log("Couldn't find playerShooting Component");
+            }
 
-            chest = animator.GetBoneTransform(HumanBodyBones.Chest);
-            chest = chest.transform.GetChild(0).transform;
+            charController = transform.GetComponent<CharacterController>();
+            if (charController == null)
+            {
+                Debug.Log("Couldn't find charController Component");
+            }
 
-            //Raycast isGrounded returns false @ spawn
-            //so manually set it for first frame
-            animator.SetBool("IsGrounded", true);
-
-            var collider = GetComponent<Collider>();
-        }
-
-        // Start is called before the first frame update
-        private void Awake()
-        {
+            NWP = transform.GetComponent<NetworkPlayer>();
+            if (NWP == null)
+            {
+                Debug.Log("Couldn't find NetworkPlayer Component");
+            }
 
             health = transform.GetComponent<Health>();
             if (health == null)
@@ -111,17 +159,6 @@ namespace UnderdogCity
             {
                 Debug.Log("Couldn't find NetworkController/PlayFabsController");
             }
-
-            pauseMenu = PFC.pauseMenu;
-
-            //Delete this after inventory is setup
-            inventory.Awake();
-
-            canvas = transform.GetChild(1).gameObject;
-
-            //This makes the player "look" like he is aiming the gun at the "target"
-            //If you edit this you must edit it in NetworkPlayer!
-            offset = new Vector3(10, 47.32f, 12);
 
             //Find the joystick objects
             GameObject tempJoystickOne = canvas.gameObject.transform.GetChild(0).gameObject;
@@ -145,8 +182,6 @@ namespace UnderdogCity
             {
                 Debug.Log("No Right JoyStick");
             }
-
-            CharacterController = GetComponent<CharacterController>();
         }
 
         //Controls bone animation after anim is playing.
@@ -157,7 +192,7 @@ namespace UnderdogCity
             chest.LookAt(target.transform.position);
             chest.rotation = chest.rotation * Quaternion.Euler(offset);
 
-            //If youre dead
+            //If youre dead don't allow movement
             if(animator.GetBool("IsDead") == true)
             {
                 transform.root.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
@@ -206,6 +241,12 @@ namespace UnderdogCity
         {
             var parentTag = other.transform.root.tag;
 
+            if (other.tag == "CoverRegion")
+            {
+                inCover = false;
+                return;
+            }
+
             if (parentTag == "ChangeScene")
             {
                 if (other.transform.GetComponent<ChangeScene>())
@@ -220,6 +261,15 @@ namespace UnderdogCity
         public void OnTriggerEnter(Collider other)
         {
             var parentTag = other.transform.root.tag;
+
+
+            if (other.tag == "CoverRegion")
+            {
+                inCover = true;
+                enterCover = false;
+                transitioning = false;
+                return;
+            }
 
             //If we collide with Player
             if (parentTag == "Player")
@@ -283,9 +333,21 @@ namespace UnderdogCity
           
         }
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 0.5f);
+            //Gizmos.DrawLine(NWP.local_chest.position, -transform.up);
+            //Gizmos.DrawLine(NWP.local_head.transform.position, midpoint);
+            Gizmos.DrawLine(NWP.local_head.transform.position, midpoint);
+
+
+        }
+
         // Update is called once per frame
         private void Update()
         {
+            midpoint = (NWP.local_head.transform.position + NWP.target.transform.position) / 2;
 
             if (health.hitPoints <= 0)
             {
@@ -296,12 +358,172 @@ namespace UnderdogCity
                 transform.GetChild(0).GetComponent<Animator>().SetBool("IsDead", false);
             }
 
+            //This sends the player to the "bestTarget" IF were less than 0.5 away
+            if (enterCover)
+            {
+                /*
+                //If the distance between the player and Target are < 0.5 stop moving!
+                if (transform.position == coverRegion.transform.position)//bestTarget != null && (closestPoint - transform.position).sqrMagnitude < 0.5
+                {
+                    inCover = true;
+                    enterCover = false;
+                    transitioning = false;
+                }
+                else
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, closestPoint, 0.01f);
+                    transitioning = true;
+                }
+                */
+
+                transform.position = Vector3.MoveTowards(transform.position, closestPoint, 0.01f);
+                transitioning = true;
+            }
+
+            //If were moving to the CoverRegion keep updating the regions location so it doesn't move with our player
+            if (transitioning)
+            {
+                  coverRegion.transform.position = closestPoint;
+            }
+
+            if (inCover)
+            {
+                if ((closestPoint - transform.position).sqrMagnitude < 0.8)
+                {
+                    Debug.Log("Were In Cover");
+                    
+                }
+                else//If we run out of cover to transition with "E"
+                {
+                    Debug.Log("Were out of Cover");
+                    inCover = false;
+                    currentCover = "";
+                    
+                    //If were currently running towards cover just return, we dont want to wipe cover target (bestTarget)
+                    if (transitioning)
+                    {
+                        Debug.Log("Running to other cover!");
+                        currentCover = "";
+                        return;
+                    }
+
+                    //bestTarget could be used during a transition because the bestTarget is the current target the player is running towards
+                    bestTarget = null;
+                    bestTargetName = "";
+                }
+            }
+
             //Press E for INTERACT
             if (Input.GetKeyDown(KeyCode.E))
             {
 
-                //If were interacting within a "SceneChange" taged Trigger
-                if (changeScenes && currrentSceneChageOBJ != null)
+                //Don't check for LOCAL cover if were in it.
+                if (inCover == false)
+                {
+                    
+                    float closestDistanceSqr = Mathf.Infinity;
+                    Vector3 currentPosition = transform.position;
+
+                    //Get colliders around player with tag "Cover", then store player -> OBJ dist. If tempDistance < distance replace it.
+                    //The radius of 0.5f requires us to be ALONG A WALL
+                    Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.5f);
+
+                    foreach (var potentialTarget in hitColliders)
+                    {
+                        if (potentialTarget.tag == "Cover")
+                        {
+                            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+                            float dSqrToTarget = directionToTarget.sqrMagnitude;
+                            if (dSqrToTarget < closestDistanceSqr)
+                            {
+                                closestDistanceSqr = dSqrToTarget;
+                                bestTarget = potentialTarget.transform;
+
+                                //Dont let the player float upward to closest point of cover
+                                closestPoint = bestTarget.transform.GetComponent<BoxCollider>().ClosestPoint((midpoint + bestTarget.transform.position)/2);
+                                closestPoint.y = 0;
+
+                                //Place cover region on ground to avoid getting too close to cover
+                                coverRegion.transform.position = closestPoint;
+
+                                Debug.Log("Best Target: " + bestTarget.name + " at distance: " + closestPoint.sqrMagnitude);
+                            }
+                        }
+                    }
+                    //If one of the colliders in the overlapsphere had the tag "cover" we get its name and set enter cover true to start moveTowards()
+                    if (bestTarget != null)
+                    {
+                        //Get name of current cover so we wont try to get this cover at same position when ray casting out for transition to another cover
+                        currentCover = bestTarget.name;
+                        enterCover = true;
+                    }
+                    else
+                    {
+                        Debug.Log("There is no close Cover!");
+                        currentCover = null;
+                        enterCover = false;
+                        inCover = false;
+                    }
+                }
+
+                RaycastHit localhit;
+                Vector3 hitPoint;
+                Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+                Transform hitTransform;
+
+                Physics.Raycast(ray, out localhit, midpoint.sqrMagnitude);
+                
+
+
+                hitTransform = playerShooting.FindClosestHitObject(ray, out hitPoint, "Cover", currentCover);
+
+                if (hitTransform.transform != null)
+                {
+                    Debug.Log("Using: " + hitTransform.name + " for cover!");
+
+                    closestPoint = hitTransform.transform.GetComponent<BoxCollider>().ClosestPoint(localhit.point);
+                    closestPoint.y = 0;
+
+                    coverRegion.transform.position = closestPoint;
+                    enterCover = true;
+                    currentCover = bestTargetName;
+                }
+
+                    /*
+                    //Run to cover were looking at even if were in cover it doesnt matter!
+                    //Casting ray from head to middle of target
+                    RaycastHit localhit;
+
+                    if (Physics.Raycast(NWP.local_head.transform.position, midpoint, out localhit, midpoint.sqrMagnitude) == true)
+                    {  
+
+                        Debug.Log("Cover Ray is hitting something!");
+
+                        Ray ray = new Ray(NWP.local_head.transform.position, midpoint);
+
+                        Vector3 hitPoint;
+
+                        bestTarget = playerShooting.FindClosestHitObject(ray, out hitPoint, "Cover", currentCover);
+
+                        //Dont let the player float upward to closest point of cover
+                        closestPoint = bestTarget.transform.GetComponent<BoxCollider>().ClosestPoint(midpoint);
+                        closestPoint.y = 0;
+
+                        //Place cover region on ground to avoid getting too close to cover
+                        coverRegion.transform.position = closestPoint;
+
+                        bestTargetName = bestTarget.name;
+
+                        enterCover = true;
+                        currentCover = bestTargetName;
+                    }
+                    */
+
+
+
+
+                    //If were interacting within a "SceneChange" taged Trigger
+                    if (changeScenes && currrentSceneChageOBJ != null)
                 {
                     //Access script of SceneChange OBJ and Send in int for scene selection. CHANGE TO GAME MODE 1
                     currrentSceneChageOBJ.GetComponentInChildren<ChangeScene>().ChangeSceneController(1);
@@ -321,7 +543,8 @@ namespace UnderdogCity
                 }
             }
 
-            if (Physics.Raycast(transform.position, -Vector3.up, 0.05f) == true)
+        
+            if (Physics.Raycast(NWP.local_chest.position, -transform.up, 0.05f) == true)
             {
                 isGrounded = true;
             }
@@ -369,17 +592,21 @@ namespace UnderdogCity
                 //If were walking backwards
                 if (joystickOne.Direction.y < -.1f)
                 {
-                    transform.Translate(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
+                    charController.SimpleMove(moveDirection * walkBackSpeed * Time.deltaTime);
+                    //rigidBody.MovePosition(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
+                    //transform.Translate(joystickOne.Horizontal * walkBackSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
                 }
                 //Limit side to side strafe speed
                 else if (joystickOne.Direction.x < -.1f && joystickOne.Direction.y < -.1f || joystickOne.Direction.x > .1f && joystickOne.Direction.y < -.1f)
                 {
-                    transform.Translate(joystickOne.Horizontal * strafeSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
+                    charController.SimpleMove(moveDirection * strafeSpeed * Time.deltaTime);
+                    //transform.Translate(joystickOne.Horizontal * strafeSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkBackSpeed * Time.deltaTime);
                 }
                 else
                 {
                     //Just move if not strafing or walking backwards
-                    transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
+                    charController.SimpleMove(moveDirection * walkSpeed * Time.deltaTime);
+                    //transform.Translate(joystickOne.Horizontal * walkSpeed * Time.deltaTime, 0, joystickOne.Vertical * walkSpeed * Time.deltaTime);
                 }
             }
 
@@ -426,7 +653,7 @@ namespace UnderdogCity
 
             if (moveDirection.magnitude > 0.1f)
             {
-                CharacterController.Move(dist / 2);
+                charController.Move(dist / 2);
             }
         }
     }

@@ -3041,16 +3041,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31bae486de6c6e43be498edb5ab52b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerShooting: {fileID: 0}
   inventory: {fileID: 11400000, guid: 87ba16b8c3f8e29478123e5868dbd443, type: 2}
   PFC: {fileID: 0}
+  NWP: {fileID: 0}
+  health: {fileID: 0}
+  charController: {fileID: 0}
   clothesInt: 0
   joystickOne: {fileID: 3890656144603369484}
   joystickTwo: {fileID: 5341682886029452478}
   crosshair: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
   animator: {fileID: 0}
-  jumpSpeed: 8
+  anim: {fileID: 0}
   gravity: 20
   Camera: {fileID: 950817916852323325}
+  jumpSpeed: 8
   walkSpeed: 1.75
   walkBackSpeed: 1
   strafeSpeed: 2.75
@@ -3071,7 +3076,18 @@ MonoBehaviour:
   getPauseMenu: 1
   otherID: 
   idInt: 0
-  NWplayer: {fileID: 0}
+  currrentSceneChageOBJ: {fileID: 0}
+  changeScenes: 0
+  enterCover: 0
+  bestTarget: {fileID: 0}
+  bestTargetName: 
+  inCover: 0
+  currentCover: 
+  closestPoint: {x: 0, y: 0, z: 0}
+  transitioning: 0
+  coverRegion: {fileID: 0}
+  stopLerp: 0
+  midpoint: {x: 0, y: 0, z: 0}
 --- !u!114 &6757547341050344599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3123,8 +3139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916cd7c5897585a4191888140f355844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GSC: {fileID: 0}
   fxManager: {fileID: 0}
   weaponData: {fileID: 0}
+  weaponType: 
   currentWepDmg: 0
 --- !u!114 &5061630234570691365
 MonoBehaviour:
@@ -3152,6 +3170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb6e3b8a6d17fd46b7a1c37a4b8e6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   hitPoints: 100
 --- !u!1 &7757426831230135937
 GameObject:
@@ -6571,6 +6590,7 @@ GameObject:
   - component: {fileID: 7757426831229842181}
   - component: {fileID: 7757426831222840541}
   - component: {fileID: 7757426831349873487}
+  - component: {fileID: 7913692576889236556}
   m_Layer: 0
   m_Name: Character@Idle
   m_TagString: Untagged
@@ -6854,6 +6874,21 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 026a30597202d0345b168e48d3f1ca3c, type: 2}
   - {fileID: 2100000, guid: 5cea395103c93244caf9a87ed2a0a209, type: 2}
   - {fileID: 2100000, guid: 235ce722a8d49454280c1eee687ebf6b, type: 2}
+--- !u!111 &7913692576889236556
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7757426831230136165}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &7757426831230136169
 GameObject:
   m_ObjectHideFlags: 0

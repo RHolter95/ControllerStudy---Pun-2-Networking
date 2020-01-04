@@ -1336,6 +1336,7 @@ GameObject:
   - component: {fileID: 936625025454424126}
   - component: {fileID: 936625025445081048}
   - component: {fileID: 936625026299490760}
+  - component: {fileID: 3996171922625705281}
   m_Layer: 0
   m_Name: Character@Idle
   m_TagString: Untagged
@@ -1608,6 +1609,22 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 026a30597202d0345b168e48d3f1ca3c, type: 2}
   - {fileID: 2100000, guid: 5cea395103c93244caf9a87ed2a0a209, type: 2}
   - {fileID: 2100000, guid: 235ce722a8d49454280c1eee687ebf6b, type: 2}
+--- !u!111 &3996171922625705281
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936625025454464030}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 5aedc6785da77ac40991762094cd1b84, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &936625025454464064
 GameObject:
   m_ObjectHideFlags: 0
@@ -4222,7 +4239,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2472808631310404009
 GameObject:
@@ -4445,9 +4462,10 @@ MonoBehaviour:
   joystickTwo: {fileID: 3283162578293939209}
   crosshair: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
   animator: {fileID: 0}
-  jumpSpeed: 8
+  anim: {fileID: 0}
   gravity: 20
   Camera: {fileID: 7674311247240510282}
+  jumpSpeed: 8
   walkSpeed: 1.75
   walkBackSpeed: 1
   strafeSpeed: 2.75
@@ -4475,10 +4493,22 @@ MonoBehaviour:
   bestTargetName: 
   inCover: 0
   currentCover: 
+  currentCoverOBJ: {fileID: 0}
   closestPoint: {x: 0, y: 0, z: 0}
   transitioning: 0
   coverRegion: {fileID: 0}
   stopLerp: 0
+  coverMin: {x: 0, y: 0, z: 0}
+  coverMax: {x: 0, y: 0, z: 0}
+  verts:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   midpoint: {x: 0, y: 0, z: 0}
 --- !u!114 &4212830685828844576
 MonoBehaviour:

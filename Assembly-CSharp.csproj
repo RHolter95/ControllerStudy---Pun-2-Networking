@@ -65,6 +65,16 @@
   <ItemGroup>
     <Compile Include="Assets\CivilCharactersPack\Scripts\CharacterCustomization.cs" />
     <Compile Include="Assets\CivilCharactersPack\Scripts\UIControllerDEMO.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\LevelScripts\HealthManager.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\LevelScripts\InteractiveWeapon.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\LevelScripts\ParticleSystemAutoDestroy.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\LevelScripts\ThirdPersonOrbitCam.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\LevelScripts\WeaponUIManager.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\PlayerScripts\AimBehaviour.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\PlayerScripts\BasicBehaviour.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\PlayerScripts\CoverBehaviour.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\PlayerScripts\MoveBehaviour.cs" />
+    <Compile Include="Assets\Cover+Shoot\Scripts\PlayerScripts\ShootBehaviour.cs" />
     <Compile Include="Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickPlayerExample.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
@@ -185,6 +195,7 @@
     <Compile Include="Assets\Scripts\FXManager.cs" />
     <Compile Include="Assets\Scripts\GameModeController.cs" />
     <Compile Include="Assets\Scripts\GameSetupController.cs" />
+    <Compile Include="Assets\Scripts\GestureControlls.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\ItemDragHandler.cs" />

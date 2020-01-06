@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 410062}
   - component: {fileID: 3359070}
   - component: {fileID: 2351054}
+  - component: {fileID: 3042495936201196441}
   m_Layer: 0
   m_Name: SM_Wep_RifleSwat_01
   m_TagString: Untagged
@@ -474,6 +475,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3042495936201196441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0c547705cfb9549a47fc41db5cca84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  label: M4
+  shotSound: {fileID: 8300000, guid: ad9f3cebf63d19e4999cdb2d9f17edf2, type: 3}
+  reloadSound: {fileID: 8300000, guid: 0ad5ea9d0a46ad94e885c85fc0062fbc, type: 3}
+  pickSound: {fileID: 8300000, guid: 58ecbbf6dcc438044947cd08cbbea5ca, type: 3}
+  dropSound: {fileID: 8300000, guid: 37d0a21710a6479489296744a2259bbb, type: 3}
+  noBulletSound: {fileID: 8300000, guid: 4f1d10400cbd5dd4790d6a5e5d0a9bad, type: 3}
+  sprite: {fileID: 21300000, guid: bba09468dc91ef94c901646a0bdbffcd, type: 3}
+  rightHandPosition: {x: 0.101, y: 0.069, z: 0.043}
+  relativeRotation: {x: -72, y: 154.4, z: -130}
+  bulletDamage: 10
+  recoilAngle: 0
+  type: 2
+  mode: 2
+  burstSize: 0
+  mag: 30
+  totalBullets: 120
+  player: {fileID: 0}
+  playerInventory: {fileID: 0}
 --- !u!1 &7890978112369278176
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,7 +516,7 @@ GameObject:
   - component: {fileID: 9030194524886862771}
   - component: {fileID: 6885090077203494777}
   m_Layer: 0
-  m_Name: FirePoint
+  m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,13 +529,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7890978112369278176}
-  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1042, z: 0.6604}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 410062}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6885090077203494777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,3 +550,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 0.1
   damage: 50
+  weaponType: 

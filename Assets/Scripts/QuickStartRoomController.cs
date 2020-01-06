@@ -53,7 +53,7 @@ public class QuickStartRoomController : MonoBehaviourPunCallbacks
                     break;
                 default:
                     Debug.Log("Starting Game");
-                    PhotonNetwork.LoadLevel(multiplayerSceneIndex); //because of AutoSyncScene all players who join the room will also be loaded into the multiplayer scene.
+                    PhotonNetwork.LoadLevel(2); //multiplayerSceneIndex because of AutoSyncScene all players who join the room will also be loaded into the multiplayer scene.
                     break;
             }
 

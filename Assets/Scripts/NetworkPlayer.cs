@@ -79,7 +79,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         PFC = GameObject.Find("NetworkController").GetComponent<PlayFabsController>();
         animator = GetComponentInChildren<Animator>();
         playerCustomizeChildOBJ = animator.gameObject;
-        target = transform.Find("CameraPivot/Target");
+        //target = transform.Find("CameraPivot/Target");
 
         if (PFC != null && GSC != null)
         {
@@ -113,8 +113,10 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         local_neck = animator.GetBoneTransform(HumanBodyBones.Neck);
         local_spine = animator.GetBoneTransform(HumanBodyBones.Spine);
 
+        /*
         if (target == null){
             Debug.Log("Network Player Couldn't find Target in child ");}
+            */
 
         if (animator == null){
             Debug.Log("Animator Empty in child");}
@@ -131,8 +133,8 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         if (local_spine == null){
             Debug.Log("Network Player Couldn't find Spine");}
 
-        if (animator == null || playerCustomizeChildOBJ == null || target == null){
-            Debug.Log("Couldn't find: PlayerOBJ || Target || Animator");}
+        if (playerCustomizeChildOBJ == null){
+            Debug.Log("Couldn't find: PlayerOBJ");}
 
     }
 #endregion Setup
@@ -155,15 +157,17 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(target.transform.position);
+            //stream.SendNext(target.transform.position);
             stream.SendNext(local_chest.transform.rotation);
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
+            /*
             stream.SendNext(animator.GetFloat("Speed"));
             stream.SendNext(animator.GetBool("IsGrounded"));
             stream.SendNext(animator.GetBool("IsDead"));
             stream.SendNext(animator.GetFloat("JoyStickX"));
             stream.SendNext(animator.GetFloat("JoyStickY"));
+            */
             
 
         }
@@ -171,20 +175,21 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
         {
             //This is someone else' player. we need to get their positions
             //as of a few milliseconds ago and update or version of that player
-            targetPosition = (Vector3)stream.ReceiveNext();
+            //targetPosition = (Vector3)stream.ReceiveNext();
             chestRotation = (Quaternion)stream.ReceiveNext();
             realPosition = (Vector3)stream.ReceiveNext();
             realRotation = (Quaternion)stream.ReceiveNext();
+            /*
             animator.SetFloat("Speed", (float)stream.ReceiveNext());
             animator.SetBool("IsGrounded", (bool)stream.ReceiveNext());
             animator.SetBool("IsDead", (bool)stream.ReceiveNext());
             animator.SetFloat("JoyStickX", (float)stream.ReceiveNext());
             animator.SetFloat("JoyStickY", (float)stream.ReceiveNext());
-     
+     */
 
             if (gotFirstUpdate == false)
             {
-                targetPosition = target.transform.position;
+                //targetPosition = target.transform.position;
                 chestRotation = local_chest.transform.rotation;
                 transform.position = realPosition;
                 transform.rotation = realRotation;

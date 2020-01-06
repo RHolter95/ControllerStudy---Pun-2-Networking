@@ -198,8 +198,8 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         //Spawn Base Model 
         if (playerSex == 0)
         {
-            //Instantiate Female base model
-            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayerFEMALE"), new Vector3(-2.8f, 0.0f, 0.736f), Quaternion.identity);    
+            //Instantiate Female base model 
+            Myplayer = (GameObject)PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "FemalePlayer"), new Vector3(-2.8f, 0.0f, 0.736f), Quaternion.identity);    
         }
         else
         {
@@ -215,11 +215,11 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         Myplayer.name = playerID;
 
         //Leave customization script active until we customize, then get the CharCustomize script
-        ((MonoBehaviour)Myplayer.transform.GetChild(0).GetComponent("CharacterCustomization")).enabled = true;
+        ((MonoBehaviour)Myplayer.transform.GetComponent("CharacterCustomization")).enabled = true;
         
 
         //Grabbing CharCustomize GO (Character@Idle)
-        playerCustomizeChildOBJ = Myplayer.transform.GetChild(0).gameObject;
+        playerCustomizeChildOBJ = Myplayer.transform.gameObject;
 
         //Slow AF but hopefully lists are small, Iterate over Entire list w/o order (Lists == unordered)
         SetupPlayerAccessory(accessoryIndex, playerCustomizeChildOBJ);
@@ -234,15 +234,15 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         PhotonView photonView = Myplayer.GetComponent<PhotonView>();
         PhotonTransformView photonTransformView = Myplayer.GetComponent<PhotonTransformView>();
 
-       //Remove un-needed components
+        //Remove un-needed components
         Destroy(((MonoBehaviour)Myplayer.GetComponent("StayOnStage")));
 
         //Enables/Disables components that are/arn't required
-        ((MonoBehaviour)Myplayer.GetComponent("Health")).enabled = true;
-        ((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
+        //((MonoBehaviour)Myplayer.GetComponent("Health")).enabled = true;
+        //((MonoBehaviour)Myplayer.GetComponent("PlayerMove")).enabled = true;
         ((MonoBehaviour)Myplayer.GetComponent("NetworkPlayer")).enabled = true;
-        ((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;
-        Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
+        //((MonoBehaviour)Myplayer.GetComponent("PlayerShooting")).enabled = true;
+        //Myplayer.transform.GetChild(2).Find("Main Camera").gameObject.SetActive(true);
         Myplayer.transform.Find("Canvas").gameObject.SetActive(true);
         
 

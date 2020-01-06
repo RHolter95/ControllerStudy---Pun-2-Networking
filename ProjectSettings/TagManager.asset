@@ -4,30 +4,24 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerUI
-  - JoyStick Left
-  - JoyStick Right
-  - PlayerOne
-  - ground
+  - Canvas
   - Bullet
-  - Slot0
-  - Slot1
-  - Slot2
-  - Slot3
-  - Slot4
-  - Slot5
+  - PlayerUI
   - Slot6
-  - Slot7
+  - Slot0
+  - Slot5
   - Slot8
   - Slot9
-  - Slot10
-  - Canvas
+  - Slot4
+  - Slot1
+  - Slot2
+  - Slot7
+  - Slot3
+  - Object
   - Item
   - ChangeScene
-  - Object
-  - AssaultRifle
+  - ground
   - Cover
-  - CoverRegion
   layers:
   - Default
   - TransparentFX
@@ -37,10 +31,10 @@ TagManager:
   - UI
   - 
   - 
+  - Cover
+  - Ignore Shot
+  - Cover Invisible
   - Player
-  - 
-  - 
-  - 
   - 
   - 
   - 
